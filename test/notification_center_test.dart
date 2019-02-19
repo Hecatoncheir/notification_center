@@ -1,13 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:notification_center/notification_center.dart';
+import 'package:notification_center/blocs.dart' show NotificationCenterBloc;
+import 'package:notification_center/notification_center.dart'
+    show NotificationCenter;
 
 void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
-    expect(() => calculator.addOne(null), throwsNoSuchMethodError);
+  group('NotificationCenter', () {
+    NotificationCenterBloc notificationCenterBloc;
+    NotificationCenter notificationCenter;
+
+    setUp(() {
+      notificationCenterBloc = NotificationCenterBloc();
+      notificationCenter =
+          NotificationCenter(notificationCenterBloc: notificationCenterBloc);
+    });
+
+    testWidgets('can show children', (tester) async {});
+    testWidgets('can show notification', (tester) async {});
   });
 }
