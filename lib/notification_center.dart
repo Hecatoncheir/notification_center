@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:meta/meta.dart' show required;
 
 import 'package:flutter/material.dart';
@@ -59,24 +61,33 @@ class NotificationCenterWidget extends StatelessWidget {
     return Column(children: _widgets);
   }
 
-  Widget _buildNotificationCenterControlPanel() => Container(
-        decoration: controlPanelModel.decoration,
-        child: Row(children: <Widget>[
-          FlatButton(
-              onPressed: notificationCenterBloc.getAllNotifications,
-              child: Text(
-                controlPanelModel.showAllText +
-                    ' (${notificationCenterBloc.history.length})',
-                style: TextStyle(color: controlPanelModel.textColor),
-              )),
-          FlatButton(
-            onPressed: notificationCenterBloc.closeAllNotifications,
-            child: Text(
-              controlPanelModel.closeAllText,
-              style: TextStyle(color: controlPanelModel.textColor),
-            ),
-          )
-        ]),
+  Widget _buildNotificationCenterControlPanel() => StreamBuilder(
+        stream: notificationCenterBloc.controlPanelReady,
+        builder: (_, snapshot) {
+          if (snapshot.data == false) {
+            return Container();
+          } else {
+            return Container(
+              decoration: controlPanelModel.decoration,
+              child: Row(children: <Widget>[
+                FlatButton(
+                    onPressed: notificationCenterBloc.getAllNotifications,
+                    child: Text(
+                      controlPanelModel.showAllText +
+                          ' (${notificationCenterBloc.history.length})',
+                      style: TextStyle(color: controlPanelModel.textColor),
+                    )),
+                FlatButton(
+                  onPressed: notificationCenterBloc.closeAllNotifications,
+                  child: Text(
+                    controlPanelModel.closeAllText,
+                    style: TextStyle(color: controlPanelModel.textColor),
+                  ),
+                )
+              ]),
+            );
+          }
+        },
       );
 
   Widget _buildNotification(NotificationModel notification) => Dismissible(

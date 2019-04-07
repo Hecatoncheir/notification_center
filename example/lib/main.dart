@@ -42,13 +42,13 @@ class _MyAppState extends State<MyApp> {
           body: NotificationBody(text: 'First notification body'));
       notificationCenterBloc.notifications.add(notification);
 
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(Duration(seconds: 2), () {
         final notification = NotificationModel(
             header: NotificationHeader(text: 'Second notification header'),
             body: NotificationBody(text: 'Second notification body'));
         notificationCenterBloc.notifications.add(notification);
 
-        Future.delayed(Duration(seconds: 1), () {
+        Future.delayed(Duration(seconds: 3), () {
           final notification = NotificationModel(
               header: NotificationHeader(text: 'Third notification header'),
               body: NotificationBody(text: 'Third notification body'),
