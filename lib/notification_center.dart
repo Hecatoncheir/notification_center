@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:notification_center/models.dart' show NotificationModel;
 
 import 'package:notification_center/blocs.dart' show NotificationCenterBloc;
+import 'package:notification_center/models.dart';
 
 /// NotificationCenterWidget  - widget for show notifications.
 class NotificationCenterWidget extends StatelessWidget {
@@ -33,12 +34,32 @@ class NotificationCenterWidget extends StatelessWidget {
   }
 
   Widget _buildNotifications(List<NotificationModel> notifications) {
-    final _notifications = <Widget>[];
+    final _widgets = <Widget>[]..add(_buildNotificationCenterControlPanel());
 
     for (NotificationModel notification in notifications) {
-      _notifications.add(Text(notification.header.text));
+      _widgets.add(_buildNotification(notification));
     }
 
-    return Column(children: _notifications);
+    return Column(children: _widgets);
   }
+
+  Widget _buildNotificationCenterControlPanel() => Row(children: <Widget>[
+        FlatButton(
+            onPressed: null,
+            child: Text('Show all notifications: '
+                '${notificationCenterBloc.history.length}'))
+      ]);
+
+  Widget _buildNotification(NotificationModel notification) => Column(
+        children: <Widget>[
+          _buildNotificationHeader(notification.header),
+          _buildNotificationBody(notification.body)
+        ],
+      );
+
+  Widget _buildNotificationHeader(NotificationHeader header) =>
+      Row(children: <Widget>[Flexible(child: Text(header.text))]);
+
+  Widget _buildNotificationBody(NotificationBody body) =>
+      Row(children: <Widget>[Flexible(child: Text(body.text))]);
 }
