@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:meta/meta.dart' show required;
 
 import 'package:flutter/material.dart';
@@ -42,17 +44,54 @@ class NotificationCenterWidget extends StatelessWidget {
 
   Widget _buildNotification(NotificationModel notification) => Dismissible(
         key: UniqueKey(),
-        child: Column(
-          children: <Widget>[
-            _buildNotificationHeader(notification.header),
-            _buildNotificationBody(notification.body)
-          ],
+        child: Container(
+          margin: notification.margin,
+          padding: notification.padding,
+          child: ClipRect(
+            child: notification.decoration != null
+                ? Column(
+                    children: <Widget>[
+                      _buildNotificationHeader(notification.header),
+                      _buildNotificationBody(notification.body)
+                    ],
+                  )
+                : SizedBox(
+                    width: double.infinity,
+                    height: 53,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                          decoration: notification.defaultDecoration,
+                          padding: notification.padding,
+                          margin: notification.margin,
+                          child: Column(
+                            children: <Widget>[
+                              _buildNotificationHeader(notification.header),
+                              _buildNotificationBody(notification.body)
+                            ],
+                          )),
+                    )),
+          ),
         ),
       );
 
   Widget _buildNotificationHeader(NotificationHeader header) =>
-      Row(children: <Widget>[Flexible(child: Text(header.text))]);
+      Row(children: <Widget>[
+        Flexible(
+            child: header.decoration == null
+                ? Text(
+                    header.text,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : Text(header.text))
+      ]);
 
   Widget _buildNotificationBody(NotificationBody body) =>
-      Row(children: <Widget>[Flexible(child: Text(body.text))]);
+      Row(children: <Widget>[
+        Flexible(
+            child: Text(
+          body.text,
+          overflow: TextOverflow.ellipsis,
+        ))
+      ]);
 }
