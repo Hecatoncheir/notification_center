@@ -50,12 +50,14 @@ class NotificationCenterWidget extends StatelessWidget {
           padding: notification.padding,
           child: ClipRect(
             child: notification.decoration != null
-                ? Column(
-                    children: <Widget>[
-                      _buildNotificationHeader(notification.header),
-                      _buildNotificationBody(notification.body)
-                    ],
-                  )
+                ? Container(
+                    decoration: notification.decoration,
+                    child: Column(
+                      children: <Widget>[
+                        _buildNotificationHeader(notification.header),
+                        _buildNotificationBody(notification.body)
+                      ],
+                    ))
                 : SizedBox(
                     width: double.infinity,
                     height: 53,
@@ -86,7 +88,7 @@ class NotificationCenterWidget extends StatelessWidget {
                   header.text,
                   overflow: TextOverflow.ellipsis,
                 )
-              : Text(header.text),
+              : Text(header.text, style: header.textStyle),
         ))
       ]);
 
@@ -100,7 +102,7 @@ class NotificationCenterWidget extends StatelessWidget {
                   body.text,
                   overflow: TextOverflow.ellipsis,
                 )
-              : Text(body.text),
+              : Text(body.text, style: body.textStyle),
         ))
       ]);
 }

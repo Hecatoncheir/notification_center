@@ -26,17 +26,23 @@ class NotificationModel {
 
 class NotificationHeader {
   String text;
+  TextStyle textStyle;
+
   BoxDecoration decoration;
   BoxDecoration defaultDecoration = BoxDecoration();
 
   EdgeInsets padding;
 
   NotificationHeader(
-      {this.text, this.padding = const EdgeInsets.all(0), this.decoration});
+      {this.text,
+      this.textStyle,
+      this.padding = const EdgeInsets.all(0),
+      this.decoration});
 }
 
 class NotificationBody {
   String text;
+  TextStyle textStyle;
 
   EdgeInsets padding;
 
@@ -44,5 +50,8 @@ class NotificationBody {
   BoxDecoration defaultDecoration = BoxDecoration();
 
   NotificationBody(
-      {this.text, this.padding = const EdgeInsets.all(0), this.decoration});
+      {this.text,
+      this.textStyle,
+      this.padding = const EdgeInsets.all(0),
+      this.decoration});
 }
