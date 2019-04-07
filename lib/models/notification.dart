@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 class NotificationModel {
   NotificationHeader header;
   NotificationBody body;
@@ -10,10 +12,12 @@ class NotificationModel {
 
 class NotificationHeader {
   String text;
-  NotificationHeader({this.text});
+  BoxDecoration decoration;
+  NotificationHeader({this.text, this.decoration});
 }
 
 class NotificationBody {
   String text;
-  NotificationBody({this.text});
+  BoxDecoration decoration;
+  NotificationBody({this.text, this.decoration});
 }

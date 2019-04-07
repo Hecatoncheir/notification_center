@@ -7,7 +7,11 @@ import 'package:notification_center/notification_center.dart'
     show NotificationCenterWidget;
 
 import 'package:notification_center/models.dart'
-    show NotificationModel, NotificationHeader, NotificationBody;
+    show
+        NotificationModel,
+        NotificationHeader,
+        NotificationBody,
+        ControlPanelModel;
 
 void main() => runApp(MyApp());
 
@@ -59,6 +63,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) => MaterialApp(
         home: SafeArea(
           child: NotificationCenterWidget(
+            controlPanelModel:
+                ControlPanelModel(showAllText: 'Open', closeAllText: 'Close'),
             notificationCenterBloc: notificationCenterBloc,
             child: Scaffold(
               appBar: AppBar(

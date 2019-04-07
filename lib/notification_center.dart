@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:notification_center/models.dart' show NotificationModel;
 
 import 'package:notification_center/blocs.dart' show NotificationCenterBloc;
-import 'package:notification_center/models.dart';
+
+import 'package:notification_center/models.dart'
+    show
+        NotificationModel,
+        NotificationHeader,
+        NotificationBody,
+        ControlPanelModel;
 
 /// NotificationCenterWidget  - widget for show notifications.
 class NotificationCenterWidget extends StatelessWidget {
@@ -13,9 +19,13 @@ class NotificationCenterWidget extends StatelessWidget {
 
   final Widget child;
 
+  final ControlPanelModel controlPanelModel;
+
   /// Constructor
   const NotificationCenterWidget(
-      {@required this.notificationCenterBloc, this.child});
+      {@required this.notificationCenterBloc,
+      this.controlPanelModel,
+      this.child});
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
@@ -52,11 +62,11 @@ class NotificationCenterWidget extends StatelessWidget {
   Widget _buildNotificationCenterControlPanel() => Row(children: <Widget>[
         FlatButton(
             onPressed: notificationCenterBloc.getAllNotifications,
-            child: Text('Show all notifications: '
-                '${notificationCenterBloc.history.length}')),
+            child: Text(controlPanelModel.showAllText +
+                ' (${notificationCenterBloc.history.length})')),
         FlatButton(
             onPressed: notificationCenterBloc.closeAllNotifications,
-            child: Text('Close all.'))
+            child: Text(controlPanelModel.closeAllText))
       ]);
 
   Widget _buildNotification(NotificationModel notification) => Dismissible(
