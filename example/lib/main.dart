@@ -63,8 +63,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) => MaterialApp(
         home: SafeArea(
           child: NotificationCenterWidget(
-            controlPanelModel:
-                ControlPanelModel(showAllText: 'Open', closeAllText: 'Close'),
+            controlPanelModel: ControlPanelModel(
+                showAllText: 'Open',
+                closeAllText: 'Close',
+                textColor: Colors.white,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                )),
             notificationCenterBloc: notificationCenterBloc,
             child: Scaffold(
               appBar: AppBar(

@@ -59,15 +59,25 @@ class NotificationCenterWidget extends StatelessWidget {
     return Column(children: _widgets);
   }
 
-  Widget _buildNotificationCenterControlPanel() => Row(children: <Widget>[
-        FlatButton(
-            onPressed: notificationCenterBloc.getAllNotifications,
-            child: Text(controlPanelModel.showAllText +
-                ' (${notificationCenterBloc.history.length})')),
-        FlatButton(
+  Widget _buildNotificationCenterControlPanel() => Container(
+        decoration: controlPanelModel.decoration,
+        child: Row(children: <Widget>[
+          FlatButton(
+              onPressed: notificationCenterBloc.getAllNotifications,
+              child: Text(
+                controlPanelModel.showAllText +
+                    ' (${notificationCenterBloc.history.length})',
+                style: TextStyle(color: controlPanelModel.textColor),
+              )),
+          FlatButton(
             onPressed: notificationCenterBloc.closeAllNotifications,
-            child: Text(controlPanelModel.closeAllText))
-      ]);
+            child: Text(
+              controlPanelModel.closeAllText,
+              style: TextStyle(color: controlPanelModel.textColor),
+            ),
+          )
+        ]),
+      );
 
   Widget _buildNotification(NotificationModel notification) => Dismissible(
         key: UniqueKey(),
