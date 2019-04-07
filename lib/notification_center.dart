@@ -41,12 +41,12 @@ class NotificationCenterWidget extends StatelessWidget {
       _notifications.add(_buildNotification(notification));
     }
 
-    final _widgets = <Widget>[]..add(ListView(
-        shrinkWrap: true,
-        children: _notifications,
-      ));
+    final _list = ListView(
+      shrinkWrap: true,
+      children: _notifications,
+    );
 
-    return Column(children: _widgets);
+    return _list;
   }
 
   Widget _buildNotification(NotificationModel notification) => Dismissible(
