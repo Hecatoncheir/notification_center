@@ -7,11 +7,7 @@ import 'package:notification_center/notification_center.dart'
     show NotificationCenterWidget;
 
 import 'package:notification_center/models.dart'
-    show
-        NotificationModel,
-        NotificationHeader,
-        NotificationBody,
-        ControlPanelModel;
+    show NotificationModel, NotificationHeader, NotificationBody;
 
 void main() => runApp(MyApp());
 
@@ -62,21 +58,63 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: SafeArea(
-          child: NotificationCenterWidget(
-            controlPanelModel: ControlPanelModel(
-                showAllText: 'Open',
-                closeAllText: 'Close',
-                textColor: Colors.white,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                )),
-            notificationCenterBloc: notificationCenterBloc,
-            child: Scaffold(
-              appBar: AppBar(
-                title: const Text('Plugin example app'),
-              ),
-              body: Center(
-                child: Text('Running on: flutter \n'),
+          child: Scaffold(
+            appBar: AppBar(
+                title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Expanded(child: Text('Plugin example app')),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      /// Notifications
+                      GestureDetector(
+                        onTap: () =>
+                            notificationCenterBloc.getAllNotifications(),
+                        child: Chip(
+                          labelStyle: TextStyle(color: Colors.black),
+                          backgroundColor: Colors.white,
+                          avatar: CircleAvatar(
+                            backgroundColor: Colors.lightGreen,
+                            child: StreamBuilder(
+                              stream: notificationCenterBloc.notificationsCount,
+                              builder: (_, snapshot) {
+                                if (snapshot.data != null) {
+                                  return Text(snapshot.data.toString(),
+                                      style: TextStyle(color: Colors.white));
+                                } else {
+                                  return Text(
+                                      notificationCenterBloc.history.length
+                                          .toString(),
+                                      style: TextStyle(color: Colors.white));
+                                }
+                              },
+                            ),
+                          ),
+                          label: Text('Show'),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () =>
+                            notificationCenterBloc.closeAllNotifications(),
+                        child: Chip(
+                          backgroundColor: Colors.white,
+                          label: Text('Close'),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            )),
+            body: Padding(
+              padding: EdgeInsets.all(10),
+              child: NotificationCenterWidget(
+                notificationCenterBloc: notificationCenterBloc,
+                child: Center(
+                  child: Text('Running on: flutter \n'),
+                ),
               ),
             ),
           ),
