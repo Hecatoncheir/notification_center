@@ -31,4 +31,7 @@ class NotificationCenterBloc {
     notifications.close();
     _notificationsController.close();
   }
+
+  void getAllNotifications() => _notificationsController.add(history);
+  void closeAllNotifications() => _notificationsController.add([]);
 }

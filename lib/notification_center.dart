@@ -51,9 +51,12 @@ class NotificationCenterWidget extends StatelessWidget {
 
   Widget _buildNotificationCenterControlPanel() => Row(children: <Widget>[
         FlatButton(
-            onPressed: null,
+            onPressed: notificationCenterBloc.getAllNotifications,
             child: Text('Show all notifications: '
-                '${notificationCenterBloc.history.length}'))
+                '${notificationCenterBloc.history.length}')),
+        FlatButton(
+            onPressed: notificationCenterBloc.closeAllNotifications,
+            child: Text('Close all.'))
       ]);
 
   Widget _buildNotification(NotificationModel notification) => Dismissible(
