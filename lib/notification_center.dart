@@ -34,11 +34,17 @@ class NotificationCenterWidget extends StatelessWidget {
   }
 
   Widget _buildNotifications(List<NotificationModel> notifications) {
-    final _widgets = <Widget>[]..add(_buildNotificationCenterControlPanel());
-
+    final _notifications = <Widget>[];
     for (NotificationModel notification in notifications) {
-      _widgets.add(_buildNotification(notification));
+      _notifications.add(_buildNotification(notification));
     }
+
+    final _widgets = <Widget>[]
+      ..add(_buildNotificationCenterControlPanel())
+      ..add(ListView(
+        shrinkWrap: true,
+        children: _notifications,
+      ));
 
     return Column(children: _widgets);
   }
@@ -50,11 +56,14 @@ class NotificationCenterWidget extends StatelessWidget {
                 '${notificationCenterBloc.history.length}'))
       ]);
 
-  Widget _buildNotification(NotificationModel notification) => Column(
-        children: <Widget>[
-          _buildNotificationHeader(notification.header),
-          _buildNotificationBody(notification.body)
-        ],
+  Widget _buildNotification(NotificationModel notification) => Dismissible(
+        key: UniqueKey(),
+        child: Column(
+          children: <Widget>[
+            _buildNotificationHeader(notification.header),
+            _buildNotificationBody(notification.body)
+          ],
+        ),
       );
 
   Widget _buildNotificationHeader(NotificationHeader header) =>
