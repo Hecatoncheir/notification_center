@@ -29,13 +29,20 @@ class NotificationHeader {
   BoxDecoration decoration;
   BoxDecoration defaultDecoration = BoxDecoration();
 
-  NotificationHeader({this.text, this.decoration});
+  EdgeInsets padding;
+
+  NotificationHeader(
+      {this.text, this.padding = const EdgeInsets.all(0), this.decoration});
 }
 
 class NotificationBody {
   String text;
+
+  EdgeInsets padding;
+
   BoxDecoration decoration;
   BoxDecoration defaultDecoration = BoxDecoration();
 
-  NotificationBody({this.text, this.decoration});
+  NotificationBody(
+      {this.text, this.padding = const EdgeInsets.all(0), this.decoration});
 }

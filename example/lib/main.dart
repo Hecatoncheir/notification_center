@@ -40,14 +40,17 @@ class _MyAppState extends State<MyApp> {
 
       Future.delayed(Duration(seconds: 2), () {
         final notification = NotificationModel(
-            decoration: BoxDecoration(),
+            decoration: NotificationDecoration,
             margin: EdgeInsets.all(5),
             padding: EdgeInsets.all(10),
             header: NotificationHeader(
+                padding: EdgeInsets.all(3),
                 text: 'Second notification header',
-                decoration: BoxDecoration()),
+                decoration: NotificationHeaderDecoration),
             body: NotificationBody(
-                decoration: BoxDecoration(), text: 'Second notification body'));
+                padding: EdgeInsets.all(3),
+                decoration: NotificationBodyDecoration,
+                text: 'Second notification body'));
         notificationCenterBloc.notifications.add(notification);
 
         Future.delayed(Duration(seconds: 3), () {
@@ -74,7 +77,7 @@ class _MyAppState extends State<MyApp> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      /// Notifications
+                      /// Notifications controls
                       GestureDetector(
                         onTap: () =>
                             notificationCenterBloc.getAllNotifications(),
@@ -116,6 +119,8 @@ class _MyAppState extends State<MyApp> {
             )),
             body: Padding(
               padding: EdgeInsets.all(10),
+
+              /// NotificationCenter
               child: NotificationCenterWidget(
                 notificationCenterBloc: notificationCenterBloc,
                 child: Center(
@@ -127,3 +132,9 @@ class _MyAppState extends State<MyApp> {
         ),
       );
 }
+
+const NotificationDecoration = BoxDecoration();
+
+const NotificationHeaderDecoration = BoxDecoration();
+
+const NotificationBodyDecoration = BoxDecoration();
