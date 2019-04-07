@@ -10,10 +10,10 @@ class NotificationModel {
 
 class NotificationHeader {
   String text;
-  NotificationHeader(this.text);
+  NotificationHeader({this.text});
 }
 
 class NotificationBody {
   String text;
-  NotificationBody(this.text);
+  NotificationBody({this.text});
 }

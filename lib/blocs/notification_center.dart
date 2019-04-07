@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:notofication_center/models/notification.dart'
+import 'package:notification_center/models/notification.dart'
     show NotificationModel;
 
 class NotificationCenterBloc {
@@ -8,20 +8,24 @@ class NotificationCenterBloc {
 
   /// Constructor
   NotificationCenterBloc() {
-    _notificationsController = StreamController<NotificationModel>();
-    allNotifications = _notificationsController.stream;
+    _notificationsController = StreamController<List<NotificationModel>>();
+    notificationsForShow = _notificationsController.stream;
 
     notifications = StreamController<NotificationModel>();
     notifications.stream.listen((notification) {
       history.add(notification);
-      _notificationsController.add(notification);
+      if (notification.onlyOneNotificationShow) {
+        _notificationsController.add([notification]);
+      } else {
+        _notificationsController.add(history);
+      }
     });
   }
 
   StreamController<NotificationModel> notifications;
-  Stream<NotificationModel> allNotifications;
 
-  StreamController<NotificationModel> _notificationsController;
+  StreamController<List<NotificationModel>> _notificationsController;
+  Stream<List<NotificationModel>> notificationsForShow;
 
   void dispose() {
     notifications.close();
