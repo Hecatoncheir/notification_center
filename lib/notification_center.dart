@@ -35,19 +35,10 @@ class NotificationCenterWidget extends StatelessWidget {
     return _widget;
   }
 
-  Widget _buildNotifications(List<NotificationModel> notifications) {
-    final _notifications = <Widget>[];
-    for (NotificationModel notification in notifications) {
-      _notifications.add(_buildNotification(notification));
-    }
-
-    final _list = ListView(
-      shrinkWrap: true,
-      children: _notifications,
-    );
-
-    return _list;
-  }
+  Widget _buildNotifications(List<NotificationModel> notifications) =>
+      ListView.builder(
+          itemCount: notifications.length,
+          itemBuilder: (_, index) => _buildNotification(notifications[index]));
 
   Widget _buildNotification(NotificationModel notification) => Dismissible(
         key: UniqueKey(),
