@@ -79,20 +79,28 @@ class NotificationCenterWidget extends StatelessWidget {
   Widget _buildNotificationHeader(NotificationHeader header) =>
       Row(children: <Widget>[
         Flexible(
-            child: header.decoration == null
-                ? Text(
-                    header.text,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Text(header.text))
+            child: Padding(
+          padding: header.padding,
+          child: header.decoration == null
+              ? Text(
+                  header.text,
+                  overflow: TextOverflow.ellipsis,
+                )
+              : Text(header.text),
+        ))
       ]);
 
   Widget _buildNotificationBody(NotificationBody body) =>
       Row(children: <Widget>[
         Flexible(
-            child: Text(
-          body.text,
-          overflow: TextOverflow.ellipsis,
+            child: Padding(
+          padding: body.padding,
+          child: body.decoration == null
+              ? Text(
+                  body.text,
+                  overflow: TextOverflow.ellipsis,
+                )
+              : Text(body.text),
         ))
       ]);
 }
