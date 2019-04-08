@@ -83,7 +83,7 @@ class NotificationCenterWidget extends StatelessWidget {
         Flexible(
             child: Padding(
           padding: header.padding,
-          child: header.decoration == null
+          child: header.textStyle == null
               ? Text(
                   header.text,
                   overflow: TextOverflow.ellipsis,
@@ -97,7 +97,7 @@ class NotificationCenterWidget extends StatelessWidget {
         Flexible(
             child: Padding(
           padding: body.padding,
-          child: body.decoration == null
+          child: body.textStyle == null
               ? Text(
                   body.text,
                   overflow: TextOverflow.ellipsis,
