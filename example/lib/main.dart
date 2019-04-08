@@ -38,9 +38,15 @@ class _MyAppState extends State<MyApp> {
           body: NotificationBody(text: 'First notification body'));
       notificationCenterBloc.notifications.add(notification);
 
+      BoxDecoration secondNotificationDecoration() => BoxDecoration(
+          color: Color(0xFFfecfbf),
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: Color(0xFFb7315c)));
+
       Future.delayed(Duration(seconds: 2), () {
         final notification = NotificationModel(
-            decoration: notificationDecoration(),
+            onlyOneNotificationShow: true,
+            decoration: secondNotificationDecoration(),
             margin: EdgeInsets.all(5),
             padding: EdgeInsets.all(10),
             header: NotificationHeader(
@@ -50,12 +56,10 @@ class _MyAppState extends State<MyApp> {
                 textStyle: TextStyle(
                     color: Color(0xFFb7315c),
                     fontSize: 16,
-                    fontWeight: FontWeight.bold),
-                decoration: notificationHeaderDecoration()),
+                    fontWeight: FontWeight.bold)),
             body: NotificationBody(
                 padding:
                     EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
-                decoration: notificationBodyDecoration(),
                 textStyle: TextStyle(color: Color(0xFFb7315c)),
                 text: 'Second notification body'));
         notificationCenterBloc.notifications.add(notification);
@@ -66,6 +70,13 @@ class _MyAppState extends State<MyApp> {
               body: NotificationBody(text: 'Third notification body'),
               onlyOneNotificationShow: true);
           notificationCenterBloc.notifications.add(notification);
+
+          Future.delayed(Duration(seconds: 4), () {
+            final notification = NotificationModel(
+                header: NotificationHeader(text: 'Fourth notification header'),
+                body: NotificationBody(text: 'Fourth notification body'));
+            notificationCenterBloc.notifications.add(notification);
+          });
         });
       });
     });
@@ -129,21 +140,26 @@ class _MyAppState extends State<MyApp> {
 
               /// NotificationCenter
               child: NotificationCenterWidget(
-                notificationCenterBloc: notificationCenterBloc,
-                child: Center(
-                  child: Text('Running on: flutter \n'),
-                ),
-              ),
+                  notificationCenterBloc: notificationCenterBloc,
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.fitHeight,
+                                alignment: FractionalOffset.center,
+                                image: AssetImage('images/background.png')),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
             ),
           ),
         ),
       );
 }
-
-BoxDecoration notificationDecoration() => BoxDecoration(
-    color: Color(0xFFfecfbf),
-    borderRadius: BorderRadius.circular(6),
-    border: Border.all(color: Color(0xFFb7315c)));
 
 BoxDecoration notificationHeaderDecoration() => BoxDecoration();
 
