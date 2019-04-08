@@ -48,33 +48,32 @@ class NotificationCenterWidget extends StatelessWidget {
         child: Container(
           margin: notification.margin,
           padding: notification.padding,
-          child: ClipRect(
-            child: notification.decoration != null
-                ? Container(
-                    decoration: notification.decoration,
-                    child: Column(
-                      children: <Widget>[
-                        _buildNotificationHeader(notification.header),
-                        _buildNotificationBody(notification.body)
-                      ],
-                    ))
-                : SizedBox(
-                    width: double.infinity,
-                    height: 53,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: Container(
-                          decoration: notification.defaultDecoration,
-                          padding: notification.padding,
-                          margin: notification.margin,
-                          child: Column(
-                            children: <Widget>[
-                              _buildNotificationHeader(notification.header),
-                              _buildNotificationBody(notification.body)
-                            ],
-                          )),
-                    )),
-          ),
+          child: notification.decoration != null
+              ? Container(
+                  decoration: notification.decoration,
+                  child: Column(
+                    children: <Widget>[
+                      _buildNotificationHeader(notification.header),
+                      _buildNotificationBody(notification.body)
+                    ],
+                  ))
+              : ClipRect(
+                  child: SizedBox(
+                      width: double.infinity,
+                      height: 53,
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Container(
+                            decoration: notification.defaultDecoration,
+                            padding: notification.padding,
+                            margin: notification.margin,
+                            child: Column(
+                              children: <Widget>[
+                                _buildNotificationHeader(notification.header),
+                                _buildNotificationBody(notification.body)
+                              ],
+                            )),
+                      ))),
         ),
       );
 
