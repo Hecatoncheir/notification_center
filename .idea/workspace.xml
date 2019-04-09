@@ -6,7 +6,6 @@
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/models/notification.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/notification.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/notification_center.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/notification_center.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification_center.iml" beforeDir="false" afterPath="$PROJECT_DIR$/notification_center.iml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/notification_center.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="99" column="37" selection-start-line="99" selection-start-column="37" selection-end-line="99" selection-end-column="37" />
+            <state relative-caret-position="146">
+              <caret line="53" selection-start-line="53" selection-end-line="53" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -31,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/models/notification.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
+            <state relative-caret-position="275">
+              <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -46,38 +45,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3000">
-              <caret line="150" column="66" selection-start-line="150" selection-start-column="66" selection-end-line="150" selection-end-column="66" />
+            <state relative-caret-position="216">
+              <caret line="120" selection-start-line="120" selection-end-line="120" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/dev/flutter/packages/flutter/lib/src/painting/alignment.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3500">
-              <caret line="181" column="6" selection-start-line="181" selection-start-column="6" selection-end-line="181" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/pubspec.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="640">
-              <caret line="32" selection-start-line="32" selection-end-line="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/dev/flutter/bin/cache/pkg/sky_engine/lib/ui/painting.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="105" column="52" selection-start-line="105" selection-start-column="52" selection-end-line="105" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -99,8 +71,8 @@
         <option value="$PROJECT_DIR$/lib/colors.dart" />
         <option value="$PROJECT_DIR$/example/pubspec.yaml" />
         <option value="$PROJECT_DIR$/example/lib/main.dart" />
-        <option value="$PROJECT_DIR$/lib/notification_center.dart" />
         <option value="$PROJECT_DIR$/lib/models/notification.dart" />
+        <option value="$PROJECT_DIR$/lib/notification_center.dart" />
       </list>
     </option>
   </component>
@@ -165,7 +137,8 @@
       <workItem from="1554634726742" duration="5594000" />
       <workItem from="1554657256775" duration="9033000" />
       <workItem from="1554693180268" duration="2489000" />
-      <workItem from="1554780068146" duration="510000" />
+      <workItem from="1554780068146" duration="2061000" />
+      <workItem from="1554785901381" duration="244000" />
     </task>
     <task id="LOCAL-00001" summary="Show notifications.">
       <created>1554637364767</created>
@@ -293,11 +266,25 @@
       <option name="project" value="LOCAL" />
       <updated>1554695910440</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Added defaultTextStyle for header and body.">
+      <created>1554780698630</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1554780698630</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fix padding.">
+      <created>1554782208590</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1554782208590</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17626000" />
+    <option name="totallyTimeSpent" value="19421000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -397,7 +384,9 @@
     <MESSAGE value="Header and body text style check." />
     <MESSAGE value="Update preview." />
     <MESSAGE value="Cleanup." />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleanup." />
+    <MESSAGE value="Added defaultTextStyle for header and body." />
+    <MESSAGE value="Fix padding." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix padding." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/notofication_center.dart" />
@@ -486,16 +475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3000">
-          <caret line="150" column="66" selection-start-line="150" selection-start-column="66" selection-end-line="150" selection-end-column="66" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/dev/flutter/packages/flutter/lib/src/painting/alignment.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3500">
@@ -512,27 +491,37 @@
     </entry>
     <entry file="file://$USER_HOME$/dev/flutter/bin/cache/pkg/sky_engine/lib/ui/painting.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
+        <state relative-caret-position="2060">
           <caret line="105" column="52" selection-start-line="105" selection-start-column="52" selection-end-line="105" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/notification_center.dart">
+    <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="99" column="37" selection-start-line="99" selection-start-column="37" selection-end-line="99" selection-end-column="37" />
+        <state relative-caret-position="216">
+          <caret line="120" selection-start-line="120" selection-end-line="120" />
           <folding>
-            <element signature="e#0#17#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/models/notification.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
+        <state relative-caret-position="275">
+          <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/notification_center.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="53" selection-start-line="53" selection-end-line="53" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
