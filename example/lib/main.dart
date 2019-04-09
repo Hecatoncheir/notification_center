@@ -47,8 +47,8 @@ class _MyAppState extends State<MyApp> {
         final notification = NotificationModel(
             onlyOneNotificationShow: true,
             decoration: secondNotificationDecoration(),
-            margin: EdgeInsets.all(5),
-            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.all(3),
+            padding: EdgeInsets.all(2),
             header: NotificationHeader(
                 padding:
                     EdgeInsets.only(top: 10, left: 10, bottom: 2, right: 10),
@@ -67,14 +67,28 @@ class _MyAppState extends State<MyApp> {
         Future.delayed(Duration(seconds: 3), () {
           final notification = NotificationModel(
               header: NotificationHeader(text: 'Third notification header'),
-              body: NotificationBody(text: 'Third notification body'),
-              onlyOneNotificationShow: true);
+              body: NotificationBody(text: 'Third notification body'));
           notificationCenterBloc.notifications.add(notification);
 
           Future.delayed(Duration(seconds: 4), () {
+            final header = NotificationHeader(
+                text: 'Fourth notification header',
+                textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 18));
+
+            final body = NotificationBody(
+                text: 'Fourth notification body',
+                padding: EdgeInsets.only(top: 5),
+                textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
+
             final notification = NotificationModel(
-                header: NotificationHeader(text: 'Fourth notification header'),
-                body: NotificationBody(text: 'Fourth notification body'));
+                header: header,
+                body: body,
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.only(top: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.zero),
+                    border: Border.all(color: Color(0xFFF0376E)),
+                    color: Color(0xFFFFFAEB)));
             notificationCenterBloc.notifications.add(notification);
           });
         });

@@ -46,11 +46,11 @@ class NotificationCenterWidget extends StatelessWidget {
   Widget _buildNotification(NotificationModel notification) => Dismissible(
         key: UniqueKey(),
         child: Container(
-          margin: notification.margin,
-          padding: notification.padding,
           child: notification.decoration != null
               ? Container(
                   decoration: notification.decoration,
+                  padding: notification.padding,
+                  margin: notification.margin,
                   child: Column(
                     children: <Widget>[
                       _buildNotificationHeader(notification.header),
