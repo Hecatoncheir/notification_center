@@ -19,7 +19,7 @@ class NotificationModel {
   NotificationModel(
       {this.header,
       this.body,
-      this.margin = const EdgeInsets.all(3),
+      this.margin = const EdgeInsets.all(8),
       this.padding = const EdgeInsets.all(6),
       this.decoration,
       this.onlyOneNotificationShow = false});
