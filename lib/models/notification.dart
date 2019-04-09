@@ -10,8 +10,9 @@ class NotificationModel {
   EdgeInsets padding;
 
   BoxDecoration decoration;
-  BoxDecoration defaultDecoration =
-      BoxDecoration(borderRadius: BorderRadius.circular(6));
+  BoxDecoration defaultDecoration = BoxDecoration(
+      borderRadius: BorderRadius.circular(6),
+      border: Border.all(color: Colors.white.withOpacity(0.6)));
 
   bool onlyOneNotificationShow;
 
@@ -27,6 +28,7 @@ class NotificationModel {
 class NotificationHeader {
   String text;
   TextStyle textStyle;
+  TextStyle defaultTextStyle = TextStyle(fontSize: 18);
 
   BoxDecoration decoration;
   BoxDecoration defaultDecoration = BoxDecoration();
@@ -36,13 +38,14 @@ class NotificationHeader {
   NotificationHeader(
       {this.text,
       this.textStyle,
-      this.padding = const EdgeInsets.all(0),
+      this.padding = const EdgeInsets.only(bottom: 5),
       this.decoration});
 }
 
 class NotificationBody {
   String text;
   TextStyle textStyle;
+  TextStyle defaultTextStyle = TextStyle(fontSize: 16);
 
   EdgeInsets padding;
 

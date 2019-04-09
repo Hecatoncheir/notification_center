@@ -58,22 +58,19 @@ class NotificationCenterWidget extends StatelessWidget {
                     ],
                   ))
               : ClipRect(
-                  child: SizedBox(
-                      width: double.infinity,
-                      height: 53,
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: Container(
-                            decoration: notification.defaultDecoration,
-                            padding: notification.padding,
-                            margin: notification.margin,
-                            child: Column(
-                              children: <Widget>[
-                                _buildNotificationHeader(notification.header),
-                                _buildNotificationBody(notification.body)
-                              ],
-                            )),
-                      ))),
+                  child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                      decoration: notification.defaultDecoration,
+                      padding: notification.padding,
+                      margin: notification.margin,
+                      child: Column(
+                        children: <Widget>[
+                          _buildNotificationHeader(notification.header),
+                          _buildNotificationBody(notification.body)
+                        ],
+                      )),
+                )),
         ),
       );
 
@@ -85,6 +82,7 @@ class NotificationCenterWidget extends StatelessWidget {
           child: header.textStyle == null
               ? Text(
                   header.text,
+                  style: header.defaultTextStyle,
                   overflow: TextOverflow.ellipsis,
                 )
               : Text(header.text, style: header.textStyle),
@@ -99,6 +97,7 @@ class NotificationCenterWidget extends StatelessWidget {
           child: body.textStyle == null
               ? Text(
                   body.text,
+                  style: body.defaultTextStyle,
                   overflow: TextOverflow.ellipsis,
                 )
               : Text(body.text, style: body.textStyle),
