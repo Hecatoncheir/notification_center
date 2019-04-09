@@ -73,17 +73,19 @@ class _MyAppState extends State<MyApp> {
           Future.delayed(Duration(seconds: 4), () {
             final header = NotificationHeader(
                 text: 'Fourth notification header',
-                textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 18));
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
+                textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));
 
             final body = NotificationBody(
                 text: 'Fourth notification body',
-                padding: EdgeInsets.only(top: 5),
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
 
             final notification = NotificationModel(
                 header: header,
                 body: body,
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.only(top: 0),
                 margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.zero),
