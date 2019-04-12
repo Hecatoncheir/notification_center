@@ -10,6 +10,7 @@ import 'package:notification_center/blocs.dart' show NotificationCenterBloc;
 
 import 'package:notification_center/models.dart'
     show NotificationModel, NotificationHeader, NotificationBody;
+import 'package:notification_center/notification_body.dart';
 
 /// NotificationCenterWidget  - widget for show notifications.
 class NotificationCenterWidget extends StatelessWidget {
@@ -91,17 +92,5 @@ class NotificationCenterWidget extends StatelessWidget {
       ]);
 
   Widget _buildNotificationBody(NotificationBody body) =>
-      Row(children: <Widget>[
-        Expanded(
-            child: Container(
-          decoration: body.decoration ??= body.defaultDecoration,
-          padding: body.padding,
-          child: body.textStyle == null
-              ? Text(
-                  body.text,
-                  style: body.defaultTextStyle,
-                )
-              : Text(body.text, style: body.textStyle),
-        ))
-      ]);
+      NotificationBodyWidget(body);
 }

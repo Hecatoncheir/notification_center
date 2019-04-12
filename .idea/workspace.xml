@@ -4,7 +4,7 @@
     <list default="true" id="6a4138fa-7da9-497b-9644-ba8c6a4ce1c5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/notification.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/notification.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/lib/notification_center.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/lib/notification_center.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/notification_center.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/notification_center.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -13,16 +13,30 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/notification_center.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="539">
+              <caret line="94" column="9" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="9" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -30,11 +44,32 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/notification_body.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-137">
+              <caret line="28" selection-start-line="28" selection-end-line="28" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/dev/flutter/packages/flutter/lib/src/widgets/animated_size.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-792">
+              <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/models/notification.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+            <state relative-caret-position="620">
+              <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -45,8 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="120" selection-start-line="120" selection-end-line="120" />
+            <state relative-caret-position="220">
+              <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -70,9 +105,10 @@
         <option value="$PROJECT_DIR$/lib/models.dart" />
         <option value="$PROJECT_DIR$/lib/colors.dart" />
         <option value="$PROJECT_DIR$/example/pubspec.yaml" />
-        <option value="$PROJECT_DIR$/example/lib/main.dart" />
         <option value="$PROJECT_DIR$/lib/models/notification.dart" />
+        <option value="$PROJECT_DIR$/example/lib/main.dart" />
         <option value="$PROJECT_DIR$/lib/notification_center.dart" />
+        <option value="$PROJECT_DIR$/lib/notification_body.dart" />
       </list>
     </option>
   </component>
@@ -89,7 +125,27 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="notification_center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="notification_center" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="notification_center" type="b2602c69:ProjectViewProjectNode" />
+              <item name="notification_center" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GO_FMT" value="true" />
@@ -102,6 +158,7 @@
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.completion" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -111,6 +168,11 @@
       <recent name="$PROJECT_DIR$/example" />
       <recent name="$PROJECT_DIR$/example/lib" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="example/lib/main.dart" />
+    </option>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -138,7 +200,10 @@
       <workItem from="1554657256775" duration="9033000" />
       <workItem from="1554693180268" duration="2489000" />
       <workItem from="1554780068146" duration="2061000" />
-      <workItem from="1554785901381" duration="244000" />
+      <workItem from="1554785901381" duration="1121000" />
+      <workItem from="1554866374816" duration="1658000" />
+      <workItem from="1554871252490" duration="56000" />
+      <workItem from="1555038788669" duration="2190000" />
     </task>
     <task id="LOCAL-00001" summary="Show notifications.">
       <created>1554637364767</created>
@@ -280,11 +345,25 @@
       <option name="project" value="LOCAL" />
       <updated>1554782208590</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Fix margin.">
+      <created>1554786209559</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1554786209559</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Fix header and body decorations.">
+      <created>1554787062902</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1554787062902</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19421000" />
+    <option name="totallyTimeSpent" value="24202000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -308,12 +387,12 @@
       <window_info id="Captures" order="6" side_tool="true" />
       <window_info id="Structure" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" weight="0.32937685" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.49882075" visible="true" weight="0.26557863" />
+      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.4976415" visible="true" weight="0.20746888" />
       <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Logcat" order="5" />
-      <window_info anchor="bottom" id="Flutter Performance" order="6" sideWeight="0.5011792" side_tool="true" weight="0.32937685" />
+      <window_info anchor="bottom" id="Flutter Performance" order="6" sideWeight="0.5023585" side_tool="true" weight="0.24777448" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32937685" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32937685" />
@@ -321,10 +400,10 @@
       <window_info anchor="bottom" id="TODO" order="11" weight="0.32937685" />
       <window_info anchor="bottom" id="Reviews" order="12" />
       <window_info anchor="bottom" id="Debug" order="13" />
-      <window_info anchor="right" id="Flutter Inspector" order="0" />
+      <window_info anchor="right" id="Flutter Inspector" order="0" weight="0.32900944" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Device File Explorer" order="2" side_tool="true" />
-      <window_info anchor="right" id="Flutter Outline" order="3" />
+      <window_info anchor="right" id="Flutter Outline" order="3" weight="0.32900944" />
       <window_info anchor="right" id="Theme Preview" order="4" />
       <window_info anchor="right" id="Database" order="5" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
@@ -386,7 +465,9 @@
     <MESSAGE value="Cleanup." />
     <MESSAGE value="Added defaultTextStyle for header and body." />
     <MESSAGE value="Fix padding." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix padding." />
+    <MESSAGE value="Fix margin." />
+    <MESSAGE value="Fix header and body decorations." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix header and body decorations." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/notofication_center.dart" />
@@ -496,32 +577,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
+    <entry file="file://$PROJECT_DIR$/lib/models/notification.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="120" selection-start-line="120" selection-end-line="120" />
+        <state relative-caret-position="620">
+          <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/models/notification.dart">
+    <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+        <state relative-caret-position="220">
+          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/dev/flutter/packages/flutter/lib/src/widgets/animated_size.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-792">
+          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/notification_center.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="539">
+          <caret line="94" column="9" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="9" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/notification_body.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-137">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
