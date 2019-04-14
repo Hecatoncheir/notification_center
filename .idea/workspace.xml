@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a4138fa-7da9-497b-9644-ba8c6a4ce1c5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/lib/notification_center.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/lib/notification_center.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/notification_center.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/notification_center.dart" afterDir="false" />
-    </list>
+    <list default="true" id="6a4138fa-7da9-497b-9644-ba8c6a4ce1c5" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,11 +39,28 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/notification_body.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-137">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="397">
+              <caret line="53" column="35" lean-forward="true" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/lib/notification_body.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -92,7 +104,7 @@
     </leaf>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -203,7 +215,7 @@
       <workItem from="1554785901381" duration="1121000" />
       <workItem from="1554866374816" duration="1658000" />
       <workItem from="1554871252490" duration="56000" />
-      <workItem from="1555038788669" duration="2190000" />
+      <workItem from="1555038788669" duration="2269000" />
     </task>
     <task id="LOCAL-00001" summary="Show notifications.">
       <created>1554637364767</created>
@@ -363,7 +375,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24202000" />
+    <option name="totallyTimeSpent" value="24281000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -387,14 +399,14 @@
       <window_info id="Captures" order="6" side_tool="true" />
       <window_info id="Structure" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" weight="0.32937685" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.4976415" visible="true" weight="0.20746888" />
+      <window_info anchor="bottom" id="Run" order="1" sideWeight="0.4976415" weight="0.20746888" />
       <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Android Profiler" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Logcat" order="5" />
       <window_info anchor="bottom" id="Flutter Performance" order="6" sideWeight="0.5023585" side_tool="true" weight="0.24777448" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32937685" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="8" visible="true" weight="0.32918397" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32937685" />
       <window_info anchor="bottom" id="Find" order="10" />
       <window_info anchor="bottom" id="TODO" order="11" weight="0.32937685" />
@@ -445,6 +457,32 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
     <MESSAGE value="Show notifications." />
@@ -467,7 +505,8 @@
     <MESSAGE value="Fix padding." />
     <MESSAGE value="Fix margin." />
     <MESSAGE value="Fix header and body decorations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix header and body decorations." />
+    <MESSAGE value="Adding NotificationBodyWidget." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding NotificationBodyWidget." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lib/notofication_center.dart" />
@@ -502,9 +541,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
@@ -616,8 +652,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/notification_body.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-137">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="397">
+          <caret line="53" column="35" lean-forward="true" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/ios/.symlinks/plugins/notification_center/lib/notification_body.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
