@@ -45,9 +45,11 @@ class _NotificationHeaderState extends State<NotificationHeaderWidget>
 
     return FadeTransition(
       // ignore: prefer_int_literals
-      opacity: Tween(begin: .0, end: 1.0).animate(_animationController),
+      opacity: Tween(begin: .0, end: 1.0).animate(CurvedAnimation(
+          curve: Curves.bounceIn, parent: _animationController)),
       child: SizeTransition(
-        sizeFactor: _animationController,
+        sizeFactor: Tween(begin: .0, end: 1.0).animate(CurvedAnimation(
+            curve: Curves.bounceIn, parent: _animationController)),
         child: Container(
           height: height,
           child: Row(key: key, children: <Widget>[
