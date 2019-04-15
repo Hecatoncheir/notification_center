@@ -85,6 +85,7 @@ class _MyAppState extends State<MyApp> {
             final notification = NotificationModel(
                 header: header,
                 body: body,
+                onlyOneNotificationShow: true,
                 padding: EdgeInsets.only(top: 0),
                 margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(

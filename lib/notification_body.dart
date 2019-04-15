@@ -1,3 +1,4 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:notification_center/models.dart' show NotificationBody;
@@ -18,46 +19,53 @@ class _NotificationBodyState extends State<NotificationBodyWidget>
   double height;
   double opacity = 0;
 
+  AnimationController _animationController;
+
   @override
   void initState() {
+    super.initState();
+
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+
     SchedulerBinding.instance.addPostFrameCallback((_) {
       // ignore: void_checks
       setState(() {
         final RenderBox renderBox = key.currentContext.findRenderObject();
-        final size = renderBox.size;
-
-        height = size.height;
+        height = renderBox.size.height;
         opacity = 1;
       });
     });
-
-    super.initState();
   }
 
   @override
-  Widget build(BuildContext context) => AnimatedSize(
-        duration: Duration(seconds: 1),
-        vsync: this,
-        curve: Curves.bounceInOut,
-        child: Opacity(
-          opacity: opacity,
-          child: Container(
-            height: height,
-            child: Row(key: key, children: <Widget>[
-              Expanded(
-                  child: Container(
-                decoration: widget.body.decoration ??=
-                    widget.body.defaultDecoration,
-                padding: widget.body.padding,
-                child: widget.body.textStyle == null
-                    ? Text(
-                        widget.body.text,
-                        style: widget.body.defaultTextStyle,
-                      )
-                    : Text(widget.body.text, style: widget.body.textStyle),
-              ))
-            ]),
-          ),
+  Widget build(BuildContext context) {
+    Future.delayed(
+        Duration(milliseconds: 200), () => _animationController.forward());
+
+    return FadeTransition(
+      // ignore: prefer_int_literals
+      opacity: Tween(begin: .0, end: 1.0).animate(_animationController),
+      child: SizeTransition(
+        sizeFactor: _animationController,
+        child: Container(
+          height: height,
+          child: Row(key: key, children: <Widget>[
+            Expanded(
+                child: Container(
+              decoration: widget.body.decoration ??=
+                  widget.body.defaultDecoration,
+              padding: widget.body.padding,
+              child: widget.body.textStyle == null
+                  ? Text(
+                      widget.body.text,
+                      style: widget.body.defaultTextStyle,
+                    )
+                  : Text(widget.body.text, style: widget.body.textStyle),
+            ))
+          ]),
         ),
-      );
+      ),
+    );
+  }
 }
