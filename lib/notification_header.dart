@@ -1,18 +1,18 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:notification_center/models.dart' show NotificationBody;
+import 'package:notification_center/models.dart' show NotificationHeader;
 
-class NotificationBodyWidget extends StatefulWidget {
-  NotificationBody body;
+class NotificationHeaderWidget extends StatefulWidget {
+  NotificationHeader header;
 
-  NotificationBodyWidget(this.body);
+  NotificationHeaderWidget(this.header);
 
   @override
-  _NotificationBodyState createState() => _NotificationBodyState();
+  _NotificationHeaderState createState() => _NotificationHeaderState();
 }
 
-class _NotificationBodyState extends State<NotificationBodyWidget>
+class _NotificationHeaderState extends State<NotificationHeaderWidget>
     with TickerProviderStateMixin {
   GlobalKey key = GlobalKey();
 
@@ -41,7 +41,7 @@ class _NotificationBodyState extends State<NotificationBodyWidget>
   @override
   Widget build(BuildContext context) {
     Future.delayed(
-        Duration(milliseconds: 300), () => _animationController.forward());
+        Duration(milliseconds: 0), () => _animationController.forward());
 
     return FadeTransition(
       // ignore: prefer_int_literals
@@ -53,15 +53,15 @@ class _NotificationBodyState extends State<NotificationBodyWidget>
           child: Row(key: key, children: <Widget>[
             Expanded(
                 child: Container(
-              decoration: widget.body.decoration ??=
-                  widget.body.defaultDecoration,
-              padding: widget.body.padding,
-              child: widget.body.textStyle == null
+              decoration: widget.header.decoration ??=
+                  widget.header.defaultDecoration,
+              padding: widget.header.padding,
+              child: widget.header.textStyle == null
                   ? Text(
-                      widget.body.text,
-                      style: widget.body.defaultTextStyle,
+                      widget.header.text,
+                      style: widget.header.defaultTextStyle,
                     )
-                  : Text(widget.body.text, style: widget.body.textStyle),
+                  : Text(widget.header.text, style: widget.header.textStyle),
             ))
           ]),
         ),

@@ -11,6 +11,7 @@ import 'package:notification_center/blocs.dart' show NotificationCenterBloc;
 import 'package:notification_center/models.dart'
     show NotificationModel, NotificationHeader, NotificationBody;
 import 'package:notification_center/notification_body.dart';
+import 'package:notification_center/notification_header.dart';
 
 /// NotificationCenterWidget  - widget for show notifications.
 class NotificationCenterWidget extends StatelessWidget {
@@ -75,21 +76,7 @@ class NotificationCenterWidget extends StatelessWidget {
       );
 
   Widget _buildNotificationHeader(NotificationHeader header) =>
-      Row(children: <Widget>[
-        Expanded(
-            child: Container(
-          child: Container(
-            decoration: header.decoration ??= header.defaultDecoration,
-            padding: header.padding,
-            child: header.textStyle == null
-                ? Text(
-                    header.text,
-                    style: header.defaultTextStyle,
-                  )
-                : Text(header.text, style: header.textStyle),
-          ),
-        ))
-      ]);
+      NotificationHeaderWidget(header);
 
   Widget _buildNotificationBody(NotificationBody body) =>
       NotificationBodyWidget(body);
