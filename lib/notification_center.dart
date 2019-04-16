@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:meta/meta.dart' show required;
 
 import 'package:flutter/material.dart';
@@ -8,10 +6,8 @@ import 'package:notification_center/models.dart' show NotificationModel;
 
 import 'package:notification_center/blocs.dart' show NotificationCenterBloc;
 
-import 'package:notification_center/models.dart'
-    show NotificationModel, NotificationHeader, NotificationBody;
-import 'package:notification_center/notification_body.dart';
-import 'package:notification_center/notification_header.dart';
+import 'package:notification_center/widgets/notification.dart'
+    show NotificationWidget;
 
 /// NotificationCenterWidget  - widget for show notifications.
 class NotificationCenterWidget extends StatelessWidget {
@@ -45,39 +41,6 @@ class NotificationCenterWidget extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (_, index) => _buildNotification(notifications[index]));
 
-  Widget _buildNotification(NotificationModel notification) => Dismissible(
-        key: UniqueKey(),
-        child: Container(
-          margin: notification.margin,
-          child: notification.decoration != null
-              ? Container(
-                  decoration: notification.decoration,
-                  padding: notification.padding,
-                  child: Column(
-                    children: <Widget>[
-                      _buildNotificationHeader(notification.header),
-                      _buildNotificationBody(notification.body)
-                    ],
-                  ))
-              : ClipRect(
-                  child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                      decoration: notification.defaultDecoration,
-                      padding: notification.padding,
-                      child: Column(
-                        children: <Widget>[
-                          _buildNotificationHeader(notification.header),
-                          _buildNotificationBody(notification.body)
-                        ],
-                      )),
-                )),
-        ),
-      );
-
-  Widget _buildNotificationHeader(NotificationHeader header) =>
-      NotificationHeaderWidget(header);
-
-  Widget _buildNotificationBody(NotificationBody body) =>
-      NotificationBodyWidget(body);
+  Widget _buildNotification(NotificationModel notification) =>
+      Dismissible(key: UniqueKey(), child: NotificationWidget(notification));
 }

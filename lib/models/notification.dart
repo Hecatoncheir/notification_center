@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class NotificationModel {
-  NotificationHeader header;
-  NotificationBody body;
+  NotificationHeaderModel header;
+  NotificationBodyModel body;
 
   EdgeInsets margin;
 
@@ -25,7 +25,7 @@ class NotificationModel {
       this.onlyOneNotificationShow = false});
 }
 
-class NotificationHeader {
+class NotificationHeaderModel {
   String text;
   TextStyle textStyle;
   TextStyle defaultTextStyle = TextStyle(fontSize: 18);
@@ -35,14 +35,14 @@ class NotificationHeader {
 
   EdgeInsets padding;
 
-  NotificationHeader(
+  NotificationHeaderModel(
       {this.text,
       this.textStyle,
       this.padding = const EdgeInsets.only(bottom: 5),
       this.decoration});
 }
 
-class NotificationBody {
+class NotificationBodyModel {
   String text;
   TextStyle textStyle;
   TextStyle defaultTextStyle = TextStyle(fontSize: 16);
@@ -52,7 +52,7 @@ class NotificationBody {
   BoxDecoration decoration;
   BoxDecoration defaultDecoration = BoxDecoration();
 
-  NotificationBody(
+  NotificationBodyModel(
       {this.text,
       this.textStyle,
       this.padding = const EdgeInsets.all(0),

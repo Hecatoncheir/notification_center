@@ -7,7 +7,7 @@ import 'package:notification_center/notification_center.dart'
     show NotificationCenterWidget;
 
 import 'package:notification_center/models.dart'
-    show NotificationModel, NotificationHeader, NotificationBody;
+    show NotificationModel, NotificationHeaderModel, NotificationBodyModel;
 
 void main() => runApp(MyApp());
 
@@ -34,8 +34,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     Future.delayed(Duration(seconds: 1), () {
       final notification = NotificationModel(
-          header: NotificationHeader(text: 'First notification header'),
-          body: NotificationBody(text: 'First notification body'));
+          header: NotificationHeaderModel(text: 'First notification header'),
+          body: NotificationBodyModel(text: 'First notification body'));
       notificationCenterBloc.notifications.add(notification);
 
       BoxDecoration secondNotificationDecoration() => BoxDecoration(
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
             decoration: secondNotificationDecoration(),
             margin: EdgeInsets.all(3),
             padding: EdgeInsets.all(2),
-            header: NotificationHeader(
+            header: NotificationHeaderModel(
                 padding:
                     EdgeInsets.only(top: 10, left: 10, bottom: 2, right: 10),
                 text: 'Second notification header',
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
                     color: Color(0xFFb7315c),
                     fontSize: 16,
                     fontWeight: FontWeight.bold)),
-            body: NotificationBody(
+            body: NotificationBodyModel(
                 padding:
                     EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
                 textStyle: TextStyle(color: Color(0xFFb7315c)),
@@ -66,18 +66,19 @@ class _MyAppState extends State<MyApp> {
 
         Future.delayed(Duration(seconds: 3), () {
           final notification = NotificationModel(
-              header: NotificationHeader(text: 'Third notification header'),
-              body: NotificationBody(text: 'Third notification body'));
+              header:
+                  NotificationHeaderModel(text: 'Third notification header'),
+              body: NotificationBodyModel(text: 'Third notification body'));
           notificationCenterBloc.notifications.add(notification);
 
           Future.delayed(Duration(seconds: 4), () {
-            final header = NotificationHeader(
+            final header = NotificationHeaderModel(
                 text: 'Fourth notification header',
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
                 textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));
 
-            final body = NotificationBody(
+            final body = NotificationBodyModel(
                 text: 'Fourth notification body',
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
