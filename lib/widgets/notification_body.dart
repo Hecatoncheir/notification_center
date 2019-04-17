@@ -4,9 +4,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:notification_center/models.dart' show NotificationBodyModel;
 
 class NotificationBodyWidget extends StatefulWidget {
-  NotificationBodyModel body;
+  final NotificationBodyModel body;
 
-  NotificationBodyWidget(this.body);
+  const NotificationBodyWidget(this.body);
 
   @override
   _NotificationBodyState createState() => _NotificationBodyState();
@@ -48,6 +48,7 @@ class _NotificationBodyState extends State<NotificationBodyWidget>
       opacity: Tween(begin: .0, end: 1.0).animate(CurvedAnimation(
           curve: Curves.bounceIn, parent: _animationController)),
       child: SizeTransition(
+        // ignore: prefer_int_literals
         sizeFactor: Tween(begin: .0, end: 1.0).animate(CurvedAnimation(
             curve: Curves.bounceIn, parent: _animationController)),
         child: Container(
