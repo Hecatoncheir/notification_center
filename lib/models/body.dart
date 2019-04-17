@@ -10,9 +10,12 @@ class NotificationBodyModel {
   BoxDecoration decoration;
   BoxDecoration defaultDecoration = BoxDecoration();
 
+  Widget Function(Widget) animator;
+
   NotificationBodyModel(
       {this.text,
       this.textStyle,
+      this.animator,
       this.padding = const EdgeInsets.all(0),
       this.decoration});
 }

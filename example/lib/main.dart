@@ -10,7 +10,7 @@ import 'package:notification_center/models.dart'
     show NotificationModel, NotificationHeaderModel, NotificationBodyModel;
 
 import 'package:notification_center/animations.dart'
-    show OneByOneHeaderAnimation;
+    show OneByOneHeaderAnimation, oneByOneBodyAnimation;
 
 void main() => runApp(MyApp());
 
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
               body: NotificationBodyModel(text: 'Third notification body'));
           notificationCenterBloc.notifications.add(notification);
 
-          Future.delayed(Duration(seconds: 4), () {
+          Future.delayed(Duration(seconds: 1), () {
             final header = NotificationHeaderModel(
                 text: 'Fourth notification header',
                 animator: OneByOneHeaderAnimation,
@@ -84,6 +84,7 @@ class _MyAppState extends State<MyApp> {
 
             final body = NotificationBodyModel(
                 text: 'Fourth notification body',
+                animator: oneByOneBodyAnimation,
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
 
