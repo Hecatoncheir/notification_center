@@ -1,1 +1,1 @@
-export 'animations/one_by_one.dart';
+export 'package:notification_center/animations/one_by_one/header.dart';
