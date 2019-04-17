@@ -9,6 +9,9 @@ import 'package:notification_center/notification_center.dart'
 import 'package:notification_center/models.dart'
     show NotificationModel, NotificationHeaderModel, NotificationBodyModel;
 
+import 'package:notification_center/animations.dart'
+    show OneByOneHeaderAnimation;
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -74,6 +77,7 @@ class _MyAppState extends State<MyApp> {
           Future.delayed(Duration(seconds: 4), () {
             final header = NotificationHeaderModel(
                 text: 'Fourth notification header',
+                animator: OneByOneHeaderAnimation,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
                 textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));

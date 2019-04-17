@@ -10,9 +10,12 @@ class NotificationHeaderModel {
 
   EdgeInsets padding;
 
+  Widget Function(Widget) animator;
+
   NotificationHeaderModel(
       {this.text,
       this.textStyle,
+      this.animator,
       this.padding = const EdgeInsets.only(bottom: 5),
       this.decoration});
 }
