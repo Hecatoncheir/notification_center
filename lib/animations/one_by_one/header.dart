@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-Widget OneByOneHeaderAnimation(Widget headerWidget) =>
+/// OneByOneHeaderAnimation - function with header parameter.
+Widget oneByOneHeaderAnimation(Widget headerWidget) =>
     _OneByOneHeaderAnimation(headerWidget);
 
+/// _OneByOneHeaderAnimation - widget for header animation.
 class _OneByOneHeaderAnimation extends StatefulWidget {
-  Widget headerWidget;
+  final Widget headerWidget;
 
-  _OneByOneHeaderAnimation(this.headerWidget);
+  const _OneByOneHeaderAnimation(this.headerWidget);
 
   @override
   _OneByOneHeaderAnimationState createState() =>

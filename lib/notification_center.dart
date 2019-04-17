@@ -11,8 +11,10 @@ import 'package:notification_center/widgets/notification.dart'
 
 /// NotificationCenterWidget  - widget for show notifications.
 class NotificationCenterWidget extends StatelessWidget {
+  /// NotificationCenterBloc - logic of notification show/hide, hold history.
   final NotificationCenterBloc notificationCenterBloc;
 
+  /// child - main widget of application.
   final Widget child;
 
   /// Constructor
@@ -21,9 +23,9 @@ class NotificationCenterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
-      stream: notificationCenterBloc.notificationsForShow, builder: builder);
+      stream: notificationCenterBloc.notificationsForShow, builder: _builder);
 
-  Widget builder(
+  Widget _builder(
       BuildContext context, AsyncSnapshot<List<NotificationModel>> snapshot) {
     Widget _widget = child;
 

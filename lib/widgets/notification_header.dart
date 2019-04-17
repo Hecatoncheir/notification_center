@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:notification_center/models.dart' show NotificationHeaderModel;
 
+/// NotificationHeaderWidget - widget with content of notification header.
 class NotificationHeaderWidget extends StatelessWidget {
+  /// header - model with data for notification header.
   final NotificationHeaderModel header;
 
+  /// Constructor.
   const NotificationHeaderWidget(this.header);
 
   @override

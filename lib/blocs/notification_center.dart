@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:notification_center/models/notification.dart'
     show NotificationModel;
 
+/// NotificationCenterBloc - logic of notification show/hide, hold history.
 class NotificationCenterBloc {
+  /// history - all notifications that have been shown.
   final List<NotificationModel> history = [];
 
   /// Constructor
@@ -27,24 +29,30 @@ class NotificationCenterBloc {
   }
 
   StreamController<int> _notificationsCountController;
+
+  /// notificationsCount - count of notifications.
   Stream<int> notificationsCount;
 
+  /// notifications - for add notification to history.
   StreamController<NotificationModel> notifications;
 
   StreamController<List<NotificationModel>> _notificationsController;
+
+  /// notificationsForShow - notifications for show only.
   Stream<List<NotificationModel>> notificationsForShow;
 
+  /// dispose - must be call when widget of bloc is disposed.
   void dispose() {
     notifications.close();
     _notificationsController.close();
     _notificationsCountController.close();
   }
 
-  void getAllNotifications() {
-    _notificationsController.add(history);
-  }
+  /// getAllNotifications - call for get all notifications from history.
+  /// Need for some controls of notification center.
+  void getAllNotifications() => _notificationsController.add(history);
 
-  void closeAllNotifications() {
-    _notificationsController.add([]);
-  }
+  /// closeAllNotifications - call for get empty list of notifications.
+  /// Need for some controls of notification center.
+  void closeAllNotifications() => _notificationsController.add([]);
 }

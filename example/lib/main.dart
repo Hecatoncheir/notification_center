@@ -10,10 +10,11 @@ import 'package:notification_center/models.dart'
     show NotificationModel, NotificationHeaderModel, NotificationBodyModel;
 
 import 'package:notification_center/animations.dart'
-    show OneByOneHeaderAnimation, oneByOneBodyAnimation;
+    show oneByOneHeaderAnimation, oneByOneBodyAnimation;
 
 void main() => runApp(MyApp());
 
+// ignore: public_member_api_docs
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -74,10 +75,10 @@ class _MyAppState extends State<MyApp> {
               body: NotificationBodyModel(text: 'Third notification body'));
           notificationCenterBloc.notifications.add(notification);
 
-          Future.delayed(Duration(seconds: 1), () {
+          Future.delayed(Duration(seconds: 2), () {
             final header = NotificationHeaderModel(
                 text: 'Fourth notification header',
-                animator: OneByOneHeaderAnimation,
+                animator: oneByOneHeaderAnimation,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
                 textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));
@@ -183,7 +184,3 @@ class _MyAppState extends State<MyApp> {
         ),
       );
 }
-
-BoxDecoration notificationHeaderDecoration() => BoxDecoration();
-
-BoxDecoration notificationBodyDecoration() => BoxDecoration();
