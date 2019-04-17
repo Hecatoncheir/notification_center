@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    init();
   }
 
   @override
@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     notificationCenterBloc.dispose();
   }
 
-  Future<void> initPlatformState() async {
+  Future<void> init() async {
     Future.delayed(Duration(seconds: 1), () {
       final notification = NotificationModel(
           header: NotificationHeaderModel(text: 'First notification header'),
