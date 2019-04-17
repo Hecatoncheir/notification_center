@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/notification_center.iml" filepath="$PROJECT_DIR$/notification_center.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/notification_center_android.iml" filepath="$PROJECT_DIR$/android/notification_center_android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/android/notification_center_example_android.iml" filepath="$PROJECT_DIR$/example/android/notification_center_example_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/notification_center.iml" filepath="$PROJECT_DIR$/.idea/notification_center.iml" />
     </modules>
   </component>
 </project>
