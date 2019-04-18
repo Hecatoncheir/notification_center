@@ -1,22 +1,28 @@
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:notification_center/notification_center.dart';
+import 'package:notification_center/blocs.dart' show NotificationCenterBloc;
+import 'package:notification_center/notification_center.dart'
+    show NotificationCenterWidget;
 
 void main() {
-  const MethodChannel channel = MethodChannel('notification_center');
+  group('Notification center', () {
+    NotificationCenterBloc notificationCenterBloc;
+    Widget notificationCenter;
 
-  setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
+    setUp(() {
+      notificationCenterBloc = NotificationCenterBloc();
+      notificationCenter = NotificationCenterWidget(
+          notificationCenterBloc: notificationCenterBloc);
     });
-  });
 
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
-  });
+    tearDown(() {
+      notificationCenterBloc.dispose();
+    });
 
-  test('getPlatformVersion', () async {
-//    expect(await NotificationCenter.platformVersion, '42');
+    test('can display main content with notification', () {});
+    test('can show notification with other notifications', () {});
+    test('can show all notifications', () {});
+    test('can hide all notifications', () {});
   });
 }
