@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:notification_center/models.dart'
     show NotificationHeaderModel, NotificationBodyModel;
 
+import 'package:notification_center/animations.dart' show fadeInAnimation;
+
 /// NotificationModel - model with data for notification.
 class NotificationModel {
   /// header - model with data for notification header part.
@@ -38,7 +40,7 @@ class NotificationModel {
       this.body,
       this.margin = const EdgeInsets.all(8),
       this.padding = const EdgeInsets.all(6),
-      this.animator,
+      this.animator = fadeInAnimation,
       this.decoration,
       this.showWithNotificationsFromHistory = false});
 }
