@@ -25,8 +25,12 @@ class NotificationModel {
       borderRadius: BorderRadius.circular(6),
       border: Border.all(color: Colors.white.withOpacity(0.6)));
 
-  // ignore: public_member_api_docs
+  /// showWithNotificationsFromHistory - for show
+  /// notification with other from history.
   bool showWithNotificationsFromHistory;
+
+  /// animator - widget with animation controller and other for make animation.
+  Widget Function(Widget) animator;
 
   /// Constructor.
   NotificationModel(
@@ -34,6 +38,7 @@ class NotificationModel {
       this.body,
       this.margin = const EdgeInsets.all(8),
       this.padding = const EdgeInsets.all(6),
+      this.animator,
       this.decoration,
       this.showWithNotificationsFromHistory = false});
 }

@@ -16,7 +16,11 @@ class NotificationWidget extends StatelessWidget {
   const NotificationWidget(this.notification);
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => notification.animator == null
+      ? _buildNotification(notification)
+      : notification.animator(_buildNotification(notification));
+
+  Widget _buildNotification(NotificationModel notification) => Container(
         margin: notification.margin,
         child: notification.decoration != null
             ? Container(
