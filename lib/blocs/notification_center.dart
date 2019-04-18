@@ -17,10 +17,10 @@ class NotificationCenterBloc {
     notifications.stream.listen((notification) {
       history.add(notification);
       _notificationsCountController.add(history.length);
-      if (notification.onlyOneNotificationShow) {
-        _notificationsController.add([notification]);
-      } else {
+      if (notification.showWithNotificationsFromHistory) {
         _notificationsController.add(history);
+      } else {
+        _notificationsController.add([notification]);
       }
     });
 

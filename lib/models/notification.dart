@@ -25,7 +25,8 @@ class NotificationModel {
       borderRadius: BorderRadius.circular(6),
       border: Border.all(color: Colors.white.withOpacity(0.6)));
 
-  bool onlyOneNotificationShow;
+  // ignore: public_member_api_docs
+  bool showWithNotificationsFromHistory;
 
   /// Constructor.
   NotificationModel(
@@ -34,5 +35,5 @@ class NotificationModel {
       this.margin = const EdgeInsets.all(8),
       this.padding = const EdgeInsets.all(6),
       this.decoration,
-      this.onlyOneNotificationShow = false});
+      this.showWithNotificationsFromHistory = false});
 }

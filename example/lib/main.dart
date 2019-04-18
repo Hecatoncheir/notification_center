@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
 
       Future.delayed(Duration(seconds: 2), () {
         final notification = NotificationModel(
-            onlyOneNotificationShow: true,
+            showWithNotificationsFromHistory: true,
             decoration: secondNotificationDecoration(),
             margin: EdgeInsets.all(3),
             padding: EdgeInsets.all(2),
@@ -92,7 +92,6 @@ class _MyAppState extends State<MyApp> {
             final notification = NotificationModel(
                 header: header,
                 body: body,
-                onlyOneNotificationShow: true,
                 padding: EdgeInsets.only(top: 0),
                 margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
