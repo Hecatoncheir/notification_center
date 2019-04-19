@@ -8,20 +8,30 @@ import 'package:notification_center/notification_center.dart'
 void main() {
   group('Notification center', () {
     NotificationCenterBloc notificationCenterBloc;
-    Widget notificationCenter;
 
     setUp(() {
       notificationCenterBloc = NotificationCenterBloc();
-      notificationCenter = NotificationCenterWidget(
-          notificationCenterBloc: notificationCenterBloc);
     });
 
     tearDown(() {
       notificationCenterBloc.dispose();
     });
 
-    test('can display main content with notification', () {});
+    testWidgets('can display main content with notification', (tester) async {
+      Widget notificationCenter;
+
+      const testText = 'Test text widget';
+      notificationCenter = NotificationCenterWidget(
+          notificationCenterBloc: notificationCenterBloc,
+          child: Text(testText));
+
+      await tester.pumpWidget(MaterialApp(home: notificationCenter));
+
+      expect(find.text(testText), findsOneWidget);
+    });
+
     test('can show notification with other notifications', () {});
+
     test('can show all notifications', () {});
     test('can hide all notifications', () {});
   });
