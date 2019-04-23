@@ -8,6 +8,9 @@ import 'package:notification_center/notification_center.dart'
 
 import 'package:notification_center/models.dart' show NotificationModel;
 
+import 'package:notification_center/animations.dart'
+    show oneByOneHeaderAnimation, oneByOneBodyAnimation;
+
 void main() {
   group('Notification center', () {
     NotificationCenterBloc notificationCenterBloc;
@@ -54,7 +57,15 @@ void main() {
       expect(find.text('Body'), findsOneWidget);
     });
 
-    test('can show notification with other notifications', () {
+    testWidgets('can show notification with other notifications',
+        (tester) async {
+      Widget notificationCenter;
+
+      notificationCenter = NotificationCenterWidget(
+          notificationCenterBloc: notificationCenterBloc, child: Offstage());
+
+      await tester.pumpWidget(MaterialApp(home: notificationCenter));
+
       final firstNotification = NotificationModel(
           showWithNotificationsFromHistory: true,
           decoration: BoxDecoration(
@@ -74,6 +85,46 @@ void main() {
               padding: EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
               textStyle: TextStyle(color: Color(0xFFb7315c)),
               text: 'Notification body'));
+
+      notificationCenterBloc.notifications.add(firstNotification);
+
+      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle();
+
+      expect(find.text('Notification header'), findsOneWidget);
+      expect(find.text('Notification body'), findsOneWidget);
+
+      final headerOfSecondNotification = NotificationHeaderModel(
+          text: 'Second notification header',
+          animator: oneByOneHeaderAnimation,
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
+          textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));
+
+      final bodyOfSecondNotification = NotificationBodyModel(
+          text: 'Second notification body',
+          animator: oneByOneBodyAnimation,
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
+
+      final secondNotification = NotificationModel(
+          showWithNotificationsFromHistory: true, // that property
+          header: headerOfSecondNotification,
+          body: bodyOfSecondNotification,
+          padding: EdgeInsets.only(top: 0),
+          margin: EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.zero),
+              border: Border.all(color: Color(0xFFF0376E)),
+              color: Color(0xFFFFFAEB)));
+
+      notificationCenterBloc.notifications.add(secondNotification);
+
+      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle();
+
+      expect(find.text('Notification header'), findsOneWidget);
+      expect(find.text('Notification body'), findsOneWidget);
     });
 
     test('can show all notifications', () {});
