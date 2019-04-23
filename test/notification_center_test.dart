@@ -47,10 +47,8 @@ void main() {
 
       notificationCenterBloc.notifications.add(notification);
 
-      await tester.runAsync(() => tester.pump());
-      await tester.pump();
-      await tester.pumpAndSettle(Duration(seconds: 3));
-      await tester.idle();
+      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle();
 
       expect(find.text('Header'), findsOneWidget);
       expect(find.text('Body'), findsOneWidget);
