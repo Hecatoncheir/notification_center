@@ -76,7 +76,7 @@ void main() {
           padding: EdgeInsets.all(2),
           header: NotificationHeaderModel(
               padding: EdgeInsets.only(top: 10, left: 10, bottom: 2, right: 10),
-              text: 'Notification header',
+              text: 'First notification header',
               textStyle: TextStyle(
                   color: Color(0xFFb7315c),
                   fontSize: 16,
@@ -84,15 +84,15 @@ void main() {
           body: NotificationBodyModel(
               padding: EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
               textStyle: TextStyle(color: Color(0xFFb7315c)),
-              text: 'Notification body'));
+              text: 'First notification body'));
 
       notificationCenterBloc.notifications.add(firstNotification);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
 
-      expect(find.text('Notification header'), findsOneWidget);
-      expect(find.text('Notification body'), findsOneWidget);
+      expect(find.text('First notification header'), findsOneWidget);
+      expect(find.text('First notification body'), findsOneWidget);
 
       final headerOfSecondNotification = NotificationHeaderModel(
           text: 'Second notification header',
@@ -123,8 +123,11 @@ void main() {
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
 
-      expect(find.text('Notification header'), findsOneWidget);
-      expect(find.text('Notification body'), findsOneWidget);
+      expect(find.text('First notification header'), findsOneWidget);
+      expect(find.text('First notification body'), findsOneWidget);
+
+      expect(find.text('Second notification header'), findsOneWidget);
+      expect(find.text('Second notification body'), findsOneWidget);
     });
 
     test('can show all notifications', () {});
