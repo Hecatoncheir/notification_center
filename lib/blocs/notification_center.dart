@@ -50,7 +50,7 @@ class NotificationCenterBloc {
 
   /// getAllNotifications - call for get all notifications from history.
   /// Need for some controls of notification center.
-  void getAllNotifications() => _notificationsController.add(history);
+  void showAllNotifications() => _notificationsController.add(history);
 
   /// closeAllNotifications - call for get empty list of notifications.
   /// Need for some controls of notification center.
