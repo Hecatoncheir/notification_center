@@ -1,6 +1,7 @@
 # notification_center
 
-A new flutter plugin project.
+### Notifications 
+![Notifications preview gif](/preview/preview.gif)
 
 ## Getting Started
 
