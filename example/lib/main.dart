@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> {
                       /// Notifications controls
                       GestureDetector(
                         onTap: () =>
-                            notificationCenterBloc.getAllNotifications(),
+                            notificationCenterBloc.showAllNotifications(),
                         child: Chip(
                           labelStyle: TextStyle(color: Colors.black),
                           backgroundColor: Colors.white,
