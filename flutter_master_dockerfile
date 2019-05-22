@@ -1,0 +1,11 @@
+FROM cirrusci/flutter:latest
+
+RUN sudo apt-get update && sudo apt-get install -y lcov
+
+RUN flutter channel master
+
+ADD pubspec.yaml .
+RUN flutter packages get
+RUN rm pubspec.yaml
+
+ENTRYPOINT /bin/bash
