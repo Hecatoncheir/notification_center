@@ -11,7 +11,7 @@ class NotificationCenterBloc {
   /// Constructor
   NotificationCenterBloc() {
     _notificationsController = StreamController<List<NotificationModel>>();
-    notificationsForShow = _notificationsController.stream;
+    notificationsForShow = _notificationsController.stream.asBroadcastStream();
 
     notifications = StreamController<NotificationModel>();
     notifications.stream.listen((notification) {
