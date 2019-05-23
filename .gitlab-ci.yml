@@ -2,6 +2,9 @@ stages:
   - install
   - check
 
+before_script:
+  - rm -rf example/
+
 Prepare:
   stage: install
   image: "registry.gitlab.com/rasarts/notification_center/flutter:master"
