@@ -35,8 +35,14 @@ class _OneByOneBodyAnimationState extends State<_OneByOneBodyAnimation>
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(
-        Duration(milliseconds: 260), () => _animationController.forward());
+    if (!mounted) {
+      _animationController.stop(canceled: true);
+    }
+
+    if (_animationController.isCompleted) {
+      Future.delayed(
+          Duration(milliseconds: 260), () => _animationController.forward());
+    }
 
     return FadeTransition(
       // ignore: prefer_int_literals
