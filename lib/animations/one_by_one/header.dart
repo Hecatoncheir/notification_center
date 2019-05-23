@@ -35,14 +35,8 @@ class _OneByOneHeaderAnimationState extends State<_OneByOneHeaderAnimation>
 
   @override
   Widget build(BuildContext context) {
-    if (!mounted) {
-      _animationController.stop(canceled: true);
-    }
-
-    if (_animationController.isCompleted) {
-      Future.delayed(
-          Duration(milliseconds: 0), () => _animationController.forward());
-    }
+    Future.delayed(
+        Duration(milliseconds: 0), () => _animationController.forward());
 
     return FadeTransition(
       // ignore: prefer_int_literals
