@@ -3,7 +3,7 @@ stages:
   - check
 
 before_script:
-  - rm -rf example/
+
 
 Prepare:
   stage: install
@@ -19,6 +19,7 @@ Prepare:
     - flutter --version
 
   script:
+    - rm -rf example/
     - flutter packages get --offline
     - flutter packages pub run build_runner build
 
