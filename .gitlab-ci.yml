@@ -21,7 +21,6 @@ Prepare:
   script:
     - rm -rf example/
     - flutter packages get --offline
-    - flutter packages pub run build_runner build
 
 Complexity:
   stage: check
