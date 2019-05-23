@@ -28,6 +28,12 @@ class _OneByOneBodyAnimationState extends State<_OneByOneBodyAnimation>
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Future.delayed(
         Duration(milliseconds: 260), () => _animationController.forward());

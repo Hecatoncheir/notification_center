@@ -28,6 +28,12 @@ class _OneByOneHeaderAnimationState extends State<_OneByOneHeaderAnimation>
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Future.delayed(
         Duration(milliseconds: 0), () => _animationController.forward());
