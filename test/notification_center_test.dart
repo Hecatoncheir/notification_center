@@ -13,14 +13,14 @@ import 'package:notification_center/animations.dart'
 
 void main() {
   group('Notification center', () {
-    NotificationCenterBloc notificationCenterBloc;
+    NotificationCenterBloc? notificationCenterBloc;
 
     setUp(() {
       notificationCenterBloc = NotificationCenterBloc();
     });
 
     tearDown(() {
-      notificationCenterBloc.dispose();
+      notificationCenterBloc!.dispose();
     });
 
     testWidgets('can display main content with notification', (tester) async {
@@ -28,7 +28,7 @@ void main() {
 
       const testText = 'Test text widget';
       notificationCenter = NotificationCenterWidget(
-          notificationCenterBloc: notificationCenterBloc,
+          notificationCenterBloc: notificationCenterBloc!,
           child: Text(testText));
 
       await tester.pumpWidget(MaterialApp(home: notificationCenter));
@@ -40,7 +40,9 @@ void main() {
       Widget notificationCenter;
 
       notificationCenter = NotificationCenterWidget(
-          notificationCenterBloc: notificationCenterBloc, child: Offstage());
+        notificationCenterBloc: notificationCenterBloc!,
+        child: Offstage(),
+      );
 
       await tester.pumpWidget(MaterialApp(home: notificationCenter));
 
@@ -48,7 +50,7 @@ void main() {
           header: NotificationHeaderModel(text: 'Header'),
           body: NotificationBodyModel(text: 'Body'));
 
-      notificationCenterBloc.notifications.add(notification);
+      notificationCenterBloc!.notifications!.add(notification);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -62,7 +64,9 @@ void main() {
       Widget notificationCenter;
 
       notificationCenter = NotificationCenterWidget(
-          notificationCenterBloc: notificationCenterBloc, child: Offstage());
+        notificationCenterBloc: notificationCenterBloc!,
+        child: Offstage(),
+      );
 
       await tester.pumpWidget(MaterialApp(home: notificationCenter));
 
@@ -86,7 +90,7 @@ void main() {
               textStyle: TextStyle(color: Color(0xFFb7315c)),
               text: 'First notification body'));
 
-      notificationCenterBloc.notifications.add(firstNotification);
+      notificationCenterBloc!.notifications!.add(firstNotification);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -118,7 +122,7 @@ void main() {
               border: Border.all(color: Color(0xFFF0376E)),
               color: Color(0xFFFFFAEB)));
 
-      notificationCenterBloc.notifications.add(secondNotification);
+      notificationCenterBloc!.notifications!.add(secondNotification);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -134,7 +138,9 @@ void main() {
       Widget notificationCenter;
 
       notificationCenter = NotificationCenterWidget(
-          notificationCenterBloc: notificationCenterBloc, child: Offstage());
+        notificationCenterBloc: notificationCenterBloc!,
+        child: Offstage(),
+      );
 
       await tester.pumpWidget(MaterialApp(home: notificationCenter));
 
@@ -158,7 +164,7 @@ void main() {
               textStyle: TextStyle(color: Color(0xFFb7315c)),
               text: 'First notification body'));
 
-      notificationCenterBloc.notifications.add(firstNotification);
+      notificationCenterBloc!.notifications!.add(firstNotification);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -190,7 +196,7 @@ void main() {
               border: Border.all(color: Color(0xFFF0376E)),
               color: Color(0xFFFFFAEB)));
 
-      notificationCenterBloc.notifications.add(secondNotification);
+      notificationCenterBloc!.notifications!.add(secondNotification);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -201,7 +207,7 @@ void main() {
       expect(find.text('Second notification header'), findsOneWidget);
       expect(find.text('Second notification body'), findsOneWidget);
 
-      notificationCenterBloc.closeAllNotifications();
+      notificationCenterBloc!.closeAllNotifications();
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -217,7 +223,9 @@ void main() {
       Widget notificationCenter;
 
       notificationCenter = NotificationCenterWidget(
-          notificationCenterBloc: notificationCenterBloc, child: Offstage());
+        notificationCenterBloc: notificationCenterBloc!,
+        child: Offstage(),
+      );
 
       await tester.pumpWidget(MaterialApp(home: notificationCenter));
 
@@ -241,7 +249,7 @@ void main() {
               textStyle: TextStyle(color: Color(0xFFb7315c)),
               text: 'First notification body'));
 
-      notificationCenterBloc.notifications.add(firstNotification);
+      notificationCenterBloc!.notifications!.add(firstNotification);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -273,7 +281,7 @@ void main() {
               border: Border.all(color: Color(0xFFF0376E)),
               color: Color(0xFFFFFAEB)));
 
-      notificationCenterBloc.notifications.add(secondNotification);
+      notificationCenterBloc!.notifications!.add(secondNotification);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -284,7 +292,7 @@ void main() {
       expect(find.text('Second notification header'), findsOneWidget);
       expect(find.text('Second notification body'), findsOneWidget);
 
-      notificationCenterBloc.closeAllNotifications();
+      notificationCenterBloc!.closeAllNotifications();
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();
@@ -295,7 +303,7 @@ void main() {
       expect(find.text('Second notification header'), findsNothing);
       expect(find.text('Second notification body'), findsNothing);
 
-      notificationCenterBloc.showAllNotifications();
+      notificationCenterBloc!.showAllNotifications();
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
       await tester.pumpAndSettle();

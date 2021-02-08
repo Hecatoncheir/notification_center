@@ -9,25 +9,20 @@ class NotificationHeaderModel {
   TextStyle textStyle;
 
   // ignore: public_member_api_docs
-  TextStyle defaultTextStyle = TextStyle(fontSize: 18);
-
-  // ignore: public_member_api_docs
   BoxDecoration decoration;
-
-  // ignore: public_member_api_docs
-  BoxDecoration defaultDecoration = BoxDecoration();
 
   // ignore: public_member_api_docs
   EdgeInsets padding;
 
   /// animator - widget with animation controller and other for make animation.
-  Widget Function(Widget) animator;
+  Widget Function(Widget)? animator;
 
   /// Constructor.
-  NotificationHeaderModel(
-      {this.text,
-      this.textStyle,
-      this.animator,
-      this.padding = const EdgeInsets.only(bottom: 5),
-      this.decoration});
+  NotificationHeaderModel({
+    this.text = "",
+    this.textStyle = const TextStyle(fontSize: 18),
+    this.animator,
+    this.padding = const EdgeInsets.only(bottom: 5),
+    this.decoration = const BoxDecoration(),
+  });
 }

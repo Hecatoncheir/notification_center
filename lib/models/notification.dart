@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:notification_center/models.dart'
     show NotificationHeaderModel, NotificationBodyModel;
 
@@ -20,27 +19,30 @@ class NotificationModel {
   EdgeInsets padding;
 
   // ignore: public_member_api_docs
-  BoxDecoration decoration;
-
-  // ignore: public_member_api_docs
-  BoxDecoration defaultDecoration = BoxDecoration(
-      borderRadius: BorderRadius.circular(6),
-      border: Border.all(color: Colors.white.withOpacity(0.6)));
+  BoxDecoration? decoration;
 
   /// showWithNotificationsFromHistory - for show
   /// notification with other from history.
   bool showWithNotificationsFromHistory;
 
   /// animator - widget with animation controller and other for make animation.
-  Widget Function(Widget) animator;
+  Widget Function(Widget)? animator;
 
   /// Constructor.
-  NotificationModel(
-      {this.header,
-      this.body,
-      this.margin = const EdgeInsets.all(8),
-      this.padding = const EdgeInsets.all(6),
-      this.animator = fadeInAnimation,
-      this.decoration,
-      this.showWithNotificationsFromHistory = false});
+  NotificationModel({
+    required this.header,
+    required this.body,
+    this.margin = const EdgeInsets.all(8),
+    this.padding = const EdgeInsets.all(6),
+    this.animator = fadeInAnimation,
+    this.decoration,
+    this.showWithNotificationsFromHistory = false,
+  }) {
+    this.decoration = BoxDecoration(
+      borderRadius: BorderRadius.circular(6),
+      border: Border.all(
+        color: Colors.white.withOpacity(0.6),
+      ),
+    );
+  }
 }

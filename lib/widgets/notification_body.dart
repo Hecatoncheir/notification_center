@@ -11,21 +11,23 @@ class NotificationBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      body.animator == null ? _buildBody() : body.animator(_buildBody());
+      body.animator == null ? _buildBody() : body.animator!(_buildBody());
 
   Widget _buildBody() => Container(
-        child: Row(key: key, children: <Widget>[
-          Expanded(
+        child: Row(
+          key: key,
+          children: <Widget>[
+            Expanded(
               child: Container(
-            decoration: body.decoration ??= body.defaultDecoration,
-            padding: body.padding,
-            child: body.textStyle == null
-                ? Text(
-                    body.text,
-                    style: body.defaultTextStyle,
-                  )
-                : Text(body.text, style: body.textStyle),
-          ))
-        ]),
+                decoration: body.decoration,
+                padding: body.padding,
+                child: Text(
+                  body.text,
+                  style: body.textStyle,
+                ),
+              ),
+            )
+          ],
+        ),
       );
 }

@@ -18,7 +18,7 @@ class NotificationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => notification.animator == null
       ? _buildNotification(notification)
-      : notification.animator(_buildNotification(notification));
+      : notification.animator!(_buildNotification(notification));
 
   Widget _buildNotification(NotificationModel notification) => Container(
         margin: notification.margin,
@@ -36,7 +36,7 @@ class NotificationWidget extends StatelessWidget {
                 child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                    decoration: notification.defaultDecoration,
+                    decoration: notification.decoration,
                     padding: notification.padding,
                     child: Column(
                       children: <Widget>[

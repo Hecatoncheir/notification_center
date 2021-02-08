@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
       final notification = NotificationModel(
           header: NotificationHeaderModel(text: 'First notification header'),
           body: NotificationBodyModel(text: 'First notification body'));
-      notificationCenterBloc.notifications.add(notification);
+      notificationCenterBloc.notifications!.add(notification);
 
       BoxDecoration secondNotificationDecoration() => BoxDecoration(
           color: Color(0xFFfecfbf),
@@ -66,14 +66,14 @@ class _MyAppState extends State<MyApp> {
                     EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
                 textStyle: TextStyle(color: Color(0xFFb7315c)),
                 text: 'Second notification body'));
-        notificationCenterBloc.notifications.add(notification);
+        notificationCenterBloc.notifications!.add(notification);
 
         Future.delayed(Duration(seconds: 3), () {
           final notification = NotificationModel(
               header:
                   NotificationHeaderModel(text: 'Third notification header'),
               body: NotificationBodyModel(text: 'Third notification body'));
-          notificationCenterBloc.notifications.add(notification);
+          notificationCenterBloc.notifications!.add(notification);
 
           Future.delayed(Duration(seconds: 2), () {
             final header = NotificationHeaderModel(
@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
                     borderRadius: BorderRadius.all(Radius.zero),
                     border: Border.all(color: Color(0xFFF0376E)),
                     color: Color(0xFFFFFAEB)));
-            notificationCenterBloc.notifications.add(notification);
+            notificationCenterBloc.notifications!.add(notification);
           });
         });
       });

@@ -12,19 +12,18 @@ class NotificationHeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => header.animator == null
       ? _buildHeader()
-      : header.animator(_buildHeader());
+      : header.animator!(_buildHeader());
 
-  Widget _buildHeader() => Row(key: key, children: <Widget>[
-        Expanded(
+  Widget _buildHeader() => Row(
+        key: key,
+        children: <Widget>[
+          Expanded(
             child: Container(
-          decoration: header.decoration ??= header.defaultDecoration,
-          padding: header.padding,
-          child: header.textStyle == null
-              ? Text(
-                  header.text,
-                  style: header.defaultTextStyle,
-                )
-              : Text(header.text, style: header.textStyle),
-        ))
-      ]);
+              decoration: header.decoration,
+              padding: header.padding,
+              child: Text(header.text, style: header.textStyle),
+            ),
+          )
+        ],
+      );
 }

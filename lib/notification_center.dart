@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart' show required;
+library notification_center;
 
 import 'package:flutter/material.dart';
 
@@ -15,34 +15,49 @@ class NotificationCenterWidget extends StatelessWidget {
   final NotificationCenterBloc notificationCenterBloc;
 
   /// child - main widget of application.
-  final Widget child;
+  final Widget? child;
 
   /// Constructor
-  const NotificationCenterWidget(
-      {@required this.notificationCenterBloc, this.child});
+  const NotificationCenterWidget({
+    required this.notificationCenterBloc,
+    this.child,
+  });
 
   @override
-  Widget build(BuildContext context) => StreamBuilder(
-      stream: notificationCenterBloc.notificationsForShow, builder: _builder);
+  Widget build(BuildContext context) => buildLayout(context);
 
-  Widget _builder(
-      BuildContext context, AsyncSnapshot<List<NotificationModel>> snapshot) {
-    Widget _widget = child;
+  Widget buildLayout(BuildContext context) {
+    final _widget = child == null ? Container() : child!;
 
-    if (snapshot.connectionState == ConnectionState.active) {
-      _widget =
-          Stack(children: <Widget>[child, _buildNotifications(snapshot.data)]);
-    }
+    return Stack(
+      children: [
+        _widget,
+        StreamBuilder(
+          stream: notificationCenterBloc.notificationsForShow,
+          builder: (context, AsyncSnapshot<List<NotificationModel>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              final notifications = snapshot.data;
+              if (notifications == null) return Container();
 
-    return _widget;
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for (final notification in notifications)
+                      _buildNotification(notification),
+                  ],
+                ),
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
+      ],
+    );
   }
 
-  Widget _buildNotifications(List<NotificationModel> notifications) =>
-      ListView.builder(
-          itemCount: notifications.length,
-          shrinkWrap: true,
-          itemBuilder: (_, index) => _buildNotification(notifications[index]));
-
-  Widget _buildNotification(NotificationModel notification) =>
-      Dismissible(key: UniqueKey(), child: NotificationWidget(notification));
+  Widget _buildNotification(NotificationModel notification) => Dismissible(
+        key: UniqueKey(),
+        child: NotificationWidget(notification),
+      );
 }

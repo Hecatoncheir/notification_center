@@ -6,28 +6,23 @@ class NotificationBodyModel {
   String text;
 
   /// textStyle - style of body content.
-  TextStyle textStyle;
-
-  /// defaultTextStyle - default style of body content.
-  TextStyle defaultTextStyle = TextStyle(fontSize: 16);
+  TextStyle? textStyle;
 
   // ignore: public_member_api_docs
-  EdgeInsets padding;
+  EdgeInsets? padding;
 
   // ignore: public_member_api_docs
-  BoxDecoration decoration;
-
-  // ignore: public_member_api_docs
-  BoxDecoration defaultDecoration = BoxDecoration();
+  BoxDecoration? decoration;
 
   /// animator - widget with animation controller and other for make animation.
-  Widget Function(Widget) animator;
+  Widget Function(Widget)? animator;
 
   /// Constructor.
-  NotificationBodyModel(
-      {this.text,
-      this.textStyle,
-      this.animator,
-      this.padding = const EdgeInsets.all(0),
-      this.decoration});
+  NotificationBodyModel({
+    this.text = "",
+    this.textStyle = const TextStyle(fontSize: 16),
+    this.animator,
+    this.padding = const EdgeInsets.all(0),
+    this.decoration = const BoxDecoration(),
+  });
 }
