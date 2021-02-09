@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 
-/// OneByOneBodyAnimation - function with body parameter.
-Widget oneByOneBodyAnimation(Widget bodyWidget) =>
-    _OneByOneBodyAnimation(bodyWidget);
-
-/// _OneByOneBodyAnimation - widget for body animation.
-class _OneByOneBodyAnimation extends StatefulWidget {
+/// OneByOneBodyAnimationDelegate  - widget for body animation.
+class OneByOneBodyAnimationDelegate extends StatefulWidget {
   final Widget bodyWidget;
 
-  /// Constructor.
-  const _OneByOneBodyAnimation(this.bodyWidget);
+  const OneByOneBodyAnimationDelegate(this.bodyWidget);
 
   @override
-  _OneByOneBodyAnimationState createState() => _OneByOneBodyAnimationState();
+  _OneByOneBodyAnimationDelegateState createState() =>
+      _OneByOneBodyAnimationDelegateState();
 }
 
-class _OneByOneBodyAnimationState extends State<_OneByOneBodyAnimation>
-    with TickerProviderStateMixin {
+class _OneByOneBodyAnimationDelegateState
+    extends State<OneByOneBodyAnimationDelegate> with TickerProviderStateMixin {
   AnimationController? _animationController;
 
   @override
@@ -38,10 +34,11 @@ class _OneByOneBodyAnimationState extends State<_OneByOneBodyAnimation>
   @override
   Widget build(BuildContext context) {
     Future.delayed(
-        Duration(milliseconds: 260), () => _animationController!.forward());
+      Duration(milliseconds: 260),
+      () => _animationController!.forward(),
+    );
 
     return FadeTransition(
-      // ignore: prefer_int_literals
       opacity: Tween(begin: .0, end: 1.0).animate(
         CurvedAnimation(
           curve: Curves.bounceIn,

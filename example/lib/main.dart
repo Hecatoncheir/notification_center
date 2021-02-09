@@ -4,7 +4,7 @@ import 'package:notification_center/blocs/notification_center.dart'
     show NotificationCenterBloc;
 
 import 'package:notification_center/notification_center.dart'
-    show NotificationCenterWidget;
+    show NotificationCenter;
 
 import 'package:notification_center/models.dart'
     show NotificationModel, NotificationHeaderModel, NotificationBodyModel;
@@ -85,7 +85,7 @@ class _MyAppState extends State<MyApp> {
 
             final body = NotificationBodyModel(
                 text: 'Fourth notification body',
-                animator: oneByOneBodyAnimation,
+                animation: oneByOneBodyAnimation,
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
 
@@ -162,7 +162,7 @@ class _MyAppState extends State<MyApp> {
               padding: EdgeInsets.all(10),
 
               /// NotificationCenter
-              child: NotificationCenterWidget(
+              child: NotificationCenter(
                   notificationCenterBloc: notificationCenterBloc,
                   child: Column(
                     children: <Widget>[
