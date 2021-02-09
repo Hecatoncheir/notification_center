@@ -6,6 +6,11 @@ abstract class NotificationCenterState {}
 class NotificationCenterInitial extends NotificationCenterState {}
 
 class NotificationsReadyForRender extends NotificationCenterState {
-  final List<NotificationWithGroup> notificationsForRender;
-  NotificationsReadyForRender({required this.notificationsForRender});
+  final List<NotificationWithBuilder> notificationsForRender;
+  final List<NotificationWithBuilder> allNotifications;
+
+  NotificationsReadyForRender({
+    required this.notificationsForRender,
+    required this.allNotifications,
+  });
 }

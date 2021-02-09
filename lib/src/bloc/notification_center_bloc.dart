@@ -2,23 +2,39 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 
 import 'package:bloc/bloc.dart';
-import 'package:notification_center/models/notification.dart';
 
-import 'package:notification_center/models/notification_group.dart';
-import 'package:notification_center/models/notification_with_group.dart';
+import 'package:notification_center/models/notification.dart';
+import 'package:notification_center/models/notification_builder.dart';
+import 'package:notification_center/models/notification_with_builder.dart';
 
 part 'notification_center_event.dart';
 part 'notification_center_state.dart';
 
+/// NotificationCenterBloc - logic of notification show/hide, hold history.
 class NotificationCenterBloc
     extends Bloc<NotificationCenterEvent, NotificationCenterState> {
-  final List<NotificationGroup> groups;
-  final List<NotificationWithGroup> notificationsForRender;
+  final List<NotificationBuilder> builders;
+
+  List<NotificationWithBuilder>? notificationsForRender;
+  List<NotificationWithBuilder>? stash;
 
   NotificationCenterBloc({
-    required this.groups,
-    this.notificationsForRender = const <NotificationWithGroup>[],
-  }) : super(NotificationCenterInitial());
+    required this.builders,
+    this.notificationsForRender,
+    this.stash,
+  }) : super(NotificationCenterInitial()) {
+    notificationsForRender ??= <NotificationWithBuilder>[];
+    stash ??= <NotificationWithBuilder>[];
+
+    if (notificationsForRender!.isNotEmpty) {
+      for (final notification in notificationsForRender!) {
+        final event = NotificationAdded(
+          notification: notification.notification,
+        );
+        add(event);
+      }
+    }
+  }
 
   @override
   Stream<NotificationCenterState> mapEventToState(
@@ -27,8 +43,8 @@ class NotificationCenterBloc
     if (event is NotificationAdded) {
       final notification = event.notification;
 
-      NotificationGroup? notificationGroup;
-      for (final group in groups) {
+      NotificationBuilder? notificationGroup;
+      for (final group in builders) {
         if (group.type == notification.runtimeType) {
           notificationGroup = group;
           break;
@@ -37,25 +53,61 @@ class NotificationCenterBloc
 
       if (notificationGroup == null) return;
 
-      final notificationWithGroup = NotificationWithGroup(
+      final notificationWithGroup = NotificationWithBuilder(
         notification: notification,
-        group: notificationGroup,
+        builder: notificationGroup,
       );
 
-      notificationsForRender.add(notificationWithGroup);
+      notificationsForRender!.add(notificationWithGroup);
+      stash!.add(notificationWithGroup);
 
       final closeNotificationAfterDuration = notification.closeAfter;
       if (closeNotificationAfterDuration != null) {
         Future.delayed(closeNotificationAfterDuration, () {
-          notificationsForRender.remove(notificationWithGroup);
-          yield NotificationsReadyForRender(
-            notificationsForRender: notificationsForRender,
-          );
+          add(NotificationClosed(notification: notification));
         });
       }
 
       yield NotificationsReadyForRender(
-        notificationsForRender: notificationsForRender,
+        notificationsForRender: notificationsForRender!,
+        allNotifications: stash!,
+      );
+    }
+
+    if (event is NotificationClosed) {
+      NotificationWithBuilder? notification;
+      for (final notificationForRender in notificationsForRender!) {
+        if (notificationForRender.notification == event.notification) {
+          notification = notificationForRender;
+          break;
+        }
+      }
+
+      if (notification == null) return;
+
+      notificationsForRender!.remove(notification);
+
+      yield NotificationsReadyForRender(
+        notificationsForRender: notificationsForRender!,
+        allNotifications: stash!,
+      );
+    }
+
+    if (event is NotificationsOpenAll) {
+      notificationsForRender!.clear();
+      notificationsForRender!.addAll(stash!);
+      yield NotificationsReadyForRender(
+        notificationsForRender: notificationsForRender!,
+        allNotifications: stash!,
+      );
+    }
+
+    if (event is NotificationsCloseAll) {
+      notificationsForRender!.clear();
+
+      yield NotificationsReadyForRender(
+        notificationsForRender: notificationsForRender!,
+        allNotifications: stash!,
       );
     }
   }

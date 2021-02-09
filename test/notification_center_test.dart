@@ -1,63 +1,77 @@
-// import 'package:flutter/material.dart' hide Notification;
-// import 'package:flutter_test/flutter_test.dart';
-//
-// import 'package:notification_center/blocs.dart' show NotificationCenterBloc;
-// import 'package:notification_center/models.dart';
-// import 'package:notification_center/src/notification_center.dart'
-//     show NotificationCenter;
-//
-// import 'package:notification_center/models.dart' show NotificationModel;
-//
-// import 'package:notification_center/animations.dart'
-//     show oneByOneHeaderAnimation, oneByOneBodyAnimation;
-//
-// void main() {
-//   group('Notification center', () {
-//     NotificationCenterBloc? notificationCenterBloc;
-//
-//     setUp(() {
-//       notificationCenterBloc = NotificationCenterBloc();
-//     });
-//
-//     tearDown(() {
-//       notificationCenterBloc!.dispose();
-//     });
-//
-//     testWidgets('can display main content with notification', (tester) async {
-//       Widget notificationCenter;
-//
-//       const testText = 'Test text widget';
-//       notificationCenter = NotificationCenter(
-//           notificationCenterBloc: notificationCenterBloc!,
-//           child: Text(testText));
-//
-//       await tester.pumpWidget(MaterialApp(home: notificationCenter));
-//
-//       expect(find.text(testText), findsOneWidget);
-//     });
-//
-//     testWidgets('can show notification', (tester) async {
-//       Widget notificationCenter;
-//
-//       notificationCenter = NotificationCenter(
-//         notificationCenterBloc: notificationCenterBloc!,
-//         child: Offstage(),
-//       );
-//
-//       await tester.pumpWidget(MaterialApp(home: notificationCenter));
-//
-//       final notification = NotificationModel(
-//           header: NotificationHeaderModel(text: 'Header'),
-//           body: NotificationBodyModel(text: 'Body'));
-//
-//       notificationCenterBloc!.notifications!.add(notification);
-//
-//       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
-//       await tester.pumpAndSettle();
-//
-//       expect(find.text('Header'), findsOneWidget);
-//       expect(find.text('Body'), findsOneWidget);
-//     });
+import 'package:flutter/material.dart' hide Notification;
+
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:notification_center/models/notification.dart';
+import 'package:notification_center/models/notification_builder.dart';
+
+import 'package:notification_center/src/bloc/notification_center_bloc.dart';
+import 'package:notification_center/src/notification_center.dart';
+
+void main() {
+  group('Notification center', () {
+    // ignore: close_sinks
+    NotificationCenterBloc? notificationCenterBloc;
+
+    NotificationBuilder? notificationBuilder;
+
+    setUp(() {
+      notificationBuilder = NotificationBuilder<Notification>(
+        headerBuilder: (notification) => Text(notification.header),
+        bodyBuilder: (notification) => Text(notification.body),
+      );
+    });
+
+    tearDown(() {
+      notificationCenterBloc!.close();
+    });
+
+    testWidgets('can display main content with notification', (tester) async {
+      Widget notificationCenter;
+
+      const testText = 'Test text widget';
+
+      notificationCenter = NotificationCenter(
+        notificationCenterBloc: notificationCenterBloc!,
+        builders: [
+          notificationBuilder!,
+        ],
+        child: Text(testText),
+      );
+
+      await tester.pumpWidget(MaterialApp(home: notificationCenter));
+      await tester.pumpAndSettle();
+
+      expect(find.text(testText), findsOneWidget);
+    });
+
+    // testWidgets('can show notification', (tester) async {
+    //   Widget notificationCenter;
+    //
+    //   notificationCenter = NotificationCenter(
+    //     notificationCenterBloc: notificationCenterBloc!,
+    //     builders: [
+    //       notificationBuilder!,
+    //     ],
+    //     child: Offstage(),
+    //   );
+    //
+    //   await tester.pumpWidget(MaterialApp(home: notificationCenter));
+    //
+    //   final notification = Notification(
+    //     header: 'Header',
+    //     body: 'Body',
+    //   );
+    //
+    //   final event = NotificationAdded(notification: notification);
+    //   notificationCenterBloc.add(event);
+    //
+    //   // await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+    //   await tester.pumpAndSettle();
+    //
+    //   expect(find.text('Header'), findsOneWidget);
+    //   expect(find.text('Body'), findsOneWidget);
+    // });
 //
 //     testWidgets('can show notification with other notifications',
 //         (tester) async {
@@ -314,5 +328,5 @@
 //       expect(find.text('Second notification header'), findsOneWidget);
 //       expect(find.text('Second notification body'), findsOneWidget);
 //     });
-//   });
-// }
+  });
+}
