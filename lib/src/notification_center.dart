@@ -82,18 +82,16 @@ class NotificationCenter extends StatelessWidget {
       );
 
   Widget buildNotification(
-          BuildContext context, NotificationWithBuilder notification) =>
+    BuildContext context,
+    NotificationWithBuilder notification,
+  ) =>
       Column(
         key: UniqueKey(),
         mainAxisSize: MainAxisSize.min,
         children: [
           Dismissible(
             direction: DismissDirection.horizontal,
-            key: Key(
-              notification.notification.header +
-                  "-" +
-                  notification.notification.body,
-            ),
+            key: UniqueKey(),
             onDismissed: (_) {
               BlocProvider.of<NotificationCenterBloc>(context).add(
                 NotificationClosed(

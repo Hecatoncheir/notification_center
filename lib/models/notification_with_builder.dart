@@ -1,4 +1,4 @@
-import 'notification.dart';
+import 'interface.dart';
 import 'notification_builder.dart';
 
 class NotificationWithBuilder {

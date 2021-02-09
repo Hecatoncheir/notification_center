@@ -1,17 +1,16 @@
-import 'package:flutter/material.dart';
+import 'interface.dart';
 
-/// Notification - model with data for notification.
-class Notification {
+/// NotificationBase - model with data for notification.
+class NotificationBase implements Notification {
   String header;
   String body;
 
-  Alignment alignment;
+  @override
   Duration? closeAfter;
 
-  Notification({
+  NotificationBase({
     required this.header,
     required this.body,
-    this.alignment = Alignment.topRight,
     this.closeAfter,
   });
 }

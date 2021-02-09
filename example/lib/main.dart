@@ -12,7 +12,7 @@ class Application extends StatelessWidget {
       home: Scaffold(
         body: NotificationCenter(
           builders: [
-            NotificationBuilder<Notification>(
+            NotificationBuilder<NotificationBase>(
               headerBuilder: (notification) => Text(notification.header),
               bodyBuilder: (notification) => Text(notification.body),
             ),
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     Future.delayed(Duration(seconds: 1), () {
-      final notification = Notification(
+      final notification = NotificationBase(
         header: 'First notification header',
         body: 'First notification body',
         closeAfter: Duration(seconds: 2),
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     Future.delayed(Duration(seconds: 2), () {
-      final notification = Notification(
+      final notification = NotificationBase(
         header: 'First2 notification header',
         body: 'First2 notification body',
       );

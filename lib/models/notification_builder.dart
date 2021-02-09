@@ -1,13 +1,10 @@
 import 'package:flutter/widgets.dart' hide Notification;
-import 'notification.dart';
-
-typedef NotificationBuilderType = Widget Function(Notification notification);
 
 class NotificationBuilder<T> {
   Type type;
 
-  NotificationBuilderType headerBuilder;
-  NotificationBuilderType bodyBuilder;
+  Widget Function(T notification) headerBuilder;
+  Widget Function(T notification) bodyBuilder;
 
   NotificationBuilder({
     required this.headerBuilder,
