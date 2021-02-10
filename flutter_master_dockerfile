@@ -5,6 +5,7 @@ RUN sudo apt-get update && sudo apt-get install -y lcov
 RUN flutter channel master
 
 ADD pubspec.yaml .
+RUN flutter upgrade
 RUN flutter packages get
 RUN rm pubspec.yaml
 
