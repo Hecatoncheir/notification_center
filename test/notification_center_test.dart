@@ -37,35 +37,18 @@ class ErrorNotification extends NotificationBase {
 
 void main() {
   group('Notification center', () {
-    NotificationCenterBloc? notificationCenterBloc;
-
-    NotificationBuilder? notificationBuilder;
-
-    setUp(() {
-      notificationBuilder = NotificationBuilder<NotificationBase>(
-        headerBuilder: (notification) => Text(notification.header),
-        bodyBuilder: (notification) => Text(notification.body),
-      );
-
-      notificationCenterBloc = NotificationCenterBloc(builders: [
-        notificationBuilder!,
-      ]);
-    });
-
-    tearDown(() {
-      notificationCenterBloc?.close();
-    });
-
     testWidgets('can display main content with notification', (tester) async {
-      Widget notificationCenter;
-
       const testText = 'Test text widget';
 
-      notificationCenter = NotificationCenter(
-        notificationCenterBloc: notificationCenterBloc!,
-        builders: [
-          notificationBuilder!,
-        ],
+      final notificationCenter = NotificationCenter(
+        notificationCenterBloc: NotificationCenterBloc(
+          builders: [
+            NotificationBuilder<NotificationBase>(
+              headerBuilder: (notification) => Text(notification.header),
+              bodyBuilder: (notification) => Text(notification.body),
+            ),
+          ],
+        ),
         child: Text(testText),
       );
 
@@ -76,13 +59,18 @@ void main() {
     });
 
     testWidgets('can show notification', (tester) async {
-      Widget notificationCenter;
-
-      notificationCenter = NotificationCenter(
-        notificationCenterBloc: notificationCenterBloc!,
+      // ignore: close_sinks
+      final notificationCenterBloc = NotificationCenterBloc(
         builders: [
-          notificationBuilder!,
+          NotificationBuilder<NotificationBase>(
+            headerBuilder: (notification) => Text(notification.header),
+            bodyBuilder: (notification) => Text(notification.body),
+          ),
         ],
+      );
+
+      final notificationCenter = NotificationCenter(
+        notificationCenterBloc: notificationCenterBloc,
         child: Offstage(),
       );
 
@@ -94,108 +82,144 @@ void main() {
       );
 
       final event = NotificationAdded(notification: notification);
-      notificationCenterBloc!.add(event);
+      notificationCenterBloc.add(event);
 
       await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
-      await tester.pumpAndSettle();
 
       expect(find.text('Header'), findsOneWidget);
       expect(find.text('Body'), findsOneWidget);
     });
 
-    // testWidgets(
-    //   'can show notification with other notifications',
-    //   (tester) async {
-    //     // final successfulNotificationBuilder =
-    //     //     NotificationBuilder<SuccessfulNotification>(
-    //     //   headerBuilder: (notification) => Container(
-    //     //     margin: EdgeInsets.all(3),
-    //     //     padding: EdgeInsets.all(2),
-    //     //     decoration: BoxDecoration(
-    //     //       color: Color(0xFFfecfbf),
-    //     //       borderRadius: BorderRadius.circular(6),
-    //     //       border: Border.all(
-    //     //         color: Color(0xFFb7315c),
-    //     //       ),
-    //     //     ),
-    //     //     child: Container(
-    //     //       padding: EdgeInsets.only(top: 10, left: 10, bottom: 2, right: 10),
-    //     //       child: Text(
-    //     //         notification.header,
-    //     //         style: TextStyle(
-    //     //           color: Color(0xFFb7315c),
-    //     //           fontSize: 16,
-    //     //           fontWeight: FontWeight.bold,
-    //     //         ),
-    //     //       ),
-    //     //     ),
-    //     //   ),
-    //     //   bodyBuilder: (notification) => Container(
-    //     //     padding: EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
-    //     //     child: Text(
-    //     //       notification.body,
-    //     //       style: TextStyle(
-    //     //         color: Color(0xFFb7315c),
-    //     //       ),
-    //     //     ),
-    //     //   ),
-    //     // );
-    //
-    //     final successfulNotificationBuilder =
-    //         NotificationBuilder<SuccessfulNotification>(
-    //       headerBuilder: (notification) => Text(notification.header),
-    //       bodyBuilder: (notification) => Text(notification.body),
-    //     );
-    //
-    //     Widget notificationCenter;
-    //     notificationCenter = NotificationCenter(
-    //       notificationCenterBloc: notificationCenterBloc!,
-    //       builders: [
-    //         successfulNotificationBuilder,
-    //       ],
-    //       child: Offstage(),
-    //     );
-    //
-    //     await tester.pumpWidget(MaterialApp(home: notificationCenter));
-    //
-    //     final firstNotification = SuccessfulNotification(
-    //       header: "First notification header",
-    //       body: "First notification body",
-    //     );
-    //
-    //     final firstNotificationEvent = NotificationAdded(
-    //       notification: firstNotification,
-    //     );
-    //
-    //     notificationCenterBloc!.add(firstNotificationEvent);
-    //
-    //     await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
-    //
-    //     expect(find.text('First notification header'), findsOneWidget);
-    //     expect(find.text('First notification body'), findsOneWidget);
-    //
-    //     // final secondNotification = SuccessfulNotification(
-    //     //   header: "Second notification header",
-    //     //   body: "Second notification body",
-    //     // );
-    //     //
-    //     // final secondNotificationEvent = NotificationAdded(
-    //     //   notification: secondNotification,
-    //     // );
-    //     //
-    //     // notificationCenterBloc!.add(secondNotificationEvent);
-    //     //
-    //     // await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
-    //     // await tester.pumpAndSettle();
-    //     //
-    //     // expect(find.text('First notification header'), findsOneWidget);
-    //     // expect(find.text('First notification body'), findsOneWidget);
-    //     //
-    //     // expect(find.text('Second notification header'), findsOneWidget);
-    //     // expect(find.text('Second notification body'), findsOneWidget);
-    //   },
-    //   skip: true,
-    // );
+    testWidgets(
+      'can show notification with other notifications',
+      (tester) async {
+        // final successfulNotificationBuilder =
+        //     NotificationBuilder<SuccessfulNotification>(
+        //   headerBuilder: (notification) => Container(
+        //     margin: EdgeInsets.all(3),
+        //     padding: EdgeInsets.all(2),
+        //     decoration: BoxDecoration(
+        //       color: Color(0xFFfecfbf),
+        //       borderRadius: BorderRadius.circular(6),
+        //       border: Border.all(
+        //         color: Color(0xFFb7315c),
+        //       ),
+        //     ),
+        //     child: Container(
+        //       padding: EdgeInsets.only(top: 10, left: 10, bottom: 2, right: 10),
+        //       child: Text(
+        //         notification.header,
+        //         style: TextStyle(
+        //           color: Color(0xFFb7315c),
+        //           fontSize: 16,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        //   bodyBuilder: (notification) => Container(
+        //     padding: EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
+        //     child: Text(
+        //       notification.body,
+        //       style: TextStyle(
+        //         color: Color(0xFFb7315c),
+        //       ),
+        //     ),
+        //   ),
+        // );
+
+        // ignore: close_sinks
+        final notificationCenterBloc = NotificationCenterBloc(
+          builders: [
+            NotificationBuilder<SuccessfulNotification>(
+              headerBuilder: (notification) => Container(
+                width: 200,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(notification.header),
+                    ),
+                  ],
+                ),
+              ),
+              bodyBuilder: (notification) => Container(
+                width: 200,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(notification.body),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            NotificationBuilder<ErrorNotification>(
+              headerBuilder: (notification) => Container(
+                width: 200,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(notification.header),
+                    ),
+                  ],
+                ),
+              ),
+              bodyBuilder: (notification) => Container(
+                width: 200,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(notification.body),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+
+        final notificationCenter = NotificationCenter(
+          notificationCenterBloc: notificationCenterBloc,
+          child: Offstage(),
+        );
+
+        await tester.pumpWidget(MaterialApp(home: notificationCenter));
+
+        final firstNotification = SuccessfulNotification(
+          header: 'First notification header',
+          body: 'First notification body',
+        );
+
+        final firstEvent = NotificationAdded(notification: firstNotification);
+        notificationCenterBloc.add(firstEvent);
+
+        await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+
+        expect(find.text('First notification header'), findsOneWidget);
+        expect(find.text('First notification body'), findsOneWidget);
+
+        final secondNotification = SuccessfulNotification(
+          header: 'Second notification header',
+          body: 'Second notification body',
+        );
+
+        final secondEvent = NotificationAdded(notification: secondNotification);
+        notificationCenterBloc.add(secondEvent);
+
+        await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+
+        expect(find.text('Second notification header'), findsOneWidget);
+        expect(find.text('Second notification body'), findsOneWidget);
+
+        await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+
+        expect(find.text('First notification header'), findsOneWidget);
+        expect(find.text('First notification body'), findsOneWidget);
+
+        expect(find.text('Second notification header'), findsOneWidget);
+        expect(find.text('Second notification body'), findsOneWidget);
+      },
+    );
 //
 //     testWidgets('can hide all notifications', (tester) async {
 //       Widget notificationCenter;

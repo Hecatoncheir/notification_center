@@ -4,7 +4,6 @@ import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:notification_center/models/interface.dart';
 
-import 'package:notification_center/models/notification.dart';
 import 'package:notification_center/models/notification_builder.dart';
 import 'package:notification_center/models/notification_with_builder.dart';
 
