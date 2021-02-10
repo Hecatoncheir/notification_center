@@ -35,19 +35,136 @@ class Application extends StatelessWidget {
           notificationCenterBloc: NotificationCenterBloc(
             builders: [
               NotificationBuilder<NotificationBase>(
-                headerBuilder: (notification) => Text(notification.header),
-                bodyBuilder: (notification) => Text(notification.body),
+                headerBuilder: (notification) {
+                  return Container(
+                    width: 300,
+                    margin: EdgeInsets.only(top: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFffe1af),
+                      border: Border(
+                        left: BorderSide(color: Color(0xFFF0376E)),
+                        top: BorderSide(color: Color(0xFFF0376E)),
+                        right: BorderSide(color: Color(0xFFF0376E)),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            notification.header,
+                            style: TextStyle(color: Color(0xFFb7315c)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                bodyBuilder: (notification) {
+                  return Container(
+                    width: 300,
+                    margin: EdgeInsets.only(bottom: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFfffae9),
+                      border: Border(
+                        left: BorderSide(color: Color(0xFFF0376E)),
+                        bottom: BorderSide(color: Color(0xFFF0376E)),
+                        right: BorderSide(color: Color(0xFFF0376E)),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            notification.body,
+                            style: TextStyle(color: Color(0xFFF0376E)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
               NotificationBuilder<ErrorNotification>(
                 headerBuilder: (notification) {
-                  return Text(notification.header);
+                  return ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(6),
+                      topRight: Radius.circular(6),
+                    ),
+                    child: Container(
+                      width: 300,
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFfecfbf),
+                        border: Border(
+                          left: BorderSide(color: Color(0xFFF0376E)),
+                          top: BorderSide(color: Color(0xFFF0376E)),
+                          right: BorderSide(color: Color(0xFFF0376E)),
+                        ),
+                      ),
+                      child: Text(
+                        notification.header,
+                        style: TextStyle(
+                          color: Color(0xFFb7315c),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
                 },
                 bodyBuilder: (notification) {
-                  return Text(notification.body);
+                  return ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(6),
+                      bottomRight: Radius.circular(6),
+                    ),
+                    child: Container(
+                      width: 300,
+                      margin: EdgeInsets.only(bottom: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFfecfbf),
+                        border: Border(
+                          left: BorderSide(color: Color(0xFFF0376E)),
+                          bottom: BorderSide(color: Color(0xFFF0376E)),
+                          right: BorderSide(color: Color(0xFFF0376E)),
+                        ),
+                      ),
+                      child: Text(
+                        notification.body,
+                        style: TextStyle(
+                          color: Color(0xFFb7315c),
+                        ),
+                      ),
+                    ),
+                  );
                 },
               ),
               NotificationBuilder<SuccessfulNotification>(
-                bodyBuilder: (notification) => Text(notification.body),
+                bodyBuilder: (notification) {
+                  return Container(
+                    width: 300,
+                    margin: EdgeInsets.symmetric(horizontal: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFfffae9),
+                      border: Border.all(color: Color(0xFFF0376E)),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            notification.body,
+                            style: TextStyle(color: Color(0xFFF0376E)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -87,8 +204,21 @@ class _MyAppState extends State<MyApp> {
 
     Future.delayed(Duration(seconds: 2), () {
       final notification = ErrorNotification(
-        header: 'Second notification header',
-        body: 'Second notification body',
+        header: 'Error notification header',
+        body: 'Error notification body',
+        closeAfter: Duration(seconds: 1),
+      );
+
+      final event = NotificationAdded(
+        notification: notification,
+      );
+
+      BlocProvider.of<NotificationCenterBloc>(context).add(event);
+    });
+
+    Future.delayed(Duration(seconds: 3), () {
+      final notification = SuccessfulNotification(
+        body: 'Successful notification body',
       );
 
       final event = NotificationAdded(
@@ -98,71 +228,6 @@ class _MyAppState extends State<MyApp> {
       BlocProvider.of<NotificationCenterBloc>(context).add(event);
     });
   }
-
-  // Future<void> init() async {
-  //   Future.delayed(Duration(seconds: 1), () {
-  //     BoxDecoration secondNotificationDecoration() => BoxDecoration(
-  //         color: Color(0xFFfecfbf),
-  //         borderRadius: BorderRadius.circular(6),
-  //         border: Border.all(color: Color(0xFFb7315c)));
-  //
-  //     Future.delayed(Duration(seconds: 2), () {
-  //       final notification = NotificationModel(
-  //           showWithNotificationsFromHistory: true,
-  //           decoration: secondNotificationDecoration(),
-  //           margin: EdgeInsets.all(3),
-  //           padding: EdgeInsets.all(2),
-  //           header: NotificationHeaderModel(
-  //               padding:
-  //                   EdgeInsets.only(top: 10, left: 10, bottom: 2, right: 10),
-  //               text: 'Second notification header',
-  //               textStyle: TextStyle(
-  //                   color: Color(0xFFb7315c),
-  //                   fontSize: 16,
-  //                   fontWeight: FontWeight.bold)),
-  //           body: NotificationBodyModel(
-  //               padding:
-  //                   EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
-  //               textStyle: TextStyle(color: Color(0xFFb7315c)),
-  //               text: 'Second notification body'));
-  //       notificationCenterBloc.notifications!.add(notification);
-  //
-  //       Future.delayed(Duration(seconds: 3), () {
-  //         final notification = NotificationModel(
-  //             header:
-  //                 NotificationHeaderModel(text: 'Third notification header'),
-  //             body: NotificationBodyModel(text: 'Third notification body'));
-  //         notificationCenterBloc.notifications!.add(notification);
-  //
-  //         Future.delayed(Duration(seconds: 2), () {
-  //           final header = NotificationHeaderModel(
-  //               text: 'Fourth notification header',
-  //               animator: oneByOneHeaderAnimation,
-  //               padding: EdgeInsets.all(10),
-  //               decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
-  //               textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));
-  //
-  //           final body = NotificationBodyModel(
-  //               text: 'Fourth notification body',
-  //               animation: oneByOneBodyAnimation,
-  //               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-  //               textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
-  //
-  //           final notification = NotificationModel(
-  //               header: header,
-  //               body: body,
-  //               padding: EdgeInsets.only(top: 0),
-  //               margin: EdgeInsets.only(top: 10),
-  //               decoration: BoxDecoration(
-  //                   borderRadius: BorderRadius.all(Radius.zero),
-  //                   border: Border.all(color: Color(0xFFF0376E)),
-  //                   color: Color(0xFFFFFAEB)));
-  //           notificationCenterBloc.notifications!.add(notification);
-  //         });
-  //       });
-  //     });
-  //   });
-  // }
 
   Widget buildNotificationsCounterLayout(BuildContext context) {
     return BlocBuilder<NotificationCenterBloc, NotificationCenterState>(
@@ -214,37 +279,35 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        home: SafeArea(
-          child: Scaffold(
-            appBar: AppBar(
-                title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+  Widget build(BuildContext context) => SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+              title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Expanded(child: Text('Plugin example app')),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    /// Notifications controls
+                    buildNotificationsCounterLayout(context),
+                    buildCloseAllNotificationsButton(context),
+                  ],
+                ),
+              ),
+            ],
+          )),
+          body: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
               children: <Widget>[
-                Expanded(child: Text('Plugin example app')),
                 Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      /// Notifications controls
-                      buildNotificationsCounterLayout(context),
-                      buildCloseAllNotificationsButton(context),
-                    ],
+                  child: Container(
+                    child: Text("Main body"),
                   ),
                 ),
               ],
-            )),
-            body: Padding(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Text("Main body"),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
         ),

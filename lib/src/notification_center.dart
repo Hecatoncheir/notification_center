@@ -15,12 +15,14 @@ class NotificationCenter extends StatelessWidget {
   final NotificationCenterBloc notificationCenterBloc;
 
   final Alignment alignment;
+  final EdgeInsets padding;
 
   /// Constructor
   const NotificationCenter({
     required this.notificationCenterBloc,
     this.child,
     this.alignment = Alignment.topCenter,
+    this.padding = EdgeInsets.zero,
   });
 
   @override
@@ -63,6 +65,7 @@ class NotificationCenter extends StatelessWidget {
             }
 
             return Container(
+              padding: padding,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: alignment,
