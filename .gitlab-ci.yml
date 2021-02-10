@@ -17,6 +17,7 @@ Prepare:
 
   before_script:
     - flutter --version
+    - flutter upgrade
 
   script:
     - rm -rf example/
@@ -52,6 +53,7 @@ Tests:
 
   before_script:
     - flutter --version
+    - flutter upgrade
 
   script:
     # Run unit and integration tests if it needed
