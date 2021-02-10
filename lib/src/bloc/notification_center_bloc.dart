@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:meta/meta.dart';
+import 'package:pedantic/pedantic.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:notification_center/models/interface.dart';
@@ -72,7 +73,9 @@ class NotificationCenterBloc
 
         final futureForWeitBeforeClose = notification.waitBeforeClose;
         if (futureForWeitBeforeClose != null) {
-          await Future.wait([futureForWeitBeforeClose]);
+          unawaited(Future.wait([futureForWeitBeforeClose]).then((value) {
+            add(NotificationClosed(notification: notification));
+          }));
         }
       }
 

@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  pedantic: ^1.10.0
   bloc: ^7.0.0-nullsafety.1
   flutter_bloc: ^7.0.0-nullsafety.1
 

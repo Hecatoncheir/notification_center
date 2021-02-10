@@ -8,12 +8,12 @@ class NotificationBase implements Notification {
   String body;
 
   Duration? closeAfter;
-  Future? waitBeforeClose;
+  Future<dynamic>? waitBeforeClose;
 
   NotificationBase({
     required this.header,
     required this.body,
     this.closeAfter,
-    this.waitBeforeClose,
-  });
+    Future<dynamic>? waitBeforeClose,
+  }) : this.waitBeforeClose = waitBeforeClose;
 }
