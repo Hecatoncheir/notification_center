@@ -11,12 +11,14 @@ class Application extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: NotificationCenter(
-          builders: [
-            NotificationBuilder<NotificationBase>(
-              headerBuilder: (notification) => Text(notification.header),
-              bodyBuilder: (notification) => Text(notification.body),
-            ),
-          ],
+          notificationCenterBloc: NotificationCenterBloc(
+            builders: [
+              NotificationBuilder<NotificationBase>(
+                headerBuilder: (notification) => Text(notification.header),
+                bodyBuilder: (notification) => Text(notification.body),
+              ),
+            ],
+          ),
           child: MyApp(),
         ),
       ),
