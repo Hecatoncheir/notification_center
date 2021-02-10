@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:notification_center/models/interface.dart';
+import 'package:notification_center/models/notification.dart';
 
 import 'package:notification_center/models/notification_builder.dart';
 import 'package:notification_center/models/notification_with_builder.dart';
@@ -61,11 +62,18 @@ class NotificationCenterBloc
       notificationsForRender!.add(notificationWithGroup);
       stash!.add(notificationWithGroup);
 
-      final closeNotificationAfterDuration = notification.closeAfter;
-      if (closeNotificationAfterDuration != null) {
-        Future.delayed(closeNotificationAfterDuration, () {
-          add(NotificationClosed(notification: notification));
-        });
+      if (notification is NotificationBase) {
+        final closeNotificationAfterDuration = notification.closeAfter;
+        if (closeNotificationAfterDuration != null) {
+          Future.delayed(closeNotificationAfterDuration, () {
+            add(NotificationClosed(notification: notification));
+          });
+        }
+
+        final futureForWeitBeforeClose = notification.waitBeforeClose;
+        if (futureForWeitBeforeClose != null) {
+          await Future.wait([futureForWeitBeforeClose]);
+        }
       }
 
       yield NotificationsReadyForRender(

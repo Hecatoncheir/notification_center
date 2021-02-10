@@ -68,66 +68,66 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> init() async {
     Future.delayed(Duration(seconds: 1), () {
-      // BoxDecoration secondNotificationDecoration() => BoxDecoration(
-      //     color: Color(0xFFfecfbf),
-      //     borderRadius: BorderRadius.circular(6),
-      //     border: Border.all(color: Color(0xFFb7315c)));
-      //
-      // Future.delayed(Duration(seconds: 2), () {
-      //   final notification = NotificationModel(
-      //       showWithNotificationsFromHistory: true,
-      //       decoration: secondNotificationDecoration(),
-      //       margin: EdgeInsets.all(3),
-      //       padding: EdgeInsets.all(2),
-      //       header: NotificationHeaderModel(
-      //           padding:
-      //               EdgeInsets.only(top: 10, left: 10, bottom: 2, right: 10),
-      //           text: 'Second notification header',
-      //           textStyle: TextStyle(
-      //               color: Color(0xFFb7315c),
-      //               fontSize: 16,
-      //               fontWeight: FontWeight.bold)),
-      //       body: NotificationBodyModel(
-      //           padding:
-      //               EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
-      //           textStyle: TextStyle(color: Color(0xFFb7315c)),
-      //           text: 'Second notification body'));
-      //   notificationCenterBloc.notifications!.add(notification);
-      //
-      //   Future.delayed(Duration(seconds: 3), () {
-      //     final notification = NotificationModel(
-      //         header:
-      //             NotificationHeaderModel(text: 'Third notification header'),
-      //         body: NotificationBodyModel(text: 'Third notification body'));
-      //     notificationCenterBloc.notifications!.add(notification);
-      //
-      //     Future.delayed(Duration(seconds: 2), () {
-      //       final header = NotificationHeaderModel(
-      //           text: 'Fourth notification header',
-      //           animator: oneByOneHeaderAnimation,
-      //           padding: EdgeInsets.all(10),
-      //           decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
-      //           textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));
-      //
-      //       final body = NotificationBodyModel(
-      //           text: 'Fourth notification body',
-      //           animation: oneByOneBodyAnimation,
-      //           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-      //           textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
-      //
-      //       final notification = NotificationModel(
-      //           header: header,
-      //           body: body,
-      //           padding: EdgeInsets.only(top: 0),
-      //           margin: EdgeInsets.only(top: 10),
-      //           decoration: BoxDecoration(
-      //               borderRadius: BorderRadius.all(Radius.zero),
-      //               border: Border.all(color: Color(0xFFF0376E)),
-      //               color: Color(0xFFFFFAEB)));
-      //       notificationCenterBloc.notifications!.add(notification);
-      //     });
-      //   });
-      // });
+      BoxDecoration secondNotificationDecoration() => BoxDecoration(
+          color: Color(0xFFfecfbf),
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: Color(0xFFb7315c)));
+
+      Future.delayed(Duration(seconds: 2), () {
+        final notification = NotificationModel(
+            showWithNotificationsFromHistory: true,
+            decoration: secondNotificationDecoration(),
+            margin: EdgeInsets.all(3),
+            padding: EdgeInsets.all(2),
+            header: NotificationHeaderModel(
+                padding:
+                    EdgeInsets.only(top: 10, left: 10, bottom: 2, right: 10),
+                text: 'Second notification header',
+                textStyle: TextStyle(
+                    color: Color(0xFFb7315c),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold)),
+            body: NotificationBodyModel(
+                padding:
+                    EdgeInsets.only(top: 5, left: 10, bottom: 10, right: 10),
+                textStyle: TextStyle(color: Color(0xFFb7315c)),
+                text: 'Second notification body'));
+        notificationCenterBloc.notifications!.add(notification);
+
+        Future.delayed(Duration(seconds: 3), () {
+          final notification = NotificationModel(
+              header:
+                  NotificationHeaderModel(text: 'Third notification header'),
+              body: NotificationBodyModel(text: 'Third notification body'));
+          notificationCenterBloc.notifications!.add(notification);
+
+          Future.delayed(Duration(seconds: 2), () {
+            final header = NotificationHeaderModel(
+                text: 'Fourth notification header',
+                animator: oneByOneHeaderAnimation,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
+                textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));
+
+            final body = NotificationBodyModel(
+                text: 'Fourth notification body',
+                animation: oneByOneBodyAnimation,
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
+
+            final notification = NotificationModel(
+                header: header,
+                body: body,
+                padding: EdgeInsets.only(top: 0),
+                margin: EdgeInsets.only(top: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.zero),
+                    border: Border.all(color: Color(0xFFF0376E)),
+                    color: Color(0xFFFFFAEB)));
+            notificationCenterBloc.notifications!.add(notification);
+          });
+        });
+      });
     });
   }
 

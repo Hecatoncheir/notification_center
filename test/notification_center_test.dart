@@ -10,16 +10,12 @@ import 'package:notification_center/src/bloc/notification_center_bloc.dart';
 import 'package:notification_center/src/notification_center.dart';
 
 class SuccessfulNotification implements Notification {
-  @override
-  Duration? closeAfter;
-
   String header;
   String body;
 
   SuccessfulNotification({
     required this.header,
     required this.body,
-    this.closeAfter,
   });
 }
 

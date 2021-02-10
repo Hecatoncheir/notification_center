@@ -1,3 +1,1 @@
-abstract class Notification {
-  Duration? closeAfter;
-}
+abstract class Notification {}
