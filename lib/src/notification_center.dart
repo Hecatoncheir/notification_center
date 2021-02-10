@@ -50,9 +50,22 @@ class NotificationCenter extends StatelessWidget {
           if (state is NotificationsReadyForRender) {
             final notificationsForRender = state.notificationsForRender;
 
+            CrossAxisAlignment alignment = CrossAxisAlignment.center;
+
+            if (this.alignment == Alignment.topRight ||
+                this.alignment == Alignment.bottomRight) {
+              alignment = CrossAxisAlignment.start;
+            }
+
+            if (this.alignment == Alignment.topRight ||
+                this.alignment == Alignment.bottomRight) {
+              alignment = CrossAxisAlignment.end;
+            }
+
             return Container(
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: alignment,
                   children: [
                     for (final notification in notificationsForRender)
                       buildNotification(context, notification),
@@ -70,7 +83,6 @@ class NotificationCenter extends StatelessWidget {
     NotificationWithBuilder notification,
   ) =>
       Column(
-        key: UniqueKey(),
         mainAxisSize: MainAxisSize.min,
         children: [
           Dismissible(

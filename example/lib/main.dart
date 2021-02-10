@@ -11,6 +11,7 @@ class Application extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: NotificationCenter(
+          alignment: Alignment.topCenter,
           notificationCenterBloc: NotificationCenterBloc(
             builders: [
               NotificationBuilder<NotificationBase>(
