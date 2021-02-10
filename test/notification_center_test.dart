@@ -40,8 +40,8 @@ void main() {
         notificationCenterBloc: NotificationCenterBloc(
           builders: [
             NotificationBuilder<NotificationBase>(
-              headerBuilder: (notification) => Text(notification.header),
-              bodyBuilder: (notification) => Text(notification.body),
+              headerBuilder: (_, notification) => Text(notification.header),
+              bodyBuilder: (_, notification) => Text(notification.body),
             ),
           ],
         ),
@@ -59,8 +59,8 @@ void main() {
       final notificationCenterBloc = NotificationCenterBloc(
         builders: [
           NotificationBuilder<NotificationBase>(
-            headerBuilder: (notification) => Text(notification.header),
-            bodyBuilder: (notification) => Text(notification.body),
+            headerBuilder: (_, notification) => Text(notification.header),
+            bodyBuilder: (_, notification) => Text(notification.body),
           ),
         ],
       );
@@ -93,7 +93,7 @@ void main() {
         final notificationCenterBloc = NotificationCenterBloc(
           builders: [
             NotificationBuilder<SuccessfulNotification>(
-              headerBuilder: (notification) => Container(
+              headerBuilder: (_, notification) => Container(
                 width: 200,
                 child: Row(
                   children: [
@@ -103,7 +103,7 @@ void main() {
                   ],
                 ),
               ),
-              bodyBuilder: (notification) => Container(
+              bodyBuilder: (_, notification) => Container(
                 width: 200,
                 child: Row(
                   children: [
@@ -115,7 +115,7 @@ void main() {
               ),
             ),
             NotificationBuilder<ErrorNotification>(
-              headerBuilder: (notification) => Container(
+              headerBuilder: (_, notification) => Container(
                 width: 200,
                 child: Row(
                   children: [
@@ -125,7 +125,7 @@ void main() {
                   ],
                 ),
               ),
-              bodyBuilder: (notification) => Container(
+              bodyBuilder: (_, notification) => Container(
                 width: 200,
                 child: Row(
                   children: [
@@ -187,7 +187,7 @@ void main() {
       final notificationCenterBloc = NotificationCenterBloc(
         builders: [
           NotificationBuilder<SuccessfulNotification>(
-            headerBuilder: (notification) => Container(
+            headerBuilder: (_, notification) => Container(
               width: 200,
               child: Row(
                 children: [
@@ -197,7 +197,7 @@ void main() {
                 ],
               ),
             ),
-            bodyBuilder: (notification) => Container(
+            bodyBuilder: (_, notification) => Container(
               width: 200,
               child: Row(
                 children: [
@@ -209,7 +209,7 @@ void main() {
             ),
           ),
           NotificationBuilder<ErrorNotification>(
-            headerBuilder: (notification) => Container(
+            headerBuilder: (_, notification) => Container(
               width: 200,
               child: Row(
                 children: [
@@ -219,7 +219,7 @@ void main() {
                 ],
               ),
             ),
-            bodyBuilder: (notification) => Container(
+            bodyBuilder: (_, notification) => Container(
               width: 200,
               child: Row(
                 children: [
@@ -280,7 +280,7 @@ void main() {
       final notificationCenterBloc = NotificationCenterBloc(
         builders: [
           NotificationBuilder<SuccessfulNotification>(
-            headerBuilder: (notification) => Container(
+            headerBuilder: (_, notification) => Container(
               width: 200,
               child: Row(
                 children: [
@@ -290,7 +290,7 @@ void main() {
                 ],
               ),
             ),
-            bodyBuilder: (notification) => Container(
+            bodyBuilder: (_, notification) => Container(
               width: 200,
               child: Row(
                 children: [
@@ -302,7 +302,7 @@ void main() {
             ),
           ),
           NotificationBuilder<ErrorNotification>(
-            headerBuilder: (notification) => Container(
+            headerBuilder: (_, notification) => Container(
               width: 200,
               child: Row(
                 children: [
@@ -312,7 +312,7 @@ void main() {
                 ],
               ),
             ),
-            bodyBuilder: (notification) => Container(
+            bodyBuilder: (_, notification) => Container(
               width: 200,
               child: Row(
                 children: [

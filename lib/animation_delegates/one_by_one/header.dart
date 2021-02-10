@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
-/// OneByOneHeaderAnimation - function with header parameter.
-Widget oneByOneHeaderAnimation(Widget headerWidget) =>
-    _OneByOneHeaderAnimation(headerWidget);
+/// OneByOneHeaderAnimation - widget for header animation.
+class OneByOneHeaderAnimation extends StatefulWidget {
+  final Widget child;
 
-/// _OneByOneHeaderAnimation - widget for header animation.
-class _OneByOneHeaderAnimation extends StatefulWidget {
-  final Widget headerWidget;
-
-  const _OneByOneHeaderAnimation(this.headerWidget);
+  const OneByOneHeaderAnimation({
+    required this.child,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _OneByOneHeaderAnimationState createState() =>
       _OneByOneHeaderAnimationState();
 }
 
-class _OneByOneHeaderAnimationState extends State<_OneByOneHeaderAnimation>
+class _OneByOneHeaderAnimationState extends State<OneByOneHeaderAnimation>
     with TickerProviderStateMixin {
   AnimationController? _animationController;
 
@@ -56,7 +55,7 @@ class _OneByOneHeaderAnimationState extends State<_OneByOneHeaderAnimation>
             parent: _animationController!,
           ),
         ),
-        child: Container(child: widget.headerWidget),
+        child: Container(child: widget.child),
       ),
     );
   }

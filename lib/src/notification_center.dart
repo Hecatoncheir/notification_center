@@ -85,39 +85,25 @@ class NotificationCenter extends StatelessWidget {
     BuildContext context,
     NotificationWithBuilder notification,
   ) =>
-      Column(
+      Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Dismissible(
-            direction: DismissDirection.horizontal,
-            key: UniqueKey(),
-            onDismissed: (_) {
-              BlocProvider.of<NotificationCenterBloc>(context).add(
-                NotificationClosed(
-                  notification: notification.notification,
-                ),
-              );
-            },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    notification.builder.headerBuilder == null
-                        ? Container()
-                        : notification.builder.headerBuilder!(
-                            notification.notification,
-                          ),
-                    notification.builder.bodyBuilder == null
-                        ? Container()
-                        : notification.builder.bodyBuilder!(
-                            notification.notification,
-                          ),
-                  ],
-                ),
-              ],
-            ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              notification.builder.headerBuilder == null
+                  ? Container()
+                  : notification.builder.headerBuilder!(
+                      notificationCenterBloc,
+                      notification.notification,
+                    ),
+              notification.builder.bodyBuilder == null
+                  ? Container()
+                  : notification.builder.bodyBuilder!(
+                      notificationCenterBloc,
+                      notification.notification,
+                    ),
+            ],
           ),
         ],
       );

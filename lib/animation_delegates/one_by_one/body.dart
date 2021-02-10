@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 /// OneByOneBodyAnimationDelegate  - widget for body animation.
 class OneByOneBodyAnimationDelegate extends StatefulWidget {
-  final Widget bodyWidget;
+  final Widget child;
 
-  const OneByOneBodyAnimationDelegate(this.bodyWidget);
+  const OneByOneBodyAnimationDelegate({
+    required this.child,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _OneByOneBodyAnimationDelegateState createState() =>
@@ -35,10 +38,13 @@ class _OneByOneBodyAnimationDelegateState
   Widget build(BuildContext context) {
     Future.delayed(
       Duration(milliseconds: 260),
-      () => _animationController!.forward(),
+      () {
+        _animationController!.forward();
+      },
     );
 
     return FadeTransition(
+      // ignore: prefer_int_literals
       opacity: Tween(begin: .0, end: 1.0).animate(
         CurvedAnimation(
           curve: Curves.bounceIn,
@@ -53,7 +59,7 @@ class _OneByOneBodyAnimationDelegateState
             parent: _animationController!,
           ),
         ),
-        child: Container(child: widget.bodyWidget),
+        child: Container(child: widget.child),
       ),
     );
   }

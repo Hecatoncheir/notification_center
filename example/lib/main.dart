@@ -20,9 +20,19 @@ class ErrorNotification extends NotificationBase {
         );
 }
 
-class SuccessfulNotification implements Notification {
+class SuccessfulNotification extends Notification {
+  String header;
   String body;
-  SuccessfulNotification({required this.body});
+
+  SuccessfulNotification({
+    required this.header,
+    required this.body,
+  });
+}
+
+class InformationNotification implements Notification {
+  String body;
+  InformationNotification({required this.body});
 }
 
 class Application extends StatelessWidget {
@@ -35,59 +45,119 @@ class Application extends StatelessWidget {
           notificationCenterBloc: NotificationCenterBloc(
             builders: [
               NotificationBuilder<NotificationBase>(
-                headerBuilder: (notification) {
-                  return Container(
-                    width: 300,
-                    margin: EdgeInsets.only(top: 8),
-                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFffe1af),
-                      border: Border(
-                        left: BorderSide(color: Color(0xFFF0376E)),
-                        top: BorderSide(color: Color(0xFFF0376E)),
-                        right: BorderSide(color: Color(0xFFF0376E)),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            notification.header,
-                            style: TextStyle(color: Color(0xFFb7315c)),
-                          ),
+                headerBuilder: (_, notification) {
+                  return OneByOneHeaderAnimation(
+                    child: Container(
+                      width: 300,
+                      margin: EdgeInsets.only(top: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFffe1af),
+                        border: Border(
+                          left: BorderSide(color: Color(0xFFF0376E)),
+                          top: BorderSide(color: Color(0xFFF0376E)),
+                          right: BorderSide(color: Color(0xFFF0376E)),
                         ),
-                      ],
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              notification.header,
+                              style: TextStyle(color: Color(0xFFb7315c)),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
-                bodyBuilder: (notification) {
-                  return Container(
-                    width: 300,
-                    margin: EdgeInsets.only(bottom: 8),
-                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFfffae9),
-                      border: Border(
-                        left: BorderSide(color: Color(0xFFF0376E)),
-                        bottom: BorderSide(color: Color(0xFFF0376E)),
-                        right: BorderSide(color: Color(0xFFF0376E)),
+                bodyBuilder: (_, notification) {
+                  return OneByOneBodyAnimationDelegate(
+                    child: Container(
+                      width: 300,
+                      margin: EdgeInsets.only(bottom: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFfffae9),
+                        border: Border(
+                          left: BorderSide(color: Color(0xFFF0376E)),
+                          bottom: BorderSide(color: Color(0xFFF0376E)),
+                          right: BorderSide(color: Color(0xFFF0376E)),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              notification.body,
+                              style: TextStyle(color: Color(0xFFF0376E)),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            notification.body,
-                            style: TextStyle(color: Color(0xFFF0376E)),
-                          ),
+                  );
+                },
+              ),
+              NotificationBuilder<SuccessfulNotification>(
+                headerBuilder: (_, notification) {
+                  return OneByOneHeaderAnimation(
+                    child: Container(
+                      width: 300,
+                      margin: EdgeInsets.only(top: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFdde46c),
+                        border: Border(
+                          left: BorderSide(color: Color(0xFFdde46c)),
+                          top: BorderSide(color: Color(0xFFdde46c)),
+                          right: BorderSide(color: Color(0xFFdde46c)),
                         ),
-                      ],
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              notification.header,
+                              style: TextStyle(color: Color(0xFF6d7a8f)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                bodyBuilder: (_, notification) {
+                  return OneByOneBodyAnimationDelegate(
+                    child: Container(
+                      width: 300,
+                      margin: EdgeInsets.only(bottom: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFfffae9),
+                        border: Border(
+                          left: BorderSide(color: Color(0xFFdde46c)),
+                          bottom: BorderSide(color: Color(0xFFdde46c)),
+                          right: BorderSide(color: Color(0xFFdde46c)),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              notification.body,
+                              style: TextStyle(color: Color(0xFF6d7a8f)),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
               ),
               NotificationBuilder<ErrorNotification>(
-                headerBuilder: (notification) {
+                headerBuilder: (bloc, notification) {
                   return ClipRRect(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(6),
@@ -95,7 +165,10 @@ class Application extends StatelessWidget {
                     ),
                     child: Container(
                       width: 300,
-                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: Color(0xFFfecfbf),
                         border: Border(
@@ -115,7 +188,7 @@ class Application extends StatelessWidget {
                     ),
                   );
                 },
-                bodyBuilder: (notification) {
+                bodyBuilder: (_, notification) {
                   return ClipRRect(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(6),
@@ -143,25 +216,36 @@ class Application extends StatelessWidget {
                   );
                 },
               ),
-              NotificationBuilder<SuccessfulNotification>(
-                bodyBuilder: (notification) {
-                  return Container(
-                    width: 300,
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFfffae9),
-                      border: Border.all(color: Color(0xFFF0376E)),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            notification.body,
-                            style: TextStyle(color: Color(0xFFF0376E)),
-                          ),
+              NotificationBuilder<InformationNotification>(
+                bodyBuilder: (bloc, notification) {
+                  return Dismissible(
+                    direction: DismissDirection.horizontal,
+                    key: UniqueKey(),
+                    onDismissed: (_) {
+                      bloc.add(
+                        NotificationClosed(
+                          notification: notification,
                         ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      width: 300,
+                      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFfffae9),
+                        border: Border.all(color: Color(0xFFF0376E)),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              notification.body,
+                              style: TextStyle(color: Color(0xFFF0376E)),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -187,12 +271,8 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     Future.delayed(Duration(seconds: 1), () {
-      final notification = NotificationBase(
-        header: 'First notification header',
-        body: 'First notification body',
-        waitBeforeClose: () async {
-          await Future.delayed(Duration(seconds: 3));
-        }(),
+      final notification = InformationNotification(
+        body: 'Information notification body',
       );
 
       final event = NotificationAdded(
@@ -217,7 +297,24 @@ class _MyAppState extends State<MyApp> {
     });
 
     Future.delayed(Duration(seconds: 3), () {
+      final notification = NotificationBase(
+        header: 'Base notification header',
+        body: 'Base notification body',
+        waitBeforeClose: () async {
+          await Future.delayed(Duration(seconds: 3));
+        }(),
+      );
+
+      final event = NotificationAdded(
+        notification: notification,
+      );
+
+      BlocProvider.of<NotificationCenterBloc>(context).add(event);
+    });
+
+    Future.delayed(Duration(seconds: 4), () {
       final notification = SuccessfulNotification(
+        header: 'Successful notification header',
         body: 'Successful notification body',
       );
 

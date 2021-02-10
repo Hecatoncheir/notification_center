@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart' hide Notification;
+import 'package:notification_center/src/bloc/notification_center_bloc.dart';
 
 class NotificationBuilder<T> {
   final Type type;
@@ -7,8 +8,8 @@ class NotificationBuilder<T> {
   final Function? bodyBuilder;
 
   NotificationBuilder({
-    Widget Function(T notification)? headerBuilder,
-    Widget Function(T notification)? bodyBuilder,
+    Widget Function(NotificationCenterBloc bloc, T notification)? headerBuilder,
+    Widget Function(NotificationCenterBloc bloc, T notification)? bodyBuilder,
   })  : this.type = T,
         this.headerBuilder = headerBuilder,
         this.bodyBuilder = bodyBuilder;
