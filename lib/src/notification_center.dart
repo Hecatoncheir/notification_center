@@ -101,12 +101,16 @@ class NotificationCenter extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    notification.builder.headerBuilder(
-                      notification.notification,
-                    ),
-                    notification.builder.bodyBuilder(
-                      notification.notification,
-                    ),
+                    notification.builder.headerBuilder == null
+                        ? Container()
+                        : notification.builder.headerBuilder!(
+                            notification.notification,
+                          ),
+                    notification.builder.bodyBuilder == null
+                        ? Container()
+                        : notification.builder.bodyBuilder!(
+                            notification.notification,
+                          ),
                   ],
                 ),
               ],

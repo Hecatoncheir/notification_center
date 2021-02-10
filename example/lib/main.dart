@@ -1,9 +1,29 @@
 import 'package:flutter/material.dart' hide Notification;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:notification_center/models/interface.dart';
 import 'package:notification_center/notification_center.dart';
 
 void main() => runApp(Application());
+
+class ErrorNotification extends NotificationBase {
+  ErrorNotification({
+    required String header,
+    required String body,
+    Duration? closeAfter,
+    Future<dynamic>? waitBeforeClose,
+  }) : super(
+          header: header,
+          body: body,
+          closeAfter: closeAfter,
+          waitBeforeClose: waitBeforeClose,
+        );
+}
+
+class SuccessfulNotification implements Notification {
+  String body;
+  SuccessfulNotification({required this.body});
+}
 
 class Application extends StatelessWidget {
   @override
@@ -16,6 +36,17 @@ class Application extends StatelessWidget {
             builders: [
               NotificationBuilder<NotificationBase>(
                 headerBuilder: (notification) => Text(notification.header),
+                bodyBuilder: (notification) => Text(notification.body),
+              ),
+              NotificationBuilder<ErrorNotification>(
+                headerBuilder: (notification) {
+                  return Text(notification.header);
+                },
+                bodyBuilder: (notification) {
+                  return Text(notification.body);
+                },
+              ),
+              NotificationBuilder<SuccessfulNotification>(
                 bodyBuilder: (notification) => Text(notification.body),
               ),
             ],
@@ -55,7 +86,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     Future.delayed(Duration(seconds: 2), () {
-      final notification = NotificationBase(
+      final notification = ErrorNotification(
         header: 'Second notification header',
         body: 'Second notification body',
       );
