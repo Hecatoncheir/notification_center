@@ -23,7 +23,7 @@ class ErrorNotification extends NotificationBase {
   ErrorNotification({
     required String header,
     required String body,
-    Duration? closeAfter,
+    Future<dynamic>? closeAfter,
   }) : super(
           header: header,
           body: body,
@@ -80,7 +80,7 @@ void main() {
       final event = NotificationAdded(notification: notification);
       notificationCenterBloc.add(event);
 
-      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
       expect(find.text('Header'), findsOneWidget);
       expect(find.text('Body'), findsOneWidget);
@@ -154,7 +154,7 @@ void main() {
         final firstEvent = NotificationAdded(notification: firstNotification);
         notificationCenterBloc.add(firstEvent);
 
-        await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+        await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
         expect(find.text('First notification header'), findsOneWidget);
         expect(find.text('First notification body'), findsOneWidget);
@@ -167,12 +167,12 @@ void main() {
         final secondEvent = NotificationAdded(notification: secondNotification);
         notificationCenterBloc.add(secondEvent);
 
-        await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+        await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
         expect(find.text('Second notification header'), findsOneWidget);
         expect(find.text('Second notification body'), findsOneWidget);
 
-        await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+        await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
         expect(find.text('First notification header'), findsOneWidget);
         expect(find.text('First notification body'), findsOneWidget);
@@ -256,7 +256,7 @@ void main() {
       final secondEvent = NotificationAdded(notification: secondNotification);
       notificationCenterBloc.add(secondEvent);
 
-      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
       expect(find.text('First notification header'), findsOneWidget);
       expect(find.text('First notification body'), findsOneWidget);
@@ -266,7 +266,7 @@ void main() {
 
       notificationCenterBloc.add(NotificationsCloseAll());
 
-      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
       expect(find.text('First notification header'), findsNothing);
       expect(find.text('First notification body'), findsNothing);
@@ -349,7 +349,7 @@ void main() {
       final secondEvent = NotificationAdded(notification: secondNotification);
       notificationCenterBloc.add(secondEvent);
 
-      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
       expect(find.text('First notification header'), findsOneWidget);
       expect(find.text('First notification body'), findsOneWidget);
@@ -358,7 +358,7 @@ void main() {
       expect(find.text('Second notification body'), findsOneWidget);
 
       notificationCenterBloc.add(NotificationsCloseAll());
-      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
       expect(find.text('First notification header'), findsNothing);
       expect(find.text('First notification body'), findsNothing);
@@ -367,7 +367,7 @@ void main() {
       expect(find.text('Second notification body'), findsNothing);
 
       notificationCenterBloc.add(NotificationsOpenAll());
-      await tester.runAsync(() => tester.pump()).then((_) => tester.pump());
+      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
 
       expect(find.text('First notification header'), findsOneWidget);
       expect(find.text('First notification body'), findsOneWidget);

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import '../notification_center.dart';
 import 'interface.dart';
 
 /// NotificationBase - model with data for notification.
@@ -7,13 +8,13 @@ class NotificationBase implements Notification {
   String header;
   String body;
 
-  Duration? closeAfter;
-  Future<dynamic>? waitBeforeClose;
+  NotificationBuilder<NotificationBase>? builder;
+  Future<dynamic>? closeAfter;
 
   NotificationBase({
     required this.header,
     required this.body,
-    this.closeAfter,
-    Future<dynamic>? waitBeforeClose,
-  }) : this.waitBeforeClose = waitBeforeClose;
+    this.builder,
+    Future<dynamic>? closeAfter,
+  }) : this.closeAfter = closeAfter;
 }

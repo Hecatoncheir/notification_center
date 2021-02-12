@@ -6,17 +6,29 @@ import 'package:notification_center/notification_center.dart';
 
 void main() => runApp(Application());
 
-class ErrorNotification extends NotificationBase {
-  ErrorNotification({
+class NewErrorNotification extends NotificationBase {
+  NewErrorNotification({
     required String header,
     required String body,
-    Duration? closeAfter,
-    Future<dynamic>? waitBeforeClose,
+    Future<dynamic>? closeAfter,
+    NotificationBuilder<NotificationBase>? builder,
   }) : super(
           header: header,
           body: body,
           closeAfter: closeAfter,
-          waitBeforeClose: waitBeforeClose,
+          builder: builder,
+        );
+}
+
+class ErrorNotification extends NotificationBase {
+  ErrorNotification({
+    required String header,
+    required String body,
+    Future<dynamic>? closeAfter,
+  }) : super(
+          header: header,
+          body: body,
+          closeAfter: closeAfter,
         );
 }
 
@@ -35,13 +47,18 @@ class InformationNotification implements Notification {
   InformationNotification({required this.body});
 }
 
+const double notificationCenterHorizontalPadding = 8;
+
 class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: NotificationCenter(
-          alignment: Alignment.topCenter,
+          alignment: Alignment.topRight,
+          padding: EdgeInsets.symmetric(
+            horizontal: notificationCenterHorizontalPadding,
+          ),
           notificationCenterBloc: NotificationCenterBloc(
             builders: [
               NotificationBuilder<InformationNotification>(
@@ -58,7 +75,7 @@ class Application extends StatelessWidget {
                     },
                     child: Container(
                       width: 300,
-                      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      margin: EdgeInsets.symmetric(vertical: 8),
                       padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
                       decoration: BoxDecoration(
                         color: Color(0xFFfffae9),
@@ -286,7 +303,7 @@ class _MyAppState extends State<MyApp> {
       final notification = ErrorNotification(
         header: 'Error notification header',
         body: 'Error notification body',
-        closeAfter: Duration(seconds: 1),
+        closeAfter: Future.delayed(Duration(seconds: 1)),
       );
 
       final event = NotificationAdded(
@@ -300,9 +317,7 @@ class _MyAppState extends State<MyApp> {
       final notification = NotificationBase(
         header: 'Base notification header',
         body: 'Base notification body',
-        waitBeforeClose: () async {
-          await Future.delayed(Duration(seconds: 3));
-        }(),
+        closeAfter: Future.delayed(Duration(seconds: 3)),
       );
 
       final event = NotificationAdded(
@@ -316,6 +331,72 @@ class _MyAppState extends State<MyApp> {
       final notification = SuccessfulNotification(
         header: 'Successful notification header',
         body: 'Successful notification body',
+      );
+
+      final event = NotificationAdded(
+        notification: notification,
+      );
+
+      BlocProvider.of<NotificationCenterBloc>(context).add(event);
+    });
+
+    Future.delayed(Duration(seconds: 1), () {
+      final notification = NewErrorNotification(
+        header: 'New error notification header',
+        body: 'New error notification body',
+        closeAfter: Future.delayed(Duration(seconds: 1)),
+        builder: NotificationBuilder<NewErrorNotification>(
+          bodyBuilder: (bloc, notification) => Dismissible(
+            key: UniqueKey(),
+            onDismissed: (_) {
+              BlocProvider.of<NotificationCenterBloc>(context).add(
+                NotificationClosed(
+                  notification: notification,
+                ),
+              );
+            },
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width -
+                    (notificationCenterHorizontalPadding * 2),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+              decoration: BoxDecoration(
+                color: Color(0xFFfecfbf),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          notification.header,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            color: Color(0xFFF0376E),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          notification.body,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Color(0xFFF0376E),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       );
 
       final event = NotificationAdded(

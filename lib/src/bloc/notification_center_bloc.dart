@@ -45,35 +45,25 @@ class NotificationCenterBloc
     if (event is NotificationAdded) {
       final notification = event.notification;
 
-      NotificationBuilder? notificationGroup;
-      for (final group in builders) {
-        if (group.type == notification.runtimeType) {
-          notificationGroup = group;
-          break;
-        }
-      }
+      final NotificationBuilder? notificationBuilder = getNotificationBuilder(
+        notification: notification,
+        builders: builders,
+      );
 
-      if (notificationGroup == null) return;
+      if (notificationBuilder == null) return;
 
       final notificationWithGroup = NotificationWithBuilder(
         notification: notification,
-        builder: notificationGroup,
+        builder: notificationBuilder,
       );
 
       notificationsForRender!.add(notificationWithGroup);
       stash!.add(notificationWithGroup);
 
       if (notification is NotificationBase) {
-        final closeNotificationAfterDuration = notification.closeAfter;
-        if (closeNotificationAfterDuration != null) {
-          Future.delayed(closeNotificationAfterDuration, () {
-            add(NotificationClosed(notification: notification));
-          });
-        }
-
-        final futureForWeitBeforeClose = notification.waitBeforeClose;
-        if (futureForWeitBeforeClose != null) {
-          unawaited(Future.wait([futureForWeitBeforeClose]).then((value) {
+        final futureForWaitBeforeClose = notification.closeAfter;
+        if (futureForWaitBeforeClose != null) {
+          unawaited(Future.wait([futureForWaitBeforeClose]).then((value) {
             add(NotificationClosed(notification: notification));
           }));
         }
@@ -120,6 +110,21 @@ class NotificationCenterBloc
         notificationsForRender: notificationsForRender!,
         allNotifications: stash!,
       );
+    }
+  }
+
+  NotificationBuilder? getNotificationBuilder({
+    required Notification notification,
+    required List<NotificationBuilder> builders,
+  }) {
+    if (notification is NotificationBase && notification.builder != null) {
+      return notification.builder;
+    }
+
+    for (final builder in builders) {
+      if (builder.type == notification.runtimeType) {
+        return builder;
+      }
     }
   }
 }
