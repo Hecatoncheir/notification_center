@@ -16,26 +16,25 @@ example/lib/main.dart
 Implement **Notification** abstract class:
 
 ```dart
-class InformationNotification implements Notification {
-  String body;
-  InformationNotification({required this.body});
-}
+abstract class Notification {}
 ```
 
 Or extends **NotificationBase**:
 ```dart
-class ErrorNotification extends NotificationBase {
-  ErrorNotification({
-    required String header,
-    required String body,
-    Duration? closeAfter,
-    Future<dynamic>? waitBeforeClose,
-  }) : super(
-    header: header,
-    body: body,
-    closeAfter: closeAfter,
-    waitBeforeClose: waitBeforeClose,
-  );
+/// NotificationBase - model with data for notification.
+class NotificationBase implements Notification {
+  String header;
+  String body;
+
+  NotificationBuilder<NotificationBase>? builder;
+  Future<dynamic>? closeAfter;
+
+  NotificationBase({
+    required this.header,
+    required this.body,
+    this.builder,
+    Future<dynamic>? closeAfter,
+  }) : this.closeAfter = closeAfter;
 }
 ```
 
@@ -93,6 +92,33 @@ Now notifications can be send:
 
       BlocProvider.of<NotificationCenterBloc>(context).add(event);
     });
+```
+
+or notification can have builder:
+
+```dart
+
+final notification = NewErrorNotification(
+  header: 'New error notification header',
+  body: 'New error notification body',
+  closeAfter: Future.delayed(Duration(seconds: 1)),
+  builder: NotificationBuilder<NewErrorNotification>(
+    bodyBuilder: (bloc, notification) => Container(
+        child: Column(
+          childer:[
+            Text(notification.header),
+            Text(notification.body),
+          ],
+      ),
+    ),
+  ),
+);
+
+final event = NotificationAdded(
+  notification: notification,
+);
+
+BlocProvider.of<NotificationCenterBloc>(context).add(event);
 ```
 
 Events:
