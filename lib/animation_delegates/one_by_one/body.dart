@@ -39,7 +39,9 @@ class _OneByOneBodyAnimationDelegateState
     Future.delayed(
       Duration(milliseconds: 260),
       () {
-        _animationController!.forward();
+        if (mounted) {
+          _animationController!.forward();
+        }
       },
     );
 
