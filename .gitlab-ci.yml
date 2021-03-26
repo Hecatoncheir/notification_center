@@ -3,7 +3,7 @@ stages:
   - check
 
 before_script:
-  - rm -rf example/
+
 
 Prepare:
   stage: install
@@ -17,26 +17,27 @@ Prepare:
 
   before_script:
     - flutter --version
+    - flutter upgrade
 
   script:
+    - rm -rf example/
     - flutter packages get --offline
-    - flutter packages pub run build_runner build
 
-Complexity:
-  stage: check
-  image: "google/dart:dev"
-  dependencies:
-    - Prepare
-
-  before_script:
-    - export PATH="$PATH":"$HOME/.pub-cache/bin"
-    - pub global activate --source git https://github.com/Rasarts/codemetrics.git
-
-  script:
-    - echo "Warning complexity begin from $BeginWarningComplexityNumber"
-    - echo "Error complexity begin from $BeginErrorComplexityNumber."
-
-    - dart-codemetrics --begin-warning-complexity-number=$BeginWarningComplexityNumber --begin-error-complexity-number=$BeginErrorComplexityNumber
+#Complexity:
+#  stage: check
+#  image: "google/dart:dev"
+#  dependencies:
+#    - Prepare
+#
+#  before_script:
+#    - export PATH="$PATH":"$HOME/.pub-cache/bin"
+#    - pub global activate --source git https://github.com/Rasarts/codemetrics.git
+#
+#  script:
+#    - echo "Warning complexity begin from $BeginWarningComplexityNumber"
+#    - echo "Error complexity begin from $BeginErrorComplexityNumber."
+#
+#    - dart-codemetrics --begin-warning-complexity-number=$BeginWarningComplexityNumber --begin-error-complexity-number=$BeginErrorComplexityNumber
 
 Tests:
   stage: check
@@ -52,6 +53,7 @@ Tests:
 
   before_script:
     - flutter --version
+    - flutter upgrade
 
   script:
     # Run unit and integration tests if it needed

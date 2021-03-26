@@ -5,83 +5,127 @@
 ### Notifications 
 ![Notifications preview gif](/preview/preview.gif)
 
-## Getting Started
+### Example
 
+```
+example/lib/main.dart
+```
 
-Make NotificationCenterWidget with NotificationCenterBloc:
+### Use
+
+Implement **Notification** abstract class:
 
 ```dart
-  NotificationCenterBloc notificationCenterBloc = NotificationCenterBloc();
+abstract class Notification {}
 ```
+
+Or extends **NotificationBase**:
+```dart
+/// NotificationBase - model with data for notification.
+class NotificationBase implements Notification {
+  String header;
+  String body;
+
+  NotificationBuilder<NotificationBase>? builder;
+  Future<dynamic>? closeAfter;
+
+  NotificationBase({
+    required this.header,
+    required this.body,
+    this.builder,
+    Future<dynamic>? closeAfter,
+  }) : this.closeAfter = closeAfter;
+}
+```
+
+Then add **NotificationCenter** widget:
 
 ```dart
-/// NotificationCenter
-child: NotificationCenterWidget(
-  notificationCenterBloc: notificationCenterBloc,
-  child: someWidget),
+class Application extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: NotificationCenter(
+          alignment: Alignment.topCenter,
+          notificationCenterBloc: NotificationCenterBloc(
+            builders: [
+              NotificationBuilder<InformationNotification>(...),
+              NotificationBuilder<ErrorNotification>(...),
+              NotificationBuilder<NotificationBase>(...),
+              NotificationBuilder<SuccessfulNotification>(...),
+            ],
+          ),
+          child: MyApp(),
+        ),
+      ),
+    );
+  }
+}
 ```
 
-For show some notification they must be created:
+Now notifications can be send:
 
 ```dart
-import 'package:notification_center/models.dart'
-    show NotificationModel, NotificationHeaderModel, NotificationBodyModel;
+    Future.delayed(Duration(seconds: 1), () {
+      final notification = InformationNotification(
+        body: 'Information notification body',
+      );
 
-import 'package:notification_center/animations.dart'
-    show oneByOneHeaderAnimation, oneByOneBodyAnimation;
+      final event = NotificationAdded(
+        notification: notification,
+      );
+
+      BlocProvider.of<NotificationCenterBloc>(context).add(event);
+    });
+
+    Future.delayed(Duration(seconds: 2), () {
+      final notification = ErrorNotification(
+        header: 'Error notification header',
+        body: 'Error notification body',
+        closeAfter: Duration(seconds: 1),
+      );
+
+      final event = NotificationAdded(
+        notification: notification,
+      );
+
+      BlocProvider.of<NotificationCenterBloc>(context).add(event);
+    });
 ```
+
+or notification can have builder:
 
 ```dart
-final header = NotificationHeaderModel(
-    text: 'Fourth notification header',
-    animator: oneByOneHeaderAnimation,
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(color: Color(0xFFFFE0B4)),
-    textStyle: TextStyle(color: Color(0xFFA34F73), fontSize: 18));
 
-final body = NotificationBodyModel(
-    text: 'Fourth notification body',
-    animator: oneByOneBodyAnimation,
-    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-    textStyle: TextStyle(color: Color(0xFFF0376E), fontSize: 16));
+final notification = NewErrorNotification(
+  header: 'New error notification header',
+  body: 'New error notification body',
+  closeAfter: Future.delayed(Duration(seconds: 1)),
+  builder: NotificationBuilder<NewErrorNotification>(
+    bodyBuilder: (bloc, notification) => Container(
+        child: Column(
+          childer:[
+            Text(notification.header),
+            Text(notification.body),
+          ],
+      ),
+    ),
+  ),
+);
 
-final notification = NotificationModel(
-    header: header,
-    body: body,
-    padding: EdgeInsets.only(top: 0),
-    margin: EdgeInsets.only(top: 10),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.zero),
-        border: Border.all(color: Color(0xFFF0376E)),
-        color: Color(0xFFFFFAEB)));
+final event = NotificationAdded(
+  notification: notification,
+);
+
+BlocProvider.of<NotificationCenterBloc>(context).add(event);
 ```
 
-and added to notificationCenterBloc:
-``` dart
-notificationCenterBloc.notifications.add(notification);
-```
+Events:
 
-For show notification with other use showWithNotificationsFromHistory property:
-``` dart
-
-  /// Constructor.
-  NotificationModel(
-      {this.header,
-      this.body,
-      this.margin = const EdgeInsets.all(8),
-      this.padding = const EdgeInsets.all(6),
-      this.animator = fadeInAnimation,
-      this.decoration,
-  this.showWithNotificationsFromHistory = false});
-```
-
-
-For hide all notifications call:
 ```dart
-notificationCenterBloc.closeAllNotifications(),
-```
-
-For show all notifications call:
-```dart
-notificationCenterBloc.showAllNotifications()
+NotificationAdded
+NotificationClosed
+NotificationsOpenAll 
+NotificationsCloseAll 
 ```
