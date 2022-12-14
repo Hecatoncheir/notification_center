@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart' hide Notification;
-
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:notification_center/models/interface.dart';
 import 'package:notification_center/models/notification.dart';
 import 'package:notification_center/models/notification_builder.dart';
-
 import 'package:notification_center/src/bloc/notification_center_bloc.dart';
 import 'package:notification_center/src/notification_center.dart';
 
@@ -37,7 +34,7 @@ void main() {
       const testText = 'Test text widget';
 
       final notificationCenter = NotificationCenter(
-        notificationCenterBloc: NotificationCenterBloc(
+        bloc: NotificationCenterBloc(
           builders: [
             NotificationBuilder<NotificationBase>(
               headerBuilder: (_, notification) => Text(notification.header),
@@ -66,7 +63,7 @@ void main() {
       );
 
       final notificationCenter = NotificationCenter(
-        notificationCenterBloc: notificationCenterBloc,
+        bloc: notificationCenterBloc,
         child: Offstage(),
       );
 
@@ -140,7 +137,7 @@ void main() {
         );
 
         final notificationCenter = NotificationCenter(
-          notificationCenterBloc: notificationCenterBloc,
+          bloc: notificationCenterBloc,
           child: Offstage(),
         );
 
@@ -234,7 +231,7 @@ void main() {
       );
 
       final notificationCenter = NotificationCenter(
-        notificationCenterBloc: notificationCenterBloc,
+        bloc: notificationCenterBloc,
         child: Offstage(),
       );
 
@@ -327,7 +324,7 @@ void main() {
       );
 
       final notificationCenter = NotificationCenter(
-        notificationCenterBloc: notificationCenterBloc,
+        bloc: notificationCenterBloc,
         child: Offstage(),
       );
 

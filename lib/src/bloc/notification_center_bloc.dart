@@ -1,130 +1,90 @@
 import 'dart:async';
+
 import 'package:meta/meta.dart';
-import 'package:pedantic/pedantic.dart';
+import 'package:notification_center/notification_center.dart';
+import 'package:notification_center/src/notifications/notification.dart';
 
-import 'package:bloc/bloc.dart';
-import 'package:notification_center/models/interface.dart';
-import 'package:notification_center/models/notification.dart';
+part 'notification_center_bloc_event.dart';
+part 'notification_center_bloc_interface.dart';
+part 'notification_center_bloc_state.dart';
 
-import 'package:notification_center/models/notification_builder.dart';
-import 'package:notification_center/models/notification_with_builder.dart';
+class NotificationCenterBloc implements NotificationCenterBlocInterface {
+  final List<Notification> _notifications;
 
-part 'notification_center_event.dart';
-part 'notification_center_state.dart';
+  late final StreamController<NotificationCenterBlocState> _stateController;
+  late final Stream<NotificationCenterBlocState> _state;
 
-/// NotificationCenterBloc - logic of notification show/hide, hold history.
-class NotificationCenterBloc
-    extends Bloc<NotificationCenterEvent, NotificationCenterState> {
-  final List<NotificationBuilder> builders;
+  late final StreamController<NotificationCenterBlocEvent> _eventController;
+  late final Stream<NotificationCenterBlocEvent> _event;
+  late final StreamSubscription<NotificationCenterBlocEvent> _eventSubscription;
 
-  List<NotificationWithBuilder>? notificationsForRender;
-  List<NotificationWithBuilder>? stash;
+  NotificationCenterBloc() : _notifications = [] {
+    _stateController = StreamController<NotificationCenterBlocState>();
+    _state = _stateController.stream.asBroadcastStream();
 
-  NotificationCenterBloc({
-    required this.builders,
-    this.notificationsForRender,
-    this.stash,
-  }) : super(NotificationCenterInitial()) {
-    notificationsForRender ??= <NotificationWithBuilder>[];
-    stash ??= <NotificationWithBuilder>[];
-
-    if (notificationsForRender!.isNotEmpty) {
-      for (final notification in notificationsForRender!) {
-        final event = NotificationAdded(
-          notification: notification.notification,
-        );
-        add(event);
+    _eventController = StreamController<NotificationCenterBlocEvent>();
+    _event = _eventController.stream;
+    _eventSubscription = _event.listen((event) {
+      if (event is GetAllNotifications) {
+        _getAllNotificationsEventHandler(event);
       }
-    }
+      if (event is ShowAllNotifications) {
+        _showAllNotificationsEventHandler(event);
+      }
+      if (event is HideAllNotifications) {
+        _hideAllNotificationsEventHandler(event);
+      }
+      if (event is ShowNotification) {
+        _showNotificationEventHandler(event);
+      }
+      if (event is HideNotification) {
+        _hideNotificationEventHandler(event);
+      }
+    });
   }
 
   @override
-  Stream<NotificationCenterState> mapEventToState(
-    NotificationCenterEvent event,
-  ) async* {
-    if (event is NotificationAdded) {
-      final notification = event.notification;
+  StreamController<NotificationCenterBlocEvent> controller() =>
+      _eventController;
 
-      final NotificationBuilder? notificationBuilder = getNotificationBuilder(
-        notification: notification,
-        builders: builders,
-      );
+  @override
+  Stream<NotificationCenterBlocState> stream() => _state;
 
-      if (notificationBuilder == null) return;
+  @override
+  void dispose() {
+    _stateController.close();
 
-      final notificationWithGroup = NotificationWithBuilder(
-        notification: notification,
-        builder: notificationBuilder,
-      );
-
-      notificationsForRender!.add(notificationWithGroup);
-      stash!.add(notificationWithGroup);
-
-      if (notification is NotificationBase) {
-        final futureForWaitBeforeClose = notification.closeAfter;
-        if (futureForWaitBeforeClose != null) {
-          unawaited(Future.wait([futureForWaitBeforeClose]).then((value) {
-            add(NotificationClosed(notification: notification));
-          }));
-        }
-      }
-
-      yield NotificationsReadyForRender(
-        notificationsForRender: notificationsForRender!,
-        allNotifications: stash!,
-      );
-    }
-
-    if (event is NotificationClosed) {
-      NotificationWithBuilder? notification;
-      for (final notificationForRender in notificationsForRender!) {
-        if (notificationForRender.notification == event.notification) {
-          notification = notificationForRender;
-          break;
-        }
-      }
-
-      if (notification == null) return;
-
-      notificationsForRender!.remove(notification);
-
-      yield NotificationsReadyForRender(
-        notificationsForRender: notificationsForRender!,
-        allNotifications: stash!,
-      );
-    }
-
-    if (event is NotificationsOpenAll) {
-      notificationsForRender!.clear();
-      notificationsForRender!.addAll(stash!);
-      yield NotificationsReadyForRender(
-        notificationsForRender: notificationsForRender!,
-        allNotifications: stash!,
-      );
-    }
-
-    if (event is NotificationsCloseAll) {
-      notificationsForRender!.clear();
-
-      yield NotificationsReadyForRender(
-        notificationsForRender: notificationsForRender!,
-        allNotifications: stash!,
-      );
-    }
+    _eventController.close();
+    _eventSubscription.cancel();
   }
 
-  NotificationBuilder? getNotificationBuilder({
-    required Notification notification,
-    required List<NotificationBuilder> builders,
-  }) {
-    if (notification is NotificationBase && notification.builder != null) {
-      return notification.builder;
-    }
+  Future<void> _getAllNotificationsEventHandler(GetAllNotifications _) async {
+    _stateController.add(AllNotifications(notifications: _notifications));
+  }
 
-    for (final builder in builders) {
-      if (builder.type == notification.runtimeType) {
-        return builder;
-      }
-    }
+  Future<void> _showAllNotificationsEventHandler(ShowAllNotifications _) async {
+    _stateController
+        .add(ShowAllNotificationsBegin(notifications: _notifications));
+  }
+
+  Future<void> _hideAllNotificationsEventHandler(HideAllNotifications _) async {
+    _stateController.add(const ShowAllNotificationsEnd());
+  }
+
+  Future<void> _showNotificationEventHandler(ShowNotification event) async {
+    final notification = event.notification;
+    _notifications.add(notification);
+    _stateController.add(ShowNotificationBegin(notification: notification));
+
+    Future.delayed(
+      notification.displayDuration,
+      () =>
+          _stateController.add(ShowNotificationEnd(notification: notification)),
+    );
+  }
+
+  Future<void> _hideNotificationEventHandler(HideNotification event) async {
+    final notification = event.notification;
+    _stateController.add(ShowNotificationEnd(notification: notification));
   }
 }

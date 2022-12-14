@@ -1,110 +1,159 @@
 library notification_center;
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:async';
 
-import 'package:notification_center/models/notification_with_builder.dart';
+import 'package:flutter/material.dart' hide Notification;
 
 import 'bloc/notification_center_bloc.dart';
+import 'notifications/notification.dart';
 
-/// NotificationCenter  - widget for show notifications.
-class NotificationCenter extends StatelessWidget {
-  /// child - main widget of application.
+part 'notification_widget.dart';
+
+class NotificationCenter extends StatefulWidget {
   final Widget? child;
+  final NotificationCenterBlocInterface? bloc;
 
-  final NotificationCenterBloc notificationCenterBloc;
-
-  final Alignment alignment;
-  final EdgeInsets padding;
-
-  /// Constructor
   const NotificationCenter({
-    required this.notificationCenterBloc,
+    super.key,
     this.child,
-    this.alignment = Alignment.topCenter,
-    this.padding = EdgeInsets.zero,
+    this.bloc,
   });
 
   @override
-  Widget build(BuildContext context) => buildLayout(context);
+  State<NotificationCenter> createState() => NotificationCenterState();
 
-  Widget buildLayout(BuildContext context) =>
-      BlocProvider<NotificationCenterBloc>.value(
-        value: notificationCenterBloc,
-        child: Builder(
-          builder: (context) => Stack(
-            alignment: alignment,
-            children: [
-              child == null ? Container() : child!,
-              buildNotifications(context)
-            ],
-          ),
-        ),
-      );
+  static NotificationCenterState of(BuildContext context) {
+    final state = context.findAncestorStateOfType<NotificationCenterState>();
+    if (state == null) throw Exception("NotificationCenterState not found.");
+    return state;
+  }
+}
 
-  Widget buildNotifications(BuildContext context) =>
-      BlocBuilder<NotificationCenterBloc, NotificationCenterState>(
-        buildWhen: (previous, current) {
-          if (current is NotificationsReadyForRender) return true;
-          return false;
-        },
-        builder: (BuildContext context, state) {
-          if (state is NotificationsReadyForRender) {
-            final notificationsForRender = state.notificationsForRender;
+class NotificationCenterState extends State<NotificationCenter> {
+  late final NotificationCenterBlocInterface _bloc;
 
-            CrossAxisAlignment alignment = CrossAxisAlignment.center;
+  Future<List<Notification>> getAllNotifications() async {
+    _bloc.controller().add(const GetAllNotifications());
+    return _bloc
+        .stream()
+        .firstWhere((state) => state is AllNotifications)
+        .then((state) => (state as AllNotifications).notifications);
+  }
 
-            if (this.alignment == Alignment.topRight ||
-                this.alignment == Alignment.bottomRight) {
-              alignment = CrossAxisAlignment.start;
-            }
+  Future<void> showAllNotifications() async {
+    _bloc.controller().add(const ShowAllNotifications());
+  }
 
-            if (this.alignment == Alignment.topRight ||
-                this.alignment == Alignment.bottomRight) {
-              alignment = CrossAxisAlignment.end;
-            }
+  Future<void> hideAllNotifications() async {
+    _bloc.controller().add(const HideAllNotifications());
+  }
 
-            return Container(
-              padding: padding,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: alignment,
-                  children: [
-                    for (final notification in notificationsForRender)
-                      buildNotification(context, notification),
-                  ],
-                ),
+  Future<void> showNotification(Notification notification) async {
+    _bloc.controller().add(ShowNotification(notification: notification));
+  }
+
+  Future<void> hideNotification(Notification notification) async {
+    _bloc.controller().add(HideNotification(notification: notification));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _bloc = widget.bloc ?? NotificationCenterBloc();
+  }
+
+  @override
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final notifications = <Notification>[];
+
+    return Stack(
+      children: [
+        widget.child ?? Container(),
+        StreamBuilder<NotificationCenterBlocState>(
+          stream: _bloc.stream().where(
+                (state) =>
+                    state is ShowNotificationBegin ||
+                    state is ShowNotificationEnd ||
+                    state is ShowAllNotificationsBegin ||
+                    state is ShowAllNotificationsEnd,
               ),
-            );
-          }
-          return Container();
-        },
-      );
+          builder: (context, snapshot) {
+            final state = snapshot.data;
+            if (state == null) return Container();
 
-  Widget buildNotification(
-    BuildContext context,
-    NotificationWithBuilder notification,
-  ) =>
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              notification.builder.headerBuilder == null
-                  ? Container()
-                  : notification.builder.headerBuilder!(
-                      notificationCenterBloc,
-                      notification.notification,
+            if (state is ShowNotificationBegin) {
+              final notification = state.notification;
+              notifications
+                ..clear()
+                ..add(notification);
+
+              return Stack(
+                children: [
+                  for (final notification in notifications)
+                    NotificationWidget(
+                      bloc: _bloc,
+                      notification: notification,
                     ),
-              notification.builder.bodyBuilder == null
-                  ? Container()
-                  : notification.builder.bodyBuilder!(
-                      notificationCenterBloc,
-                      notification.notification,
+                ],
+              );
+            }
+
+            if (state is ShowNotificationEnd) {
+              notifications.remove(state.notification);
+              return Stack(
+                children: [
+                  for (final notification in notifications)
+                    NotificationWidget(
+                      bloc: _bloc,
+                      notification: notification,
                     ),
-            ],
-          ),
-        ],
-      );
+                ],
+              );
+            }
+
+            if (state is ShowAllNotificationsBegin) {
+              notifications
+                ..clear()
+                ..addAll(state.notifications);
+
+              return Stack(
+                children: [
+                  for (final notification in notifications)
+                    NotificationWidget(
+                      bloc: _bloc,
+                      notification: notification,
+                      mustBeDismissible: true,
+                    ),
+                ],
+              );
+            }
+
+            if (state is ShowAllNotificationsEnd) {
+              notifications.clear();
+
+              return Stack(
+                children: [
+                  for (final notification in notifications)
+                    NotificationWidget(
+                      bloc: _bloc,
+                      notification: notification,
+                      mustBeDismissible: true,
+                    ),
+                ],
+              );
+            }
+
+            return Container();
+          },
+        ),
+      ],
+    );
+  }
 }
