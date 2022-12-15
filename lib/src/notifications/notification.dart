@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 part 'base_notification.dart';
 part 'error.dart';
@@ -8,34 +8,34 @@ part 'warning.dart';
 typedef NotificationBuilder = Widget Function({
   Widget? header,
   String? headerText,
-  Padding? headerPadding,
+  EdgeInsetsGeometry? headerPadding,
   Color? headerBackground,
   Color? headerForeground,
   Widget? body,
   String? bodyText,
-  Padding? bodyPadding,
+  EdgeInsetsGeometry? bodyPadding,
   Color? bodyBackground,
   Color? bodyForeground,
   Decoration? decoration,
+  BoxConstraints? constraints,
 });
 
 class Notification extends StatefulWidget {
   final Widget? header;
   final String? headerText;
-  final Padding? headerPadding;
+  final EdgeInsetsGeometry? headerPadding;
   final Color? headerBackground;
   final Color? headerForeground;
 
   final Widget? body;
   final String? bodyText;
-  final Padding? bodyPadding;
+  final EdgeInsetsGeometry? bodyPadding;
   final Color? bodyBackground;
   final Color? bodyForeground;
 
   final Decoration? decoration;
+  final BoxConstraints? constraints;
 
-  final Alignment alignment;
-  final bool isDismissible;
   final Duration displayDuration;
 
   final NotificationBuilder? notificationBuilder;
@@ -44,18 +44,23 @@ class Notification extends StatefulWidget {
     super.key,
     this.header,
     this.headerText,
-    this.headerPadding,
-    this.headerBackground,
-    this.headerForeground,
+    this.headerPadding = const EdgeInsets.symmetric(
+      horizontal: 6,
+      vertical: 3,
+    ),
+    this.headerBackground = const Color(0xFFffffff),
+    this.headerForeground = const Color(0xFF000000),
     this.body,
     this.bodyText,
-    this.bodyPadding,
-    this.bodyBackground,
-    this.bodyForeground,
-    this.alignment = Alignment.bottomRight,
-    this.isDismissible = true,
+    this.bodyPadding = const EdgeInsets.symmetric(
+      horizontal: 6,
+      vertical: 3,
+    ),
+    this.bodyBackground = const Color(0xFFffffff),
+    this.bodyForeground = const Color(0xFF000000),
     this.displayDuration = const Duration(milliseconds: 4000),
     this.decoration,
+    this.constraints,
     this.notificationBuilder,
   });
 
@@ -80,6 +85,7 @@ class NotificationState extends State<Notification> {
             bodyBackground: widget.bodyBackground,
             bodyForeground: widget.bodyForeground,
             decoration: widget.decoration,
+            constraints: widget.constraints,
           )
         : BaseNotification(
             header: widget.header,
@@ -93,6 +99,7 @@ class NotificationState extends State<Notification> {
             bodyBackground: widget.bodyBackground,
             bodyForeground: widget.bodyForeground,
             decoration: widget.decoration,
+            constraints: widget.constraints,
           );
   }
 }

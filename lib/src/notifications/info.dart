@@ -6,15 +6,17 @@ class Info extends Notification {
     super.header,
     super.headerText,
     super.headerPadding,
-    super.headerBackground,
-    super.headerForeground,
+    super.headerBackground = const Color(0xFFAEC1D9),
+    super.headerForeground = const Color(0xFF3C6282),
     super.body,
     super.bodyText,
     super.bodyPadding,
-    super.bodyBackground,
-    super.bodyForeground,
-    super.alignment,
-    super.decoration,
+    super.bodyBackground = const Color(0xFFE7EEF7),
+    super.bodyForeground = const Color(0xFF3C6282),
+    super.decoration = const BoxDecoration(
+      border: Border.fromBorderSide(BorderSide(color: Color(0xFF3C6282))),
+    ),
+    super.constraints,
     super.notificationBuilder,
   });
 }

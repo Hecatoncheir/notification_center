@@ -40,6 +40,9 @@ class NotificationCenterBloc implements NotificationCenterBlocInterface {
       if (event is HideNotification) {
         _hideNotificationEventHandler(event);
       }
+      if (event is NotificationDeleted) {
+        _notificationDeletedEventHandler(event);
+      }
     });
   }
 
@@ -86,5 +89,16 @@ class NotificationCenterBloc implements NotificationCenterBlocInterface {
   Future<void> _hideNotificationEventHandler(HideNotification event) async {
     final notification = event.notification;
     _stateController.add(ShowNotificationEnd(notification: notification));
+  }
+
+  Future<void> _notificationDeletedEventHandler(
+    NotificationDeleted event,
+  ) async {
+    final notification = event.notification;
+    _notifications.remove(notification);
+    _stateController.add(NotificationDeletedSuccessful(
+      notification: notification,
+      notifications: _notifications,
+    ));
   }
 }

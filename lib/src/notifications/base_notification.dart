@@ -1,19 +1,22 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 part of 'notification.dart';
 
 class BaseNotification extends StatelessWidget {
   final Widget? header;
   final String? headerText;
-  final Padding? headerPadding;
+  final EdgeInsetsGeometry? headerPadding;
   final Color? headerBackground;
   final Color? headerForeground;
 
   final Widget? body;
   final String? bodyText;
-  final Padding? bodyPadding;
+  final EdgeInsetsGeometry? bodyPadding;
   final Color? bodyBackground;
   final Color? bodyForeground;
 
   final Decoration? decoration;
+  final BoxConstraints? constraints;
 
   const BaseNotification({
     super.key,
@@ -28,46 +31,54 @@ class BaseNotification extends StatelessWidget {
     this.bodyBackground,
     this.bodyForeground,
     this.decoration,
+    this.constraints,
   });
 
   @override
   Widget build(BuildContext context) {
-    final _header = header;
-    final _headerText = headerText ?? "";
-    final _headerPadding =
-        headerPadding ?? const EdgeInsets.symmetric(horizontal: 6, vertical: 3);
-    final _headerBackground = headerBackground ?? Colors.white;
-    final _headerForeground = headerForeground ?? Colors.black;
-    final _body = body;
-    final _bodyText = bodyText ?? "";
-    final _bodyPadding =
-        bodyPadding ?? const EdgeInsets.symmetric(horizontal: 6, vertical: 3);
-    final _bodyBackground = bodyBackground ?? Colors.white;
-    final _bodyForeground = bodyForeground ?? Colors.black;
-
     return Container(
       decoration: decoration,
+      constraints: constraints,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              header ??
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(_headerText),
-                  ),
+              Expanded(
+                child: header ??
+                    Container(
+                      color: headerBackground,
+                      padding: headerPadding,
+                      child: Text(
+                        headerText ?? "",
+                        style: TextStyle(
+                          color: headerForeground,
+                        ),
+                      ),
+                    ),
+              ),
             ],
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              body ??
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(_bodyText),
-                  ),
+              Expanded(
+                child: body ??
+                    Container(
+                      color: bodyBackground,
+                      padding: bodyPadding,
+                      child: Text(
+                        bodyText ?? "",
+                        style: TextStyle(
+                          color: bodyForeground,
+                        ),
+                      ),
+                    ),
+              ),
             ],
           ),
         ],

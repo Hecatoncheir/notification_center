@@ -10,9 +10,14 @@ class AllNotifications extends NotificationCenterBlocState {
   const AllNotifications({required this.notifications});
 }
 
-class NotificationDeletedSuccessful extends NotificationCenterBlocEvent {
+class NotificationDeletedSuccessful extends NotificationCenterBlocState {
   final Notification notification;
-  const NotificationDeletedSuccessful({required this.notification});
+  final List<Notification> notifications;
+
+  const NotificationDeletedSuccessful({
+    required this.notification,
+    required this.notifications,
+  });
 }
 
 class ShowAllNotificationsBegin extends NotificationCenterBlocState {

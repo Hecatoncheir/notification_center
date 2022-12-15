@@ -13,10 +13,13 @@ class NotificationCenter extends StatefulWidget {
   final Widget? child;
   final NotificationCenterBlocInterface? bloc;
 
+  final Alignment alignment;
+
   const NotificationCenter({
     super.key,
     this.child,
     this.bloc,
+    this.alignment = Alignment.bottomRight,
   });
 
   @override
@@ -81,6 +84,7 @@ class NotificationCenterState extends State<NotificationCenter> {
                 (state) =>
                     state is ShowNotificationBegin ||
                     state is ShowNotificationEnd ||
+                    state is NotificationDeletedSuccessful ||
                     state is ShowAllNotificationsBegin ||
                     state is ShowAllNotificationsEnd,
               ),
@@ -89,68 +93,70 @@ class NotificationCenterState extends State<NotificationCenter> {
             if (state == null) return Container();
 
             if (state is ShowNotificationBegin) {
-              final notification = state.notification;
               notifications
                 ..clear()
-                ..add(notification);
-
-              return Stack(
-                children: [
-                  for (final notification in notifications)
-                    NotificationWidget(
-                      bloc: _bloc,
-                      notification: notification,
-                    ),
-                ],
-              );
+                ..add(state.notification);
             }
 
             if (state is ShowNotificationEnd) {
               notifications.remove(state.notification);
-              return Stack(
-                children: [
-                  for (final notification in notifications)
-                    NotificationWidget(
-                      bloc: _bloc,
-                      notification: notification,
-                    ),
-                ],
-              );
+            }
+
+            if (state is NotificationDeletedSuccessful) {
+              notifications.remove(state.notification);
             }
 
             if (state is ShowAllNotificationsBegin) {
               notifications
                 ..clear()
                 ..addAll(state.notifications);
-
-              return Stack(
-                children: [
-                  for (final notification in notifications)
-                    NotificationWidget(
-                      bloc: _bloc,
-                      notification: notification,
-                      mustBeDismissible: true,
-                    ),
-                ],
-              );
             }
 
             if (state is ShowAllNotificationsEnd) {
               notifications.clear();
-
-              return Stack(
-                children: [
-                  for (final notification in notifications)
-                    NotificationWidget(
-                      bloc: _bloc,
-                      notification: notification,
-                      mustBeDismissible: true,
-                    ),
-                ],
-              );
             }
 
-            return Container();
+            double? width;
+            for (final notification in notifications) {
+              final notificationWidth = notification.constraints?.maxWidth;
+
+              if (notificationWidth == null) {
+                width = double.infinity;
+                break;
+              }
+
+              width ??= notificationWidth;
+              if (width < notificationWidth) width = notificationWidth;
+            }
+
+            return Align(
+              alignment: widget.alignment,
+              child: SizedBox(
+                width: width,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 3),
+                      for (final notification in notifications)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 3,
+                            horizontal: 6,
+                          ),
+                          child: NotificationWidget(
+                            key: ValueKey(notification),
+                            bloc: _bloc,
+                            notification: notification,
+                          ),
+                        ),
+                      const SizedBox(height: 3),
+                    ],
+                  ),
+                ),
+              ),
+            );
           },
         ),
       ],
