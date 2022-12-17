@@ -48,17 +48,13 @@ class BaseNotification extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: header ??
-                    Container(
-                      color: headerBackground,
-                      padding: headerPadding,
-                      child: Text(
-                        headerText ?? "",
-                        style: TextStyle(
-                          color: headerForeground,
-                        ),
-                      ),
-                    ),
+                child: BaseNotificationHeader(
+                  header: header,
+                  headerText: headerText,
+                  headerPadding: headerPadding,
+                  headerBackground: headerBackground,
+                  headerForeground: headerForeground,
+                ),
               ),
             ],
           ),
@@ -67,17 +63,13 @@ class BaseNotification extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: body ??
-                    Container(
-                      color: bodyBackground,
-                      padding: bodyPadding,
-                      child: Text(
-                        bodyText ?? "",
-                        style: TextStyle(
-                          color: bodyForeground,
-                        ),
-                      ),
-                    ),
+                child: BaseNotificationBody(
+                  body: body,
+                  bodyText: bodyText,
+                  bodyPadding: bodyPadding,
+                  bodyBackground: bodyBackground,
+                  bodyForeground: bodyForeground,
+                ),
               ),
             ],
           ),

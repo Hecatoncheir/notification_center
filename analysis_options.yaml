@@ -26,7 +26,7 @@ dart_code_metrics:
     metrics:
         cycloramic-complexity: 5
         maximum-nesting-level: 5
-        number-of-parameters: 7
+        number-of-parameters: 13
         source-lines-of-code: 250
         number-of-methods: 10
         weight-of-class: 0.33

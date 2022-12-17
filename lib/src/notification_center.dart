@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart' hide Notification;
 
 import 'bloc/notification_center_bloc.dart';
-import 'notifications/notification.dart';
+import 'notification/notification.dart';
 
 part 'notification_widget.dart';
 
@@ -77,6 +77,7 @@ class NotificationCenterState extends State<NotificationCenter> {
     final notifications = <Notification>[];
 
     return Stack(
+      key: const Key('NotificationCenter'),
       children: [
         widget.child ?? Container(),
         StreamBuilder<NotificationCenterBlocState>(

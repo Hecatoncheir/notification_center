@@ -1,370 +1,125 @@
 import 'package:flutter/material.dart' hide Notification;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:notification_center/models/interface.dart';
-import 'package:notification_center/models/notification.dart';
-import 'package:notification_center/models/notification_builder.dart';
-import 'package:notification_center/src/bloc/notification_center_bloc.dart';
-import 'package:notification_center/src/notification_center.dart';
-
-class SuccessfulNotification implements Notification {
-  String header;
-  String body;
-
-  SuccessfulNotification({
-    required this.header,
-    required this.body,
-  });
-}
-
-class ErrorNotification extends NotificationBase {
-  ErrorNotification({
-    required String header,
-    required String body,
-    Future<dynamic>? closeAfter,
-  }) : super(
-          header: header,
-          body: body,
-          closeAfter: closeAfter,
-        );
-}
+import 'package:notification_center/notification_center.dart';
 
 void main() {
   group('Notification center', () {
     testWidgets('can display main content with notification', (tester) async {
-      const testText = 'Test text widget';
-
-      final notificationCenter = NotificationCenter(
-        bloc: NotificationCenterBloc(
-          builders: [
-            NotificationBuilder<NotificationBase>(
-              headerBuilder: (_, notification) => Text(notification.header),
-              bodyBuilder: (_, notification) => Text(notification.body),
-            ),
-          ],
-        ),
-        child: Text(testText),
+      const testWidget = NotificationCenter(
+        child: Text('Test text widget'),
       );
 
-      await tester.pumpWidget(MaterialApp(home: notificationCenter));
-      await tester.pumpAndSettle();
+      const widget = MaterialApp(
+        home: testWidget,
+      );
 
-      expect(find.text(testText), findsOneWidget);
+      await tester.pumpWidget(widget);
+      await tester.pump();
+
+      expect(find.text('Test text widget'), findsOneWidget);
     });
 
     testWidgets('can show notification', (tester) async {
-      // ignore: close_sinks
-      final notificationCenterBloc = NotificationCenterBloc(
-        builders: [
-          NotificationBuilder<NotificationBase>(
-            headerBuilder: (_, notification) => Text(notification.header),
-            bodyBuilder: (_, notification) => Text(notification.body),
-          ),
-        ],
+      final bloc = NotificationCenterBloc();
+
+      final testWidget = NotificationCenter(
+        bloc: bloc,
+        child: const Text(
+          'Test text widget',
+        ),
       );
 
-      final notificationCenter = NotificationCenter(
-        bloc: notificationCenterBloc,
-        child: Offstage(),
+      final widget = MaterialApp(
+        home: testWidget,
       );
 
-      await tester.pumpWidget(MaterialApp(home: notificationCenter));
+      await tester.pumpWidget(widget);
 
-      final notification = NotificationBase(
-        header: 'Header',
-        body: 'Body',
+      expect(find.text('Notification header'), findsNothing);
+      expect(find.text('Notification body'), findsNothing);
+
+      const notification = Notification(
+        headerText: "Notification header",
+        bodyText: "Notification body",
+        duration: Duration(seconds: 2),
       );
 
-      final event = NotificationAdded(notification: notification);
-      notificationCenterBloc.add(event);
+      bloc.controller().add(const ShowNotification(notification: notification));
 
-      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
+      await tester.pump(const Duration(seconds: 1));
 
-      expect(find.text('Header'), findsOneWidget);
-      expect(find.text('Body'), findsOneWidget);
-    });
+      expect(find.text('Notification header'), findsOneWidget);
+      expect(find.text('Notification body'), findsOneWidget);
 
-    testWidgets(
-      'can show notification with other notifications',
-      (tester) async {
-        // ignore: close_sinks
-        final notificationCenterBloc = NotificationCenterBloc(
-          builders: [
-            NotificationBuilder<SuccessfulNotification>(
-              headerBuilder: (_, notification) => Container(
-                width: 200,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(notification.header),
-                    ),
-                  ],
-                ),
-              ),
-              bodyBuilder: (_, notification) => Container(
-                width: 200,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(notification.body),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            NotificationBuilder<ErrorNotification>(
-              headerBuilder: (_, notification) => Container(
-                width: 200,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(notification.header),
-                    ),
-                  ],
-                ),
-              ),
-              bodyBuilder: (_, notification) => Container(
-                width: 200,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(notification.body),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        );
+      await tester.pump(const Duration(seconds: 1));
 
-        final notificationCenter = NotificationCenter(
-          bloc: notificationCenterBloc,
-          child: Offstage(),
-        );
-
-        await tester.pumpWidget(MaterialApp(home: notificationCenter));
-
-        final firstNotification = SuccessfulNotification(
-          header: 'First notification header',
-          body: 'First notification body',
-        );
-
-        final firstEvent = NotificationAdded(notification: firstNotification);
-        notificationCenterBloc.add(firstEvent);
-
-        await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
-
-        expect(find.text('First notification header'), findsOneWidget);
-        expect(find.text('First notification body'), findsOneWidget);
-
-        final secondNotification = ErrorNotification(
-          header: 'Second notification header',
-          body: 'Second notification body',
-        );
-
-        final secondEvent = NotificationAdded(notification: secondNotification);
-        notificationCenterBloc.add(secondEvent);
-
-        await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
-
-        expect(find.text('Second notification header'), findsOneWidget);
-        expect(find.text('Second notification body'), findsOneWidget);
-
-        await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
-
-        expect(find.text('First notification header'), findsOneWidget);
-        expect(find.text('First notification body'), findsOneWidget);
-
-        expect(find.text('Second notification header'), findsOneWidget);
-        expect(find.text('Second notification body'), findsOneWidget);
-      },
-    );
-
-    testWidgets('can hide all notifications', (tester) async {
-      // ignore: close_sinks
-      final notificationCenterBloc = NotificationCenterBloc(
-        builders: [
-          NotificationBuilder<SuccessfulNotification>(
-            headerBuilder: (_, notification) => Container(
-              width: 200,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(notification.header),
-                  ),
-                ],
-              ),
-            ),
-            bodyBuilder: (_, notification) => Container(
-              width: 200,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(notification.body),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          NotificationBuilder<ErrorNotification>(
-            headerBuilder: (_, notification) => Container(
-              width: 200,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(notification.header),
-                  ),
-                ],
-              ),
-            ),
-            bodyBuilder: (_, notification) => Container(
-              width: 200,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(notification.body),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      );
-
-      final notificationCenter = NotificationCenter(
-        bloc: notificationCenterBloc,
-        child: Offstage(),
-      );
-
-      await tester.pumpWidget(MaterialApp(home: notificationCenter));
-
-      final firstNotification = SuccessfulNotification(
-        header: 'First notification header',
-        body: 'First notification body',
-      );
-
-      final firstEvent = NotificationAdded(notification: firstNotification);
-      notificationCenterBloc.add(firstEvent);
-
-      final secondNotification = ErrorNotification(
-        header: 'Second notification header',
-        body: 'Second notification body',
-      );
-
-      final secondEvent = NotificationAdded(notification: secondNotification);
-      notificationCenterBloc.add(secondEvent);
-
-      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
-
-      expect(find.text('First notification header'), findsOneWidget);
-      expect(find.text('First notification body'), findsOneWidget);
-
-      expect(find.text('Second notification header'), findsOneWidget);
-      expect(find.text('Second notification body'), findsOneWidget);
-
-      notificationCenterBloc.add(NotificationsCloseAll());
-
-      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
-
-      expect(find.text('First notification header'), findsNothing);
-      expect(find.text('First notification body'), findsNothing);
-
-      expect(find.text('Second notification header'), findsNothing);
-      expect(find.text('Second notification body'), findsNothing);
+      expect(find.text('Notification header'), findsNothing);
+      expect(find.text('Notification body'), findsNothing);
     });
 
     testWidgets('can show all notifications', (tester) async {
-      // ignore: close_sinks
-      final notificationCenterBloc = NotificationCenterBloc(
-        builders: [
-          NotificationBuilder<SuccessfulNotification>(
-            headerBuilder: (_, notification) => Container(
-              width: 200,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(notification.header),
-                  ),
-                ],
-              ),
-            ),
-            bodyBuilder: (_, notification) => Container(
-              width: 200,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(notification.body),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          NotificationBuilder<ErrorNotification>(
-            headerBuilder: (_, notification) => Container(
-              width: 200,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(notification.header),
-                  ),
-                ],
-              ),
-            ),
-            bodyBuilder: (_, notification) => Container(
-              width: 200,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(notification.body),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      final bloc = NotificationCenterBloc();
+
+      final testWidget = NotificationCenter(
+        bloc: bloc,
+        child: const Text(
+          'Test text widget',
+        ),
       );
 
-      final notificationCenter = NotificationCenter(
-        bloc: notificationCenterBloc,
-        child: Offstage(),
+      final widget = MaterialApp(
+        home: testWidget,
       );
 
-      await tester.pumpWidget(MaterialApp(home: notificationCenter));
-
-      final firstNotification = SuccessfulNotification(
-        header: 'First notification header',
-        body: 'First notification body',
-      );
-
-      final firstEvent = NotificationAdded(notification: firstNotification);
-      notificationCenterBloc.add(firstEvent);
-
-      final secondNotification = ErrorNotification(
-        header: 'Second notification header',
-        body: 'Second notification body',
-      );
-
-      final secondEvent = NotificationAdded(notification: secondNotification);
-      notificationCenterBloc.add(secondEvent);
-
-      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
-
-      expect(find.text('First notification header'), findsOneWidget);
-      expect(find.text('First notification body'), findsOneWidget);
-
-      expect(find.text('Second notification header'), findsOneWidget);
-      expect(find.text('Second notification body'), findsOneWidget);
-
-      notificationCenterBloc.add(NotificationsCloseAll());
-      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
+      await tester.pumpWidget(widget);
 
       expect(find.text('First notification header'), findsNothing);
       expect(find.text('First notification body'), findsNothing);
 
+      const firstNotification = Notification(
+        headerText: "First notification header",
+        bodyText: "First notification body",
+        duration: Duration(seconds: 2),
+      );
+
+      bloc
+          .controller()
+          .add(const ShowNotification(notification: firstNotification));
+
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.text('First notification header'), findsOneWidget);
+      expect(find.text('First notification body'), findsOneWidget);
+
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.text('First notification header'), findsNothing);
+      expect(find.text('First notification body'), findsNothing);
+
+      const secondNotification = Notification(
+        headerText: "Second notification header",
+        bodyText: "Second notification body",
+        duration: Duration(seconds: 2),
+      );
+
+      bloc
+          .controller()
+          .add(const ShowNotification(notification: secondNotification));
+
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.text('Second notification header'), findsOneWidget);
+      expect(find.text('Second notification body'), findsOneWidget);
+
+      await tester.pump(const Duration(seconds: 1));
+
       expect(find.text('Second notification header'), findsNothing);
       expect(find.text('Second notification body'), findsNothing);
 
-      notificationCenterBloc.add(NotificationsOpenAll());
-      await tester.pumpAndSettle().then((value) => tester.pumpAndSettle());
+      await tester.pump(const Duration(seconds: 1));
+
+      bloc.controller().add(const ShowAllNotifications());
+      await tester.pump(const Duration(seconds: 1));
 
       expect(find.text('First notification header'), findsOneWidget);
       expect(find.text('First notification body'), findsOneWidget);

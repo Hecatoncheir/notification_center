@@ -1,9 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 part 'base_notification.dart';
-part 'error.dart';
-part 'info.dart';
-part 'warning.dart';
+part 'base_notification_body.dart';
+part 'base_notification_header.dart';
 
 typedef NotificationBuilder = Widget Function({
   Widget? header,
@@ -36,7 +35,7 @@ class Notification extends StatefulWidget {
   final Decoration? decoration;
   final BoxConstraints? constraints;
 
-  final Duration displayDuration;
+  final Duration duration;
 
   final NotificationBuilder? notificationBuilder;
 
@@ -58,7 +57,7 @@ class Notification extends StatefulWidget {
     ),
     this.bodyBackground = const Color(0xFFffffff),
     this.bodyForeground = const Color(0xFF000000),
-    this.displayDuration = const Duration(milliseconds: 4000),
+    this.duration = const Duration(milliseconds: 4000),
     this.decoration,
     this.constraints,
     this.notificationBuilder,

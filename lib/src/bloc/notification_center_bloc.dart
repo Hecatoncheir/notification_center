@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 import 'package:notification_center/notification_center.dart';
-import 'package:notification_center/src/notifications/notification.dart';
 
 part 'notification_center_bloc_event.dart';
 part 'notification_center_bloc_interface.dart';
@@ -80,7 +79,7 @@ class NotificationCenterBloc implements NotificationCenterBlocInterface {
     _stateController.add(ShowNotificationBegin(notification: notification));
 
     Future.delayed(
-      notification.displayDuration,
+      notification.duration,
       () =>
           _stateController.add(ShowNotificationEnd(notification: notification)),
     );

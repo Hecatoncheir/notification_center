@@ -3,6 +3,7 @@ import 'package:notification_center/notification_center.dart';
 
 void main() => runApp(const Application());
 
+// ignore: prefer-match-file-name
 class Application extends StatelessWidget {
   const Application({super.key});
 
@@ -32,28 +33,30 @@ class _ExampleWidgetState extends State<ExampleWidget> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      int seconds = 1;
+      int seconds = 3;
 
       final infoNotification = Info(
         headerText: "Info notification header",
         bodyText: "Info notification body",
         constraints: BoxConstraints(maxWidth: 260),
+        notificationBuilder: notificationFadeAnimationBuilder,
       );
       await Future.delayed(
         Duration(seconds: seconds),
         () => NotificationCenter.of(context).showNotification(infoNotification),
-      ).then((_) => seconds++);
+      );
 
       final warningNotification = Warning(
         headerText: "Warning notification header",
         bodyText: "Warning notification body",
         constraints: BoxConstraints(maxWidth: 260),
+        notificationBuilder: notificationOneByOneAnimationBuilder,
       );
       await Future.delayed(
         Duration(seconds: seconds),
         () => NotificationCenter.of(context)
             .showNotification(warningNotification),
-      ).then((_) => seconds++);
+      );
 
       final errorNotification = Error(
         headerText: "Error notification header",
@@ -64,10 +67,11 @@ class _ExampleWidgetState extends State<ExampleWidget> {
         Duration(seconds: seconds),
         () =>
             NotificationCenter.of(context).showNotification(errorNotification),
-      ).then((_) => seconds++);
+      );
 
+      const showAllDelay = 4;
       Future.delayed(
-        Duration(seconds: seconds),
+        Duration(seconds: showAllDelay),
         () => NotificationCenter.of(context).showAllNotifications(),
       );
     });
@@ -75,6 +79,27 @@ class _ExampleWidgetState extends State<ExampleWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: Placeholder(
+                  child: Opacity(
+                    // ignore: no-magic-number
+                    opacity: 0.6,
+                    child: Image.asset(
+                      "images/background.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -1,4 +1,5 @@
-part of 'notification.dart';
+import 'package:flutter/painting.dart';
+import 'package:notification_center/notification_center.dart';
 
 class Error extends Notification {
   const Error({
