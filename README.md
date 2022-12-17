@@ -11,121 +11,55 @@
 example/lib/main.dart
 ```
 
-### Use
+### How to use
 
-Implement **Notification** abstract class:
-
-```dart
-abstract class Notification {}
-```
-
-Or extends **NotificationBase**:
-```dart
-/// NotificationBase - model with data for notification.
-class NotificationBase implements Notification {
-  String header;
-  String body;
-
-  NotificationBuilder<NotificationBase>? builder;
-  Future<dynamic>? closeAfter;
-
-  NotificationBase({
-    required this.header,
-    required this.body,
-    this.builder,
-    Future<dynamic>? closeAfter,
-  }) : this.closeAfter = closeAfter;
-}
-```
-
-Then add **NotificationCenter** widget:
+Add **NotificationCenter** widget:
 
 ```dart
-class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Scaffold(
         body: NotificationCenter(
-          alignment: Alignment.topCenter,
-          notificationCenterBloc: NotificationCenterBloc(
-            builders: [
-              NotificationBuilder<InformationNotification>(...),
-              NotificationBuilder<ErrorNotification>(...),
-              NotificationBuilder<NotificationBase>(...),
-              NotificationBuilder<SuccessfulNotification>(...),
-            ],
-          ),
-          child: MyApp(),
+          child: ExampleWidget(),
         ),
       ),
     );
   }
-}
 ```
 
 Now notifications can be send:
 
 ```dart
-    Future.delayed(Duration(seconds: 1), () {
-      final notification = InformationNotification(
-        body: 'Information notification body',
-      );
-
-      final event = NotificationAdded(
-        notification: notification,
-      );
-
-      BlocProvider.of<NotificationCenterBloc>(context).add(event);
-    });
-
-    Future.delayed(Duration(seconds: 2), () {
-      final notification = ErrorNotification(
-        header: 'Error notification header',
-        body: 'Error notification body',
-        closeAfter: Duration(seconds: 1),
-      );
-
-      final event = NotificationAdded(
-        notification: notification,
-      );
-
-      BlocProvider.of<NotificationCenterBloc>(context).add(event);
-    });
+  @override
+  void initState() {
+    super.initState();
+    
+    final infoNotification = Info(
+      headerText: "Info notification header",
+      bodyText: "Info notification body",
+      constraints: BoxConstraints(maxWidth: 260),
+      notificationBuilder: notificationFadeAnimationBuilder,
+    );
+    
+    NotificationCenter.of(context).showNotification(infoNotification);
+  }
 ```
 
-or notification can have builder:
+Animations:
 
-```dart
-
-final notification = NewErrorNotification(
-  header: 'New error notification header',
-  body: 'New error notification body',
-  closeAfter: Future.delayed(Duration(seconds: 1)),
-  builder: NotificationBuilder<NewErrorNotification>(
-    bodyBuilder: (bloc, notification) => Container(
-        child: Column(
-          childer:[
-            Text(notification.header),
-            Text(notification.body),
-          ],
-      ),
-    ),
-  ),
-);
-
-final event = NotificationAdded(
-  notification: notification,
-);
-
-BlocProvider.of<NotificationCenterBloc>(context).add(event);
+```
+notificationFadeAnimationBuilder,
+notificationOneByOneAnimationBuilder,
 ```
 
-Events:
+BLoC events:
 
-```dart
-NotificationAdded
-NotificationClosed
-NotificationsOpenAll 
-NotificationsCloseAll 
+```
+GetAllNotifications,
+ShowAllNotifications,
+HideAllNotifications,
+ShowNotification,
+HideNotification,
+NotificationDeleted,
 ```
