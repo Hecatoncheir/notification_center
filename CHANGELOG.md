@@ -1,3 +1,7 @@
+## 0.3.0
+
+* Update for new flutter version.
+
 ## 0.1.1
 
 * Cleanup.
