@@ -21,19 +21,21 @@ class BaseNotificationHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _header = header;
-    return _header != null
-        ? _header
-        : headerText == null
-            ? Container()
-            : Container(
-                color: headerBackground,
-                padding: headerPadding,
-                child: Text(
-                  headerText ?? "",
+    final _headerText = headerText;
+
+    return Container(
+      color: headerBackground,
+      padding: headerPadding,
+      child: _header != null
+          ? _header
+          : _headerText == null
+              ? Container()
+              : Text(
+                  _headerText,
                   style: TextStyle(
                     color: headerForeground,
                   ),
                 ),
-              );
+    );
   }
 }

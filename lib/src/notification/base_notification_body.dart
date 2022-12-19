@@ -21,19 +21,21 @@ class BaseNotificationBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _body = body;
-    return _body != null
-        ? _body
-        : bodyText == null
-            ? Container()
-            : Container(
-                color: bodyBackground,
-                padding: bodyPadding,
-                child: Text(
-                  bodyText ?? "",
+    final _bodyText = bodyText;
+
+    return Container(
+      color: bodyBackground,
+      padding: bodyPadding,
+      child: _body != null
+          ? _body
+          : _bodyText == null
+              ? Container()
+              : Text(
+                  _bodyText,
                   style: TextStyle(
                     color: bodyForeground,
                   ),
                 ),
-              );
+    );
   }
 }
