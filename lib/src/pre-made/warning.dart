@@ -14,6 +14,7 @@ class Warning extends Notification {
     super.bodyPadding,
     super.bodyBackground = const Color(0xFFF1EFDC),
     super.bodyForeground = const Color(0xffd77e9f),
+    super.duration,
     super.decoration = const BoxDecoration(
       border: Border.fromBorderSide(BorderSide(color: Color(0xffd77e9f))),
     ),

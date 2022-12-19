@@ -14,6 +14,7 @@ class Info extends Notification {
     super.bodyPadding,
     super.bodyBackground = const Color(0xFFE7EEF7),
     super.bodyForeground = const Color(0xFF3C6282),
+    super.duration,
     super.decoration = const BoxDecoration(
       border: Border.fromBorderSide(BorderSide(color: Color(0xFF3C6282))),
     ),
