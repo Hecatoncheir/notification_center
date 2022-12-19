@@ -1,4 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, prefer_if_null_operators
 
 part of 'notification.dart';
 
@@ -20,8 +20,10 @@ class BaseNotificationBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return body == null
-        ? bodyText == null
+    final _body = body;
+    return _body != null
+        ? _body
+        : bodyText == null
             ? Container()
             : Container(
                 color: bodyBackground,
@@ -32,7 +34,6 @@ class BaseNotificationBody extends StatelessWidget {
                     color: bodyForeground,
                   ),
                 ),
-              )
-        : Container();
+              );
   }
 }

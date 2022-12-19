@@ -1,6 +1,6 @@
 name: notification_center
 description: Show notifications in app.
-version: 0.3.0
+version: 0.3.1
 homepage: https://github.com/Hecatoncheir/notification_center
 
 environment:
