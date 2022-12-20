@@ -18,6 +18,7 @@ class Error extends Notification {
     super.decoration = const BoxDecoration(
       border: Border.fromBorderSide(BorderSide(color: Color(0xFFB84C71))),
     ),
+    super.borderRadius,
     super.constraints,
     super.notificationBuilder,
   });
