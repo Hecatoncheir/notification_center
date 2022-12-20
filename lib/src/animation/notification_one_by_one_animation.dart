@@ -13,7 +13,8 @@ Widget notificationOneByOneAnimationBuilder({
   EdgeInsetsGeometry? bodyPadding,
   Color? bodyBackground,
   Color? bodyForeground,
-  Decoration? decoration,
+  BoxDecoration? decoration,
+  BorderRadiusGeometry? borderRadius,
   BoxConstraints? constraints,
 }) {
   return _NotificationOneByOneAnimation(
@@ -28,6 +29,7 @@ Widget notificationOneByOneAnimationBuilder({
     bodyBackground: bodyBackground,
     bodyForeground: bodyForeground,
     decoration: decoration,
+    borderRadius: borderRadius,
     constraints: constraints,
   );
 }
@@ -45,7 +47,8 @@ class _NotificationOneByOneAnimation extends StatelessWidget {
   final Color? bodyBackground;
   final Color? bodyForeground;
 
-  final Decoration? decoration;
+  final BoxDecoration? decoration;
+  final BorderRadiusGeometry? borderRadius;
   final BoxConstraints? constraints;
 
   const _NotificationOneByOneAnimation({
@@ -60,57 +63,63 @@ class _NotificationOneByOneAnimation extends StatelessWidget {
     this.bodyBackground,
     this.bodyForeground,
     this.decoration,
+    this.borderRadius,
     this.constraints,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: decoration,
-      constraints: constraints,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _OneByOneAnimation(
-            delayed: Duration.zero,
-            duration: const Duration(milliseconds: 200),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: BaseNotificationHeader(
-                    header: header,
-                    headerText: headerText,
-                    headerPadding: headerPadding,
-                    headerBackground: headerBackground,
-                    headerForeground: headerForeground,
+    return ClipRRect(
+      borderRadius: borderRadius,
+      child: Container(
+        decoration: decoration?.copyWith(
+          borderRadius: borderRadius,
+        ),
+        constraints: constraints,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _OneByOneAnimation(
+              delayed: Duration.zero,
+              duration: const Duration(milliseconds: 200),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: BaseNotificationHeader(
+                      header: header,
+                      headerText: headerText,
+                      headerPadding: headerPadding,
+                      headerBackground: headerBackground,
+                      headerForeground: headerForeground,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          _OneByOneAnimation(
-            delayed: const Duration(milliseconds: 400),
-            duration: const Duration(milliseconds: 200),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: BaseNotificationBody(
-                    body: body,
-                    bodyText: bodyText,
-                    bodyPadding: bodyPadding,
-                    bodyBackground: bodyBackground,
-                    bodyForeground: bodyForeground,
+            _OneByOneAnimation(
+              delayed: const Duration(milliseconds: 400),
+              duration: const Duration(milliseconds: 200),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: BaseNotificationBody(
+                      body: body,
+                      bodyText: bodyText,
+                      bodyPadding: bodyPadding,
+                      bodyBackground: bodyBackground,
+                      bodyForeground: bodyForeground,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

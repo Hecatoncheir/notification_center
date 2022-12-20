@@ -13,7 +13,8 @@ Widget notificationFadeAnimationBuilder({
   EdgeInsetsGeometry? bodyPadding,
   Color? bodyBackground,
   Color? bodyForeground,
-  Decoration? decoration,
+  BoxDecoration? decoration,
+  BorderRadiusGeometry? borderRadius,
   BoxConstraints? constraints,
 }) {
   return _NotificationFadeAnimation(
@@ -29,6 +30,7 @@ Widget notificationFadeAnimationBuilder({
       bodyBackground: bodyBackground,
       bodyForeground: bodyForeground,
       decoration: decoration,
+      borderRadius: borderRadius,
       constraints: constraints,
     ),
   );

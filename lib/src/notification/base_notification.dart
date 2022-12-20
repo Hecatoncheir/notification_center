@@ -15,7 +15,8 @@ class BaseNotification extends StatelessWidget {
   final Color? bodyBackground;
   final Color? bodyForeground;
 
-  final Decoration? decoration;
+  final BoxDecoration? decoration;
+  final BorderRadiusGeometry? borderRadius;
   final BoxConstraints? constraints;
 
   const BaseNotification({
@@ -31,49 +32,55 @@ class BaseNotification extends StatelessWidget {
     this.bodyBackground,
     this.bodyForeground,
     this.decoration,
+    this.borderRadius,
     this.constraints,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: decoration,
-      constraints: constraints,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: BaseNotificationHeader(
-                  header: header,
-                  headerText: headerText,
-                  headerPadding: headerPadding,
-                  headerBackground: headerBackground,
-                  headerForeground: headerForeground,
+    return ClipRRect(
+      borderRadius: borderRadius,
+      child: Container(
+        decoration: decoration?.copyWith(
+          borderRadius: borderRadius,
+        ),
+        constraints: constraints,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: BaseNotificationHeader(
+                    header: header,
+                    headerText: headerText,
+                    headerPadding: headerPadding,
+                    headerBackground: headerBackground,
+                    headerForeground: headerForeground,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: BaseNotificationBody(
-                  body: body,
-                  bodyText: bodyText,
-                  bodyPadding: bodyPadding,
-                  bodyBackground: bodyBackground,
-                  bodyForeground: bodyForeground,
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: BaseNotificationBody(
+                    body: body,
+                    bodyText: bodyText,
+                    bodyPadding: bodyPadding,
+                    bodyBackground: bodyBackground,
+                    bodyForeground: bodyForeground,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
