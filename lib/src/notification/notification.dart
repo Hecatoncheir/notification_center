@@ -16,7 +16,6 @@ typedef NotificationBuilder = Widget Function({
   Color? bodyBackground,
   Color? bodyForeground,
   BoxDecoration? decoration,
-  BorderRadiusGeometry? borderRadius,
   BoxConstraints? constraints,
 });
 
@@ -34,7 +33,6 @@ class Notification extends StatefulWidget {
   final Color? bodyForeground;
 
   final BoxDecoration? decoration;
-  final BorderRadiusGeometry? borderRadius;
   final BoxConstraints? constraints;
 
   final Duration duration;
@@ -61,7 +59,6 @@ class Notification extends StatefulWidget {
     this.bodyForeground = const Color(0xFF000000),
     this.duration = const Duration(milliseconds: 4000),
     this.decoration,
-    this.borderRadius,
     this.constraints,
     this.notificationBuilder,
   });

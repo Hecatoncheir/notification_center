@@ -18,7 +18,6 @@ class Warning extends Notification {
     super.decoration = const BoxDecoration(
       border: Border.fromBorderSide(BorderSide(color: Color(0xffd77e9f))),
     ),
-    super.borderRadius,
     super.constraints,
     super.notificationBuilder,
   });

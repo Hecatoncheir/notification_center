@@ -16,7 +16,6 @@ class BaseNotification extends StatelessWidget {
   final Color? bodyForeground;
 
   final BoxDecoration? decoration;
-  final BorderRadiusGeometry? borderRadius;
   final BoxConstraints? constraints;
 
   const BaseNotification({
@@ -32,19 +31,17 @@ class BaseNotification extends StatelessWidget {
     this.bodyBackground,
     this.bodyForeground,
     this.decoration,
-    this.borderRadius,
     this.constraints,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: borderRadius,
-      child: Container(
-        decoration: decoration?.copyWith(
-          borderRadius: borderRadius,
-        ),
-        constraints: constraints,
+    final borderRadius = decoration?.borderRadius;
+    return Container(
+      decoration: decoration,
+      constraints: constraints,
+      child: ClipRRect(
+        borderRadius: borderRadius ?? BorderRadius.zero,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

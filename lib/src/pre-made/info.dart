@@ -18,7 +18,6 @@ class Info extends Notification {
     super.decoration = const BoxDecoration(
       border: Border.fromBorderSide(BorderSide(color: Color(0xFF3C6282))),
     ),
-    super.borderRadius,
     super.constraints,
     super.notificationBuilder,
   });
